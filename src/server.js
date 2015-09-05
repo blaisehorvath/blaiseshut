@@ -13,7 +13,10 @@ app.set('view engine', 'handlebars');
 app.set('views', appDirName+"/views/");
 
 app.get('/', function (req, res) {
-    res.render("home", {layout:false, title:"Welcome to the algorithms course in Javascript"});
+    res.render("home", {layout:false,
+                        title: "Algorithms in Javascript",
+                        headerTitle: "Welcome to the algorithms course in Javascript"
+                        });
 });
 
 app.listen(4444, function () {
