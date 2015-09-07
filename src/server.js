@@ -1,29 +1,25 @@
 'use strict';
 
+/*Modules*/
 const express = require('express')
-const handlebars  = require('express-handlebars');
 const path = require('path');
 
-//the absolute location of this file
-const appDirName = path.dirname(require.main.filename);
-
+/*App*/
 const app = express();
 
-//configuring handlebars
-app.engine('handlebars', handlebars({defaultLayout: 'main'}));
-//setting the view engine of the app
-app.set('view engine', 'handlebars');
-//setting up the folder where the app looks up views
+/*Constants*/
+const appDirName = path.dirname(require.main.filename);
+
+/*Configuring React*/
 app.set('views', appDirName+"/views/");
+app.set('view engine', 'jsx');
+app.engine('jsx', require('express-react-views').createEngine());
+
 //setting the static directory
 app.use(express.static(appDirName+"/static"));
 
 app.get('/', function (req, res) {
-    res.render("home", {
-                              layout:false,
-                              title: "Algorithms in Javascript",
-                              headerTitle: "Welcome to the algorithms course in Javascript"
-                        });
+       res.render('home', { name: 'John', title: 'Javascript Algorithms' });
 });
 
 app.listen(4444, function () {

@@ -1,21 +1,27 @@
 'use strict';
 
+/*Modules*/
 var express = require('express');
-var handlebars = require('express-handlebars');
 var path = require('path');
-var appDirName = path.dirname(require.main.filename);
 
+/*App*/
 var app = express();
 
-app.engine('handlebars', handlebars({ defaultLayout: 'main' }));
-app.set('view engine', 'handlebars');
+/*Constants*/
+var appDirName = path.dirname(require.main.filename);
+
+/*Configuring React*/
 app.set('views', appDirName + "/views/");
+app.set('view engine', 'jsx');
+app.engine('jsx', require('express-react-views').createEngine());
+
+//setting the static directory
+app.use(express['static'](appDirName + "/static"));
 
 app.get('/', function (req, res) {
-    res.render("home", { layout: false, title: "Welcome to the algorithms course in Javascript" });
+    res.render('home', { name: 'John', title: 'Javascript Algorithms' });
 });
 
 app.listen(4444, function () {
-    console.log('Server started!');
-    console.log('Listening on port: 4444');
+    console.log('Server started! \r\nListening on port: 4444');
 });
