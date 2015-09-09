@@ -15,7 +15,7 @@ gulp.task('copy_views', function(){
 
 gulp.task('copy_layouts', function(){
       return gulp.src('src/views/layouts/*.jsx').pipe(gulp.dest('build/views/layouts'))
-})
+});
 
 // run server
 gulp.task( 'server:start', function() {
