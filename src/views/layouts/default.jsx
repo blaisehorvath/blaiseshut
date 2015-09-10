@@ -10,6 +10,7 @@ let DefaultLayout = React.createClass({
              <meta httpEquiv="X-UA-Compatible" content="IE=edge"></meta>
              <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
              <link href="css/bootstrap.min.css" rel="stylesheet"></link>
+             <link href="css/own.css" rel="stylesheet"></link>
         </head>
         <body>
 
