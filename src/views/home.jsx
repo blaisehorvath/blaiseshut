@@ -1,8 +1,11 @@
-const React = require('react');
-let DefaultLayout = require('./layouts/default');
-let ArticleIntro = require('./articleIntro');
+/*eslint-env jsx, node*/
+const React = require("react");
 
-let loremipsum = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ultricies vitae tellus in interdum. Maecenas ac egestas est, quis tristique eros. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Praesent pharetra tincidunt ante quis auctor. Proin imperdiet est in tempor tristique. Morbi tortor urna, euismod id velit ut, laoreet cursus ex. Etiam consectetur tellus lacus, id pretium felis malesuada in. Fusce vestibulum quis orci vel ullamcorper. Vestibulum diam magna, sagittis non mi ut, volutpat dignissim diam. Nulla tristique dui posuere risus ullamcorper fringilla. Sed sed purus ut orci faucibus ultricies. Proin ultricies neque sed erat pretium, nec rutrum purus hendrerit. Donec lacus leo, varius in odio id, luctus auctor metus. "
+/*eslint no-unused-vars: 0*/
+let DefaultLayout = require("./layouts/default");
+let ArticleIntro = require("./articleIntro");
+
+let loremipsum = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ultricies vitae tellus in interdum. Maecenas ac egestas est, quis tristique eros. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Praesent pharetra tincidunt ante quis auctor. Proin imperdiet est in tempor tristique. Morbi tortor urna, euismod id velit ut, laoreet cursus ex. Etiam consectetur tellus lacus, id pretium felis malesuada in. Fusce vestibulum quis orci vel ullamcorper. Vestibulum diam magna, sagittis non mi ut, volutpat dignissim diam. Nulla tristique dui posuere risus ullamcorper fringilla. Sed sed purus ut orci faucibus ultricies. Proin ultricies neque sed erat pretium, nec rutrum purus hendrerit. Donec lacus leo, varius in odio id, luctus auctor metus. ";
 
 let HelloMessage = React.createClass({
   render: function() {

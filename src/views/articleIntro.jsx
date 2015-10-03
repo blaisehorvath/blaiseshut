@@ -1,4 +1,5 @@
-const React = require('react');
+/*eslint-env jsx, node*/
+const React = require("react");
 
 let article = React.createClass({
       render : function () {
@@ -6,11 +7,10 @@ let article = React.createClass({
                         <div className='well'>
                               <h2>{this.props.articleTitle}</h2>
                               <p>{this.props.articleText}</p>
-                              <div className="col-sm-8"></div>
-                              <div className="col-sm-4">
-                                    <button type="button" className="btn btn-link">More</button>
+                              <div className="col-xs-12">
+                                    <button type="button" className="btn btn-link pull-right">More</button>
                               </div>
-                               <div className="clearfix visible-lg"></div>
+                              <div className="clearfix"></div>
                         </div>
             );
       }
