@@ -1,0 +1,57 @@
+body {
+      background-color: rgb(255, 255, 255);
+      font-family: Slabo;
+}
+
+/*---------------------------------
+  Navbar
+---------------------------------*/
+.navbar {
+  background: rgb(37, 187, 173);
+  font-family: Slabo;
+}
+
+.navbar a {
+  font-size: 14pt;
+  color: white;
+}
+
+.navbar-inverse .navbar-brand {
+  font-size: 14pt;
+  color: white;
+}
+
+.navbar-inverse .navbar-nav li a{
+  font-size: 14pt;
+  color: white;
+}
+
+.navbar-inverse .navbar-nav li a:hover {
+  font-size: 14pt;
+  color: white;
+  background-color: rgb(210, 58, 104);
+}
+
+.navbar-inverse .navbar-nav > .active > a, .navbar-inverse .navbar-nav > .active > a:focus, .navbar-inverse .navbar-nav > .active > a:hover {
+  font-size: 14pt;
+  font-style: italic;
+  color: white;
+  background-color: purple;
+}
+
+/*---------------------------------
+  Footer
+---------------------------------*/
+footer {
+  background: rgb(189, 189, 189)
+}
+
+footer ul {
+    list-style: none;
+    padding: 0;
+}
+
+footer a:hover {
+    text-decoration: none;
+    font-weight: bold;
+}
