@@ -1,7 +1,7 @@
+/*eslint no-undef: 0, quotes: 0, indent: 0 */
 /* Grabbing gulp packages*/
 
 var gulp  = require('gulp');
-var gutil = require('gulp-util');
 var babel = require('gulp-babel');
 var server = require('gulp-develop-server');
 
@@ -12,7 +12,12 @@ gulp.task('build_server', function(){
 
 //copying css files
 gulp.task('copy_css', function(){
-      return gulp.src('src/css/own.css').pipe(gulp.dest('build/static/css/'));
+      return gulp.src('src/public/css/own.css').pipe(gulp.dest('build/public/css/'));
+});
+
+//copying components
+gulp.task('copy_components', function(){
+  return gulp.src('src/public/components/*.jsx').pipe(babel()).pipe(gulp.dest('build/public/components'));
 });
 
 //copying views
@@ -33,7 +38,8 @@ gulp.task( 'server:start', function() {
     //if any of the views changed, the old views are overwritten and the server is restarted
     gulp.watch( ['src/views/*.jsx'], ['copy_views', server.restart]);
     gulp.watch( ['src/views/layouts/*.jsx'], ['copy_layouts', server.restart]);
-    gulp.watch( ['src/css/own.css'], ['copy_css', server.restart]);
+    gulp.watch( ['src/public/css/own.css'], ['copy_css', server.restart]);
+    gulp.watch( ['src/public/components/*.jsx'], ['copy_componenets', server.restart]);
 });
 
 // restart server if app.js changed
@@ -41,4 +47,4 @@ gulp.task( 'server:restart', function() {
     gulp.watch( [ 'src/server.js' ], server.restart );
 });
 
-gulp.task('default', ['build_server', 'copy_views', 'copy_layouts', 'copy_css', 'server:start']);
+gulp.task('default', ['build_server', 'copy_views', 'copy_layouts', "copy_components", 'copy_css', 'server:start']);

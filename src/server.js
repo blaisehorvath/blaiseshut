@@ -1,8 +1,8 @@
-'use strict';
+"use strict";
 
 /*Modules*/
-const express = require('express')
-const path = require('path');
+import express from 'express';
+import path from 'path';
 
 /*App*/
 const app = express();
@@ -16,7 +16,7 @@ app.set('view engine', 'jsx');
 app.engine('jsx', require('express-react-views').createEngine());
 
 //setting the static directory
-app.use(express.static(appDirName+"/static"));
+app.use(express.static(appDirName+"/public"));
 
 app.get('/', function (req, res) {
        res.render('home', { name: 'John', title: 'Javascript Algorithms' });

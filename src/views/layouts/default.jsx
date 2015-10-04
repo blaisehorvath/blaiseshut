@@ -1,5 +1,6 @@
-/*eslint-env jsx*/
-const React = require("react");
+"use strict";
+/*eslint-env jsx node*/
+import React from "react";
 
 let DefaultLayout = React.createClass({
   render: function() {
@@ -10,7 +11,7 @@ let DefaultLayout = React.createClass({
              <meta charSet="utf-8"></meta>
              <meta httpEquiv="X-UA-Compatible" content="IE=edge"></meta>
              <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
-             <link href="css/bootstrap.min.css" rel="stylesheet"></link>
+             <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet"></link>
              <link href="css/own.css" rel="stylesheet"></link>
              <link href="https://fonts.googleapis.com/css?family=Slabo+27px" rel="stylesheet" type="text/css"></link>
         </head>
@@ -64,7 +65,7 @@ let DefaultLayout = React.createClass({
              </footer>
 
              <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-             <script src="js/bootstrap.min.js"></script>
+             <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
         </body>
       </html>
     );
