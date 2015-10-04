@@ -1,25 +1,33 @@
 {
-  "name": "algorithms",
+  "name": "blaiseshut",
   "version": "1.0.0",
-  "description": "tech blog",
-  "main": "/build/server.js",
+  "description": "A tech blog",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "gulp": "gulp",
+    "start": "npm run gulp"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/blaisehorvath/blaiseshut.git"
+  },
+  "author": "Blaise Horvath",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/blaisehorvath/blaiseshut/issues"
+  },
+  "homepage": "https://github.com/blaisehorvath/blaiseshut",
   "dependencies": {
     "babel": "^5.8.23",
     "express": "^4.13.3",
-    "express-react-views": "^0.8.2",
-    "react": "^0.13.3"
+    "express-react-views": "^0.8.2"
   },
   "devDependencies": {
     "babel": "^5.8.23",
-    "gulp": "^3.9.0",
+    "dev": "^0.1.3",
     "gulp-babel": "^5.2.1",
     "gulp-develop-server": "^0.4.3",
-    "gulp-sass": "^2.0.4",
     "gulp-util": "^3.0.6"
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "Blaise Horvath <blaisehorvath@gmail.com>",
-  "license": "GPL"
+  }
 }
