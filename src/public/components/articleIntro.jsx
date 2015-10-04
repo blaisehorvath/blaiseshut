@@ -1,6 +1,6 @@
 "use strict";
 /*eslint-env jsx, node*/
-import React from "react";
+let React = require("react");
 
 let article = React.createClass({
       render : function () {

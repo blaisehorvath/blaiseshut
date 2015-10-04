@@ -3,6 +3,7 @@
 /*Modules*/
 import express from 'express';
 import path from 'path';
+require('node-jsx').install();
 
 /*App*/
 const app = express();

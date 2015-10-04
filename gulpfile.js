@@ -17,7 +17,8 @@ gulp.task('copy_css', function(){
 
 //copying components
 gulp.task('copy_components', function(){
-  return gulp.src('src/public/components/*.jsx').pipe(babel()).pipe(gulp.dest('build/public/components'));
+  return gulp.src('src/public/components/*.jsx').pipe(gulp.dest('build/public/components'));
+  //return gulp.src('src/public/components/*.jsx').pipe(babel()).pipe(gulp.dest('build/public/components'));
 });
 
 //copying views

@@ -12,6 +12,8 @@ var _path = require('path');
 
 var _path2 = _interopRequireDefault(_path);
 
+require('node-jsx').install();
+
 /*App*/
 var app = (0, _express2['default'])();
 
