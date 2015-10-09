@@ -21,7 +21,8 @@
   "dependencies": {
     "babel": "^5.8.23",
     "express": "^4.13.3",
-    "express-react-views": "^0.8.2"
+    "express-react-views": "^0.8.2",
+    "react-router": "^0.13.3"
   },
   "devDependencies": {
     "babel": "^5.8.23",

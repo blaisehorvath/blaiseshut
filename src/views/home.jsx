@@ -1,7 +1,7 @@
 "use strict";
 /*eslint-env jsx, node*/
 /*eslint indent: false*/
-const React = require("react");
+import React from "react";
 
 /*eslint no-unused-vars: 0*/
 import DefaultLayout from "./layouts/default";

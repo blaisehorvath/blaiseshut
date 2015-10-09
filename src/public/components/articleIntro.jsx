@@ -2,7 +2,7 @@
 /*eslint-env jsx, node*/
 let React = require("react");
 
-let article = React.createClass({
+let ArticleIntro = React.createClass({
       render : function () {
         return (
                         <div className='well'>
@@ -17,4 +17,4 @@ let article = React.createClass({
       }
 });
 
-module.exports = article;
+module.exports = ArticleIntro;
