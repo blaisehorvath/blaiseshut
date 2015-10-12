@@ -50,7 +50,7 @@ gulp.task( 'server:restart', function() {
 
 //building the server
 gulp.task('build_server', function(){
-   return gulp.src('src/*.js').pipe(babel()).pipe(gulp.dest('build'));
+   return gulp.src('src/server/*.js').pipe(babel()).pipe(gulp.dest('build'));
 });
 
 gulp.task('default', ['copy_views', 'copy_layouts', 'copy_public_js', "copy_components", 'copy_css', 'build_server', 'server:start']);
