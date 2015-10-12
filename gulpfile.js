@@ -34,7 +34,7 @@ gulp.task('copy_layouts', function(){
 gulp.task( 'server:start', function() {
     server.listen( { path: 'build/server.js' } );
     //if server.js if changed it's built again and the server is restarted
-    gulp.watch( ['src/server.js'], ['build_server', server.restart]);
+    gulp.watch( ['src/server.js'], ['build_server_files', server.restart]);
     //if any of the views changed, the old views are overwritten and the server is restarted
     gulp.watch( ['src/public/views/*.jsx'], ['copy_views', server.restart]);
     //gulp.watch( ['src/views/layouts/*.jsx'], ['copy_layouts', server.restart]);
@@ -49,8 +49,8 @@ gulp.task( 'server:restart', function() {
 });
 
 //building the server
-gulp.task('build_server', function(){
+gulp.task('build_server_files', function(){
    return gulp.src('src/server/*.js').pipe(babel()).pipe(gulp.dest('build'));
 });
 
-gulp.task('default', ['copy_views', 'copy_layouts', 'copy_public_js', "copy_components", 'copy_css', 'build_server', 'server:start']);
+gulp.task('default', ['copy_views', 'copy_layouts', 'copy_public_js', "copy_components", 'copy_css', 'build_server_files', 'server:start']);
