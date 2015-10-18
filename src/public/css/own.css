@@ -1,6 +1,13 @@
+/*-------------------------------------
+      Everything
+--------------------------------------*/
+
 body {
       background-color: rgb(255, 255, 255);
       font-family: 'Fira Sans', sans-serif;
+	-webkit-font-smoothing: antialiased;
+	text-rendering: optimizelegibility;
+      -moz-osx-font-smoothing: grayscale;
 }
 
 /*---------------------------------
@@ -48,12 +55,20 @@ ul.nav.navbar-nav li a:hover {
 li.dropdown ul.dropdown-menu li a {
       color: black;
 }
+/*---------------------------------
+      Content
+ ---------------------------------*/
+
+div#myApp {
+      margin-top: 60px;
+      margin-bottom: 130px;
+}
 
 /*---------------------------------
   Footer
 ---------------------------------*/
 footer {
-  background: rgb(189, 189, 189)
+  background: rgb(189, 189, 189);
 }
 
 footer ul {
@@ -66,7 +81,8 @@ footer a:hover {
     font-weight: bold;
 }
 
-/* Sticky footer styles
+/* ------------------------------------------------
+      Sticky footer styles
 -------------------------------------------------- */
 html {
   position: relative;
@@ -80,22 +96,4 @@ body {
   position: absolute;
   bottom: 0;
   width: 100%;
-}
-
-
-/* Custom page CSS
--------------------------------------------------- */
-/* Not required for template or sticky footer method. */
-
-body > .container {
-  padding: 60px 15px 0;
-}
-
-.footer > .container {
-  padding-right: 15px;
-  padding-left: 15px;
-}
-
-code {
-  font-size: 80%;
 }
