@@ -14,16 +14,16 @@ let Nav = React.createClass({
                           <span className="icon-bar"></span>
                           <span className="icon-bar"></span>
                         </button>
-                        <a className="navbar-brand" id="brandText" href="#">Brand</a>
+                        <a className="navbar-brand" id="brandText" href="#">Blaise's Hut</a>
                       </div>
 
 
                       <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                         <ul className="nav navbar-nav">
-                          <li className="active"><a href="#">Link <span className="sr-only">(current)</span></a></li>
-                          <li><a href="#">Link</a></li>
+                          <li className="active"><a href="#">Home <span className="sr-only">(current)</span></a></li>
+                          <li><a href="#">About me</a></li>
                           <li className="dropdown">
-                            <a href="#" className="dropdown-toggle" id="myDropDown" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span className="caret"></span></a>
+                            <a href="#" className="dropdown-toggle" id="myDropDown" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">More <span className="caret"></span></a>
                             <ul className="dropdown-menu">
                               <li><a href="#">Action</a></li>
                               <li><a href="#">Another action</a></li>
@@ -35,25 +35,18 @@ let Nav = React.createClass({
                             </ul>
                           </li>
                         </ul>
-                        <form className="navbar-form navbar-left" role="search">
-                          <div className="form-group">
-                            <input type="text" className="form-control" placeholder="Search"/>
-                          </div>
-                          <button type="submit" className="btn btn-default">Submit</button>
+                        <form className="navbar-form navbar-right" role="search">
+                              <div className="col-lg-6">
+                              <div className="input-group">
+                               <input type="text" className="form-control" placeholder="Search for..."/>
+                               <span className="input-group-btn">
+                                 <button className="btn btn-default" type="button">
+                                       <span className="glyphicon glyphicon-search"></span>&nbsp;
+                                 </button>
+                               </span>
+                             </div>
+                           </div>
                         </form>
-                        <ul className="nav navbar-nav navbar-right">
-                          <li><a href="#">Link</a></li>
-                          <li className="dropdown">
-                            <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span className="caret"></span></a>
-                            <ul className="dropdown-menu">
-                              <li><a href="#">Action</a></li>
-                              <li><a href="#">Another action</a></li>
-                              <li><a href="#">Something else here</a></li>
-                              <li role="separator" className="divider"></li>
-                              <li><a href="#">Separated link</a></li>
-                            </ul>
-                          </li>
-                        </ul>
                       </div>
                     </div>
                   </nav>
