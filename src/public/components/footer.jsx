@@ -5,7 +5,7 @@ let React = require("react");
 let Footer = React.createClass({
       render: () => {
             return (
-                  <footer>
+                  <footer className="footer">
                     <div className="container">
                       <div className="col-sm-4">
                         <h4>About me</h4>

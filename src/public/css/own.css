@@ -1,42 +1,52 @@
 body {
       background-color: rgb(255, 255, 255);
-      font-family: Slabo;
+      font-family: 'Fira Sans', sans-serif;
 }
 
 /*---------------------------------
   Navbar
 ---------------------------------*/
-.navbar {
-  background: rgb(37, 187, 173);
-  font-family: Slabo;
+
+nav.navbar {
+      background: rgb(14, 201, 190)
 }
 
-.navbar a {
-  font-size: 14pt;
-  color: white;
+
+ul.nav.navbar-nav li a {
+      color: white;
 }
 
-.navbar-inverse .navbar-brand {
-  font-size: 14pt;
-  color: white;
+ul.nav.navbar-nav li.active a {
+      color: white;
+      background: rgb(242, 78, 78);
 }
 
-.navbar-inverse .navbar-nav li a{
-  font-size: 14pt;
-  color: white;
+ul.nav.navbar-nav li.active a:hover {
+      color: white;
+      background: rgb(228, 46, 139);
 }
 
-.navbar-inverse .navbar-nav li a:hover {
-  font-size: 14pt;
-  color: white;
-  background-color: rgb(210, 58, 104);
+ul.nav.navbar-nav li a:hover {
+      color: white;
+      background: rgb(228, 46, 139);
 }
 
-.navbar-inverse .navbar-nav > .active > a, .navbar-inverse .navbar-nav > .active > a:focus, .navbar-inverse .navbar-nav > .active > a:hover {
-  font-size: 14pt;
-  font-style: italic;
-  color: white;
-  background-color: purple;
+#brandText {
+      color: white;
+      font-family: 'Slabo 27px', serif;
+}
+
+#myDropDown[aria-expanded="true"] {
+      background: rgb(228, 46, 139);
+      color: white;
+}
+
+#myDropDown[aria-expanded="false"] {
+      color: white;
+}
+
+li.dropdown ul.dropdown-menu li a {
+      color: black;
 }
 
 /*---------------------------------
@@ -54,4 +64,38 @@ footer ul {
 footer a:hover {
     text-decoration: none;
     font-weight: bold;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  position: relative;
+  min-height: 100%;
+}
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 100px;
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
+
+/* Custom page CSS
+-------------------------------------------------- */
+/* Not required for template or sticky footer method. */
+
+body > .container {
+  padding: 60px 15px 0;
+}
+
+.footer > .container {
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+code {
+  font-size: 80%;
 }

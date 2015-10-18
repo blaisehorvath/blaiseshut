@@ -13,6 +13,8 @@ let Header = React.createClass({
                  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet"></link>
                  <link href="css/own.css" rel="stylesheet"></link>
                  <link href="https://fonts.googleapis.com/css?family=Slabo+27px" rel="stylesheet" type="text/css"></link>
+                 <link href='https://fonts.googleapis.com/css?family=Slabo+27px' rel='stylesheet' type='text/css'/>
+                 <link href='https://fonts.googleapis.com/css?family=Fira+Sans:400,300,500' rel='stylesheet' type='text/css'/>
             </head>
       );
       }
