@@ -24,7 +24,7 @@ app.use((req, res) => {
                         stuff = React.createElement(Handler, {content : "adsasdasd", nestedContent:"/"});
                         res.send(React.renderToString(stuff));
                         break;
-                  case "/test":
+                  case "/cv":
                         stuff = React.createElement(Handler, {content : "adsasdasd", nestedContent:"/test"});
                         res.send(React.renderToString(stuff));
                         break;

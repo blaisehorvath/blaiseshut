@@ -20,8 +20,8 @@ let Nav = React.createClass({
 
                       <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                         <ul className="nav navbar-nav">
-                          <li className="active"><a href="#">Home <span className="sr-only">(current)</span></a></li>
-                          <li><a href="#">About me</a></li>
+                          <li id="home" className="active"><a href="/">Home <span className="sr-only">(current)</span></a></li>
+                          <li id="aboutMe"><a href="/cv">About me</a></li>
                           <li className="dropdown">
                             <a href="#" className="dropdown-toggle" id="myDropDown" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">More <span className="caret"></span></a>
                             <ul className="dropdown-menu">
