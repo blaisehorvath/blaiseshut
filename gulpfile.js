@@ -12,29 +12,29 @@ gulp.task('copy_css', function(){
 
 //copying components
 gulp.task('copy_components', function(){
-  return gulp.src('src/public/components/*').pipe(gulp.dest('build/public/components'));
+  return gulp.src('src/public/components/*').pipe(babel()).pipe(gulp.dest('build/public/components'));
 });
 
 //copying public js files
 gulp.task('copy_public_js', function(){
-  return gulp.src('./src/public/js/*').pipe(gulp.dest('build/public/js/'));
+  return gulp.src('./src/public/js/*').pipe(babel()).pipe(gulp.dest('build/public/js/'));
 });
 
 //copying views
 gulp.task('copy_views', function(){
-   return gulp.src('src/public/views/*.jsx').pipe(gulp.dest('build/public/views/'));
+   return gulp.src('src/public/views/*').pipe(babel()).pipe(gulp.dest('build/public/views/'));
 });
 
 //copying layouts
 gulp.task('copy_layouts', function(){
-      return gulp.src('./src/views/layouts/*.jsx').pipe(gulp.dest('build/views/layouts/'));
+      return gulp.src('./src/public/views/layouts/*').pipe(babel()).pipe(gulp.dest('build/views/layouts/'));
 });
 
 // run server
 gulp.task( 'server:start', function() {
-    server.listen( { path: 'build/server.js' } );
+    server.listen( { path: 'build/server/server.js' } );
     //if server.js if changed it's built again and the server is restarted
-    gulp.watch( ['src/server.js'], ['build_server_files', server.restart]);
+    gulp.watch( ['src/server/server.js'], ['build_server', server.restart]);
     //if any of the views changed, the old views are overwritten and the server is restarted
     gulp.watch( ['src/public/views/*.jsx'], ['copy_views', server.restart]);
     //gulp.watch( ['src/views/layouts/*.jsx'], ['copy_layouts', server.restart]);
@@ -45,12 +45,11 @@ gulp.task( 'server:start', function() {
 
 // restart server if app.js changed
 gulp.task( 'server:restart', function() {
-    gulp.watch( [ 'src/server.js' ], server.restart );
+    gulp.watch( [ 'src/server/server.js'], server.restart );
 });
 
 //building the server
-gulp.task('build_server_files', function(){
+gulp.task('build_server', function(){
    return gulp.src('src/server/*.js').pipe(babel()).pipe(gulp.dest('build/server/'));
 });
-
-gulp.task('default', ['copy_views', 'copy_layouts', 'copy_public_js', "copy_components", 'copy_css', 'build_server_files', 'server:start']);
+gulp.task('default', ['copy_views', 'copy_layouts', 'copy_public_js', "copy_components", 'copy_css', 'build_server', 'server:start', 'server:restart']);
