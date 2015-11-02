@@ -3,15 +3,9 @@
 /*Modules*/
 import express from "express";
 import path from "path";
-
-require("node-jsx").install({
-      harmony: true,
-      extension: ".jsx"
-});
-
 import React from "react";
 import Router from "react-router";
-const routes = require("./public/js/routes");
+import routes from "../public/js/routes"
 
 /*App*/
 const app = express();
@@ -20,7 +14,7 @@ const app = express();
 const appDirName = path.dirname(require.main.filename);
 
 /*Setting the static directory*/
-app.use(express.static(appDirName+"/public"));
+app.use(express.static(__dirname + '/../public'));
 
 app.use((req, res) => {
       Router.run(routes, req.path, (Handler) => {

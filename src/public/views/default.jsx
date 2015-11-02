@@ -3,7 +3,7 @@
 /*eslint no-unused-vars: 0*/
 const React = require("react");
 const Header = require("../components/header");
-const Footer = require("../components//footer");
+const Footer = require("../components/footer");
 const Nav = require("../components//nav");
 
 let DefaultLayout = React.createClass({
