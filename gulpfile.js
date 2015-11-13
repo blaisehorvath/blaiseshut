@@ -1,10 +1,11 @@
 /* eslint no-undef: 0, quotes: 0, indent: 0 */
 /* Grabbing gulp packages*/
 
-var gulp  = require('gulp');
-var babel = require('gulp-babel');
-var server = require('gulp-develop-server');
-var browserify = require('gulp-browserify');
+var gulp  = require('gulp'),
+    babel = require('gulp-babel'),
+    server = require('gulp-develop-server'),
+    browserify = require('gulp-browserify'),
+    plumber = require('gulp-plumber');
 
 var sources = {
     server : "src/server/server.js",
@@ -17,18 +18,21 @@ var sources = {
 gulp.task('copy_index', function(){
     "use strict";
         return gulp.src(sources.mainView)
+                .pipe(plumber())
                 .pipe(gulp.dest('build/server/'));
 });
 
 //copying css files
 gulp.task('copy_css', function(){
         return gulp.src(sources.css)
+                .pipe(plumber())
                 .pipe(gulp.dest('build/public/css/'));
 });
 
 //copying components
 gulp.task('copy_components', function(){
         return gulp.src(sources.components)
+              .pipe(plumber())
               .pipe(babel())
               .pipe(gulp.dest('build/public/components'));
 });
@@ -36,6 +40,7 @@ gulp.task('copy_components', function(){
 //copying public js files
 gulp.task('copy_public_js', function(){
         return gulp.src('./src/public/js/*')
+             .pipe(plumber())
              .pipe(babel())
              .pipe(gulp.dest('build/public/js/'));
 });
@@ -43,6 +48,7 @@ gulp.task('copy_public_js', function(){
 gulp.task('browserify', ['copy_public_js', 'copy_components'], function () {
         "use strict";
         return gulp.src('build/public/js/script.js')
+             .pipe(plumber())
              .pipe(browserify({
                 insertGlobals : true,
                 debug : !gulp.env.production
@@ -53,6 +59,7 @@ gulp.task('browserify', ['copy_public_js', 'copy_components'], function () {
 //building the server
 gulp.task('build_server', function(){
         return gulp.src('src/server/*.js')
+             .pipe(plumber())
              .pipe(babel())
              .pipe(gulp.dest('build/server/'));
 });
