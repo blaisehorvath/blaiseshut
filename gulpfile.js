@@ -50,8 +50,7 @@ gulp.task('browserify', ['copy_public_js', 'copy_components'], function () {
         return gulp.src('build/public/js/script.js')
              .pipe(plumber())
              .pipe(browserify({
-                insertGlobals : true,
-                debug : !gulp.env.production
+                insertGlobals : true
              }))
              .pipe(gulp.dest('build/public/js/'));
 });
@@ -65,7 +64,7 @@ gulp.task('build_server', function(){
 });
 
 
-gulp.task('default', ['copy_index', 'copy_public_js', "copy_components", 'copy_css', 'build_server'], function () {
+gulp.task('default', ['copy_index', 'copy_css', 'browserify','build_server'], function () {
     "use strict";
 
     // starting the server when everything is done
