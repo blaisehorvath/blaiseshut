@@ -73,7 +73,7 @@ gulp.task('default', ['copy_index', 'copy_css', 'browserify','build_server'], fu
     // watching files for changes
     gulp.watch( [sources.server], ['build_server', server.restart]);
     gulp.watch( [sources.css], ['copy_css', server.restart]);
-    gulp.watch( [sources.components], ['copy_components', server.restart]);
-    gulp.watch( [sources.publicScripts], ['copy_public_js', server.restart]);
+    gulp.watch( [sources.components], ['browserify', server.restart]);
+    gulp.watch( [sources.publicScripts], ['browserify', server.restart]);
     gulp.watch( [sources.mainView], ['copy_index', server.restart]);
 });
