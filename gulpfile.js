@@ -1,55 +1,73 @@
-/*eslint no-undef: 0, quotes: 0, indent: 0 */
+/* eslint no-undef: 0, quotes: 0, indent: 0 */
 /* Grabbing gulp packages*/
 
 var gulp  = require('gulp');
 var babel = require('gulp-babel');
 var server = require('gulp-develop-server');
+var browserify = require('gulp-browserify');
+
+var sources = {
+    server : "src/server/server.js",
+    css : "src/public/css/own.css",
+    components : "src/public/components/*",
+    publicScripts : "src/public/js/*",
+    mainView : "src/server/*.html"
+};
+
+gulp.task('copy_index', function(){
+    "use strict";
+        return gulp.src(sources.mainView)
+                .pipe(gulp.dest('build/server/'));
+});
 
 //copying css files
 gulp.task('copy_css', function(){
-      return gulp.src('src/public/css/own.css').pipe(gulp.dest('build/public/css/'));
+        return gulp.src(sources.css)
+                .pipe(gulp.dest('build/public/css/'));
 });
 
 //copying components
 gulp.task('copy_components', function(){
-  return gulp.src('src/public/components/*').pipe(babel()).pipe(gulp.dest('build/public/components'));
+        return gulp.src(sources.components)
+              .pipe(babel())
+              .pipe(gulp.dest('build/public/components'));
 });
 
 //copying public js files
 gulp.task('copy_public_js', function(){
-  return gulp.src('./src/public/js/*').pipe(babel()).pipe(gulp.dest('build/public/js/'));
+        return gulp.src('./src/public/js/*')
+             .pipe(babel())
+             .pipe(gulp.dest('build/public/js/'));
 });
 
-//copying views
-gulp.task('copy_views', function(){
-   return gulp.src('src/public/views/*').pipe(babel()).pipe(gulp.dest('build/public/views/'));
-});
-
-//copying layouts
-gulp.task('copy_layouts', function(){
-      return gulp.src('./src/public/views/layouts/*').pipe(babel()).pipe(gulp.dest('build/views/layouts/'));
-});
-
-// run server
-gulp.task( 'server:start', function() {
-    server.listen( { path: 'build/server/server.js' } );
-    //if server.js if changed it's built again and the server is restarted
-    gulp.watch( ['src/server/server.js'], ['build_server', server.restart]);
-    //if any of the views changed, the old views are overwritten and the server is restarted
-    gulp.watch( ['src/public/views/*.jsx'], ['copy_views', server.restart]);
-    //gulp.watch( ['src/views/layouts/*.jsx'], ['copy_layouts', server.restart]);
-    gulp.watch( ['src/public/css/own.css'], ['copy_css', server.restart]);
-    gulp.watch( ['src/public/components/*'], ['copy_components', server.restart]);
-    gulp.watch( ['src/public/js/*'], ['copy_public_js', server.restart]);
-});
-
-// restart server if app.js changed
-gulp.task( 'server:restart', function() {
-    gulp.watch( [ 'src/server/server.js'], server.restart );
+gulp.task('browserify', ['copy_public_js', 'copy_components'], function () {
+        "use strict";
+        return gulp.src('build/public/js/script.js')
+             .pipe(browserify({
+                insertGlobals : true,
+                debug : !gulp.env.production
+             }))
+             .pipe(gulp.dest('build/public/js/'));
 });
 
 //building the server
 gulp.task('build_server', function(){
-   return gulp.src('src/server/*.js').pipe(babel()).pipe(gulp.dest('build/server/'));
+        return gulp.src('src/server/*.js')
+             .pipe(babel())
+             .pipe(gulp.dest('build/server/'));
 });
-gulp.task('default', ['copy_views', 'copy_layouts', 'copy_public_js', "copy_components", 'copy_css', 'build_server', 'server:start', 'server:restart']);
+
+
+gulp.task('default', ['copy_index', 'copy_public_js', "copy_components", 'copy_css', 'build_server'], function () {
+    "use strict";
+
+    // starting the server when everything is done
+    server.listen( { path: 'build/server/server.js' } );
+
+    // watching files for changes
+    gulp.watch( [sources.server], ['build_server', server.restart]);
+    gulp.watch( [sources.css], ['copy_css', server.restart]);
+    gulp.watch( [sources.components], ['copy_components', server.restart]);
+    gulp.watch( [sources.publicScripts], ['copy_public_js', server.restart]);
+    gulp.watch( [sources.mainView], ['copy_index', server.restart]);
+});
