@@ -1,9 +1,10 @@
-"use strict";
-/*eslint-env jsx, node*/
-let React = require("react");
+import React from "react";
 
-let Nav = React.createClass({
-      render: () => {
+export default class Nav extends React.component {
+    constructor(props) {
+        super(props);
+    }
+    render () {
             return (
                   <nav className="navbar navbar-default navbar-fixed-top">
                     <div className="container-fluid">
@@ -53,6 +54,4 @@ let Nav = React.createClass({
 
             );
       }
-});
-
-module.exports = Nav;
+};
