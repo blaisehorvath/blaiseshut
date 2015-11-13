@@ -10,8 +10,10 @@ export default class ReactApp extends React.Component {
         return (
             <div id="app">
                 <Nav/>
-                <h1>{this.props.title}</h1>
-                <p>Lorem ipsusm</p>
+                    <div className="container">
+                        <h1>{this.props.title}</h1>
+                        <p>Lorem ipsusm</p>
+                    </div>
                 <Footer/>
             </div>
         )
