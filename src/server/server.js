@@ -1,12 +1,12 @@
 /*eslint-disable no-unused-vars, no-undef, no-console*/
-"use strict";
 /*Modules*/
 import express from "express";
 import path from "path";
 import React from "react";
 
 /*App*/
-const app = express();
+let app = express();
+
 
 /*Constants*/
 const appDirName = path.dirname(require.main.filename);
