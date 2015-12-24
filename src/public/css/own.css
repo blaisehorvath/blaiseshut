@@ -97,3 +97,14 @@ body {
   bottom: 0;
   width: 100%;
 }
+
+/* ------------------------------------------------
+      Articles in the Main React Class
+-------------------------------------------------- */
+#article {
+    margin: 5px 0 15px 0;
+}
+
+#tags {
+    font-weight: bold;
+}

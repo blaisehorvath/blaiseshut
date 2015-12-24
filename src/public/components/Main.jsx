@@ -8,16 +8,20 @@ export default class Main extends React.Component {
     constructor(props) {
         super(props);
     }
+
+    /***
+     * This function renders the article to the DIV with the id articles. Watch out, only put safe saninitized html to the body of the article.
+     * @returns {XML}
+     */
     render () {
-        console.log(this.props.data.articles);
         let articles = this.props.data.articles.map(
             (article) => {
                 "use strict";
                 return (
-                    <div>
+                    <div id="article" key={article.id}>
                         <h3>{article.title}</h3>
-                        <div>{article.body}</div>
-                        <p>{article.tags}</p>
+                        <p id="tags"> {'#'+article.tags.join(', #')}</p>
+                        <div dangerouslySetInnerHTML={{__html : article.body}}></div>
                     </div>
                 )
             }
