@@ -1,9 +1,10 @@
-"use strict";
-/*eslint-env jsx, node*/
-let React = require("react");
+import React from "react";
 
-let Footer = React.createClass({
-      render: () => {
+export default class Footer extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+    render () {
             return (
                   <footer className="footer">
                     <div className="container">
@@ -29,7 +30,5 @@ let Footer = React.createClass({
                     </div> {/* container*/}
                   </footer>
             );
-      }
-});
-
-module.exports = Footer;
+    };
+}

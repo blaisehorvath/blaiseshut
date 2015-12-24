@@ -33,7 +33,6 @@
     "gulp-develop-server": "^0.4.3",
     "gulp-plumber": "^1.0.1",
     "tern-gulp": "^0.2.0",
-    "tern-node-api-doc": "0.0.5",
     "tern-node-express": "^0.3.0"
   }
 }

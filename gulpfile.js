@@ -12,14 +12,14 @@ var sources = {
     css : "src/public/css/own.css",
     components : "src/public/components/*",
     publicScripts : "src/public/js/*",
-    mainView : "src/server/*.html"
+    mainView : "src/server/view/*"
 };
 
 gulp.task('copy_index', function(){
     "use strict";
         return gulp.src(sources.mainView)
                 .pipe(plumber())
-                .pipe(gulp.dest('build/server/'));
+                .pipe(gulp.dest('build/server/view/'));
 });
 
 //copying css files
