@@ -19,7 +19,8 @@ export default class MainView extends React.Component {
             </head>
             <body>
             <div id="app" dangerouslySetInnerHTML={{__html: this.props.content}} />
-            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"/>
+            <script src="https://code.jquery.com/jquery-2.2.1.min.js"/>
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"/>
             <script src="js/script.js"/>
             </body>
             </html>

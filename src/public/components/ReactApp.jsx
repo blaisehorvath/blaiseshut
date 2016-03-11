@@ -29,7 +29,7 @@ var options = {
         {
             id : 3,
             title : "Yellow umbrella",
-            body : '<img src="https://41.media.tumblr.com/875799f7d42336377a1931e04df15f21/tumblr_npr9pzmNhq1qmv09yo1_500.png" />',
+            body : '<img class="img-responsive" src="https://41.media.tumblr.com/875799f7d42336377a1931e04df15f21/tumblr_npr9pzmNhq1qmv09yo1_500.png" />',
             tags : ["image"]
         }
     ]
