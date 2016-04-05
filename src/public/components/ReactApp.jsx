@@ -2,11 +2,31 @@ import React from "react";
 import Nav from "./Nav";
 import Footer from "./Footer";
 import Main from "./Main";
-
+import About from "./About"
 /*
 * This is only for testing purposes
 * */
 var options = {
+    aboutProjects : [
+        {
+            id : 0,
+            title:"CNC",
+            picture:"http://www.finmech.hu/wp-content/uploads/2015/08/Close-up-of-CNC-machine-at-work.jpg",
+            short_descr:"Nagyon durva bááázee"
+        },
+        {
+            id : 1,
+            title:"MIDI synth",
+            picture:"http://www.elektricks.net/wp-content/uploads/2015/02/STM32F4-Discovery.jpg",
+            short_descr:"Nagyon durva bááázee"
+        },
+        {
+            id : 2,
+            title:"Mesh network with RIOT os",
+            picture:"http://midisizer.files.wordpress.com/2013/01/midibud_bbf-small1.jpg",
+            short_descr:"Nagyon durva bááázee"
+        }
+    ],
     articles : [
         {
             id : 0,
@@ -49,7 +69,7 @@ export default class ReactApp extends React.Component {
             <div id="reactApp">
                 <Nav/>
                     <div className="container">
-                        <Main data={options} />
+                        <About data={options}/>
                     </div>
                 <Footer/>
             </div>

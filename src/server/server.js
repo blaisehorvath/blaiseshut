@@ -31,6 +31,46 @@ app.get('/', (req, res) => {
     res.render('index', {content : appContent});
 });
 
+app.get('/about', (req, res) => {
+    "use strict";
+    console.log({
+        reuqestType : "GET",
+        path : req.path
+    });
+    let appContent = ReactDOM.renderToString(React.createElement(ReactApp));
+    res.render('cv', {content : appContent});
+});
+
+app.get('/contact', (req, res) => {
+    "use strict";
+    console.log({
+        reuqestType : "GET",
+        path : req.path
+    });
+    let appContent = ReactDOM.renderToString(React.createElement(ReactApp));
+    res.render('cv', {content : appContent});
+});
+
+app.get('/blog', (req, res) => {
+    "use strict";
+    console.log({
+        reuqestType : "GET",
+        path : req.path
+    });
+    let appContent = ReactDOM.renderToString(React.createElement(ReactApp));
+    res.render('cv', {content : appContent});
+});
+
+app.get('/projects', (req, res) => {
+    "use strict";
+    console.log({
+        reuqestType : "GET",
+        path : req.path
+    });
+    let appContent = ReactDOM.renderToString(React.createElement(ReactApp));
+    res.render('cv', {content : appContent});
+});
+
 app.listen(4444, function () {
     console.log("Development server is listening on port: 4444");
 });
