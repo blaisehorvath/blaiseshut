@@ -12,7 +12,7 @@ export default class AboutTop extends React.Component {
                 </div>
 
                 <div className="col-xs-9">
-                    <img src={this.props.defaultimg} className="img-rounded" alt="Cinque Terre" width="304" height="236"/>
+                    <img src={this.props.aboutImgSelectorState} className="img-rounded" alt="Cinque Terre" width="304" height="236"/>
                 </div>
 
             </div>

@@ -8,7 +8,7 @@ var gulp  = require('gulp'),
     plumber = require('gulp-plumber');
 
 var sources = {
-    server : "src/server/server.js",
+    server : "src/server/*",
     css : "src/public/css/own.css",
     components : "src/public/components/*",
     publicScripts : "src/public/js/*",
@@ -57,7 +57,7 @@ gulp.task('browserify', ['copy_public_js', 'copy_components'], function () {
 
 //building the server
 gulp.task('build_server', function(){
-        return gulp.src('src/server/*.js')
+        return gulp.src('src/server/*')
              .pipe(plumber())
              .pipe(babel())
              .pipe(gulp.dest('build/server/'));

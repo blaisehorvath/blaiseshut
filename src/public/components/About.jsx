@@ -1,5 +1,6 @@
 import React from "react";
 import AboutTop from "./AboutTop"
+
 export default class About extends React.Component {
     /***
      * This React class will handle the main page.
@@ -29,7 +30,7 @@ export default class About extends React.Component {
         );
         return (
             <div className="container">
-                <AboutTop data={aboutProjects}/>
+                <AboutTop data={aboutProjects} aboutImgSelectorState={this.props.aboutImgSelectorState}/>
             </div>
         )
     }
