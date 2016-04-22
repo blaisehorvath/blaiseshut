@@ -23,3 +23,7 @@ export default function renderHTML (content, initialState)  {
             </html>`
         )
 }
+/*
+ <div id="app"> ${content} </div>
+ <script src="js/script.js"></script>
+ */

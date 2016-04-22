@@ -57,61 +57,51 @@ let options = {
         }
     ]
 };
-
-const Pina = ({children}) => {
-    return (<p> {children}</p>);
-}
-const setVisibilityFilter = (filter) => {
+const addImgNum = (imgNum) => {
     return {
-        type: 'SET_VISIBILITY_FILTER',
-        filter
+        type: "IMG_SELECT",
+        imgNum
     }
+};
+const mapStateToProps_fasz = (state, ownProps) => {
+    return {};
 }
-
-const Link = ({ active, children, onClick }) => {
-    if (active) {
-        return <span>{children}</span>
-    }
-
-    return (
-        <a href="#"
-           onClick={e => {
-         e.preventDefault()
-         onClick()
-       }}
-        >
-            {children}
-        </a>
-    )
-}
-
-Link.propTypes = {
-    active: PropTypes.bool.isRequired,
-    children: PropTypes.node.isRequired,
-    onClick: PropTypes.func.isRequired
-}
-
-const mapStateToProps_fasz = (state, ownProps) =>{return {};}
-const mapDispatchToProps_fasz = (dispatch,ownProps) =>{return{};}
-const Fasz = connect(mapDispatchToProps_fasz,mapDispatchToProps_fasz)(Pina);
-const mapStateToProps = (state, ownProps) => {
+const mapDispatchToProps_fasz = (dispatch, ownProps) => {
     return {
-        active: ownProps.filter === state.visibilityFilter
-    }
-}
-
-const mapDispatchToProps = (dispatch, ownProps) => {
-    return {
-        onClick: () => {
-            dispatch(setVisibilityFilter(ownProps.filter))
+        onBtnClick: (text) => {
+            dispatch(addImgNum(text));
         }
+    };
+};
+const mapStateToProps_textbox = (state,ownProps) =>{
+    return{
+        textField: state.aboutImgSelectorState
     }
 }
+const mapDispatchToProps_textbox =  (dispatch, ownProps) => {
+    return {}
+}
+const TextBox = ({textField}) => {
+    return( <p>{textField}</p>
+)};
+const TextBoxfromIMGstate = connect(mapDispatchToProps_textbox,mapStateToProps_textbox)(TextBox)
 
-const FilterLink = connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(Link)
+const Pina = ({onBtnClick,children}) => {
+    let input;
+    return (
+        <div>
+            <input ref={node => {input = node;}}/>
+            <button onClick={e =>{
+                e.preventDefault();
+                onBtnClick(input.value);
+                }
+                }>
+                Add number
+            </button>
+            {children}
+        </div>)
+};
+const Fasz = connect(mapDispatchToProps_fasz, mapDispatchToProps_fasz)(Pina);
 
 const ReactApp = () =>
 /***
@@ -121,11 +111,8 @@ const ReactApp = () =>
     (
         <div id="reactApp">
             <Nav/>
-            <div className="container">
-                <input ref={node => {this.input = node;}}/>
-                <button />
-                <Fasz>FASwwwZ</Fasz>
-            </div>
+                <Fasz>FASwwsssswZ</Fasz>
+                <TextBoxfromIMGstate></TextBoxfromIMGstate>
             <Footer/>
         </div>
     )

@@ -12,14 +12,16 @@ export default renderHTML = (content, initialState) => {
                 <link href="https://fonts.googleapis.com/css?family=Fira+Sans:400,300,500" rel="stylesheet" type="text/css" />
             </head>
             <body>
-            <div id="app" dangerouslySetInnerHTML=${content} />
+            <div id="app" dangerouslySetInnerHTML=${content}>
+
+            </div>
             <script>
                 window.__INITIAL_STATE__ = ${initialState}
                 window.pina = "fasz"
             </script>
-            <script src="https://code.jquery.com/jquery-2.2.1.min.js"/>
-            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"/>
-            <script src="js/script.js"/>
+            <script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+            <script src="js/script.js"></script>
             </body>
             </html>
         )

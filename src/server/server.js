@@ -12,10 +12,9 @@ import {connect} from "react-redux"
 import renderHTML from "./renderHTML"
 
 const aboutImgSelectorState = (state = 0, action)=>{
-    console.log(action);
     switch (action.type){
         case 'IMG_SELECT':
-            return action.ingNum;
+            return action.imgNum;
         default:
             return state;
     }
@@ -24,7 +23,6 @@ const AppReducer = combineReducers({
     aboutImgSelectorState
 });
 let store = createStore(AppReducer);
-console.log(store.getState());
 let app = express();
 
 
@@ -46,10 +44,9 @@ app.get('/', (req, res) => {
         reuqestType : "GET",
         path : req.path
     });
-    //let content = ReactDOM.renderToString(<Provider store={store}>{ReactApp}</Provider>);
-    //let response = renderHTML(content, initialState);
-    console.log("asélkjdhagakjsdgahd")
-    res.send(/*response*/ "asdaskhdgajsldgavgsjdhasjdcghavsdfhas");
+    let content = ReactDOM.renderToString(<Provider store={store}>{ReactApp}</Provider>);
+    let response = renderHTML(content, initialState);
+    res.send(response);
 
     //res.render('index', {content : content, initialState});
 });
@@ -62,8 +59,7 @@ app.get('/about', (req, res) => {
     });
     let content = ReactDOM.renderToString(<Provider store={store}><ReactApp/></Provider>);
     let response = renderHTML(content, initialState);
-    res.send(response)
-    console.log(response)
+    res.send(response);
 });
 
 app.get('/contact', (req, res) => {
