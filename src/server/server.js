@@ -8,6 +8,7 @@ import ReactDOM from "react-dom/server"
 import { Provider } from 'react-redux'
 /*App*/
 import { combineReducers,createStore } from 'redux';
+//import {AppReducer} from "../public/reducers/StoreAndReducers"
 import {connect} from "react-redux"
 import renderHTML from "./renderHTML"
 

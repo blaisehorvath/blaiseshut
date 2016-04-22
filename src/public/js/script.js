@@ -1,17 +1,16 @@
 /**
  * This sript will is the entry point for the app in the browser
  */
-
 import ReactApp from "../components/ReactApp";
 import React from "react";
 import { render } from 'react-dom'
 
-
 import { Provider } from 'react-redux'
 import { combineReducers,createStore } from 'redux';
+//import {AppReducer} from "../reducers/StoreAndReducers"
 
 const aboutImgSelectorState = (state = 0, action)=>{
-    console.log(action,state);
+    console.log(action);
     switch (action.type){
         case 'IMG_SELECT':
             return action.imgNum;
@@ -32,4 +31,4 @@ render(
       <ReactApp/>
      </Provider>,
     document.getElementById('app')
-)
+);

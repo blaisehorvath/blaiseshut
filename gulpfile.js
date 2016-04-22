@@ -12,7 +12,8 @@ var sources = {
     css : "src/public/css/own.css",
     components : "src/public/components/*",
     publicScripts : "src/public/js/*",
-    mainView : "src/server/view/*"
+    mainView : "src/server/view/*",
+    reducers : "src/public/reducers/*"
 };
 
 gulp.task('copy_index', function(){
@@ -27,6 +28,14 @@ gulp.task('copy_css', function(){
         return gulp.src(sources.css)
                 .pipe(plumber())
                 .pipe(gulp.dest('build/public/css/'));
+});
+
+//copying reducer files
+gulp.task('copy_reducers', function(){
+    return gulp.src(sources.reducers)
+        .pipe(plumber())
+        .pipe(babel())
+        .pipe(gulp.dest('build/public/reducers'));
 });
 
 //copying components
@@ -64,13 +73,14 @@ gulp.task('build_server', function(){
 });
 
 
-gulp.task('default', ['copy_index', 'copy_css', 'browserify','build_server'], function () {
+gulp.task('default', ['copy_index', 'copy_css', 'browserify','build_server','copy_reducers'], function () {
     "use strict";
 
     // starting the server when everything is done
     server.listen( { path: 'build/server/server.js' } );
 
     // watching files for changes
+    gulp.watch( [sources.reducers], ['copy_reducers', server.restart]);
     gulp.watch( [sources.server], ['build_server', server.restart]);
     gulp.watch( [sources.css], ['copy_css', server.restart]);
     gulp.watch( [sources.components], ['browserify', server.restart]);

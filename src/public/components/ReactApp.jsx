@@ -73,18 +73,22 @@ const mapDispatchToProps_fasz = (dispatch, ownProps) => {
         }
     };
 };
-const mapStateToProps_textbox = (state,ownProps) =>{
-    return{
-        textField: state.aboutImgSelectorState
+const mapStateToProps_textbox = (state, ownProps) => {
+    return {
+        textField: "ANYÁD PICSÁJA" //state.aboutImgSelectorState
     }
 }
-const mapDispatchToProps_textbox =  (dispatch, ownProps) => {
+const mapDispatchToProps_textbox = (dispatch, ownProps) => {
     return {}
 }
-const TextBox = ({textField}) => {
-    return( <p>{textField}</p>
-)};
-const TextBoxfromIMGstate = connect(mapDispatchToProps_textbox,mapStateToProps_textbox)(TextBox)
+const TextBox = ({textField,children}) => {
+    return (<div>
+            <p>{textField}</p>
+            <p>{children}</p>
+        </div>
+    )
+};
+const TextBoxfromIMGstate = connect(mapDispatchToProps_textbox, mapStateToProps_textbox)(TextBox)
 
 const Pina = ({onBtnClick,children}) => {
     let input;
@@ -93,9 +97,7 @@ const Pina = ({onBtnClick,children}) => {
             <input ref={node => {input = node;}}/>
             <button onClick={e =>{
                 e.preventDefault();
-                onBtnClick(input.value);
-                }
-                }>
+                onBtnClick(input.value);}}>
                 Add number
             </button>
             {children}
@@ -111,8 +113,8 @@ const ReactApp = () =>
     (
         <div id="reactApp">
             <Nav/>
-                <Fasz>FASwwsssswZ</Fasz>
-                <TextBoxfromIMGstate></TextBoxfromIMGstate>
+            <Fasz>FASwwsssswZ</Fasz>
+            <TextBoxfromIMGstate>faszbéci</TextBoxfromIMGstate>
             <Footer/>
         </div>
     )
