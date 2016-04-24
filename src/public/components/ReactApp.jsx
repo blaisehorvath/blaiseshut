@@ -104,21 +104,63 @@ const Pina = ({onBtnClick,children, faszalgas}) => {
             {faszalgas}
         </div>)
 };
-const Fasz = connect(mapDispatchToProps_fasz, mapDispatchToProps_fasz)(Pina);
+const Fasz = connect(mapStateToProps_fasz, mapDispatchToProps_fasz)(Pina);
+
+// ***************************IMAGEHOLDER
+const ImageHolder = ({imageSrc,projectsWithImages}) => {
+    return (
+        <img src={imageSrc} className="img-rounded" alt="Cinque Terre" width="304"
+             height="236"/>
+    )
+};
+const mapStateToProps_ProjectImage = (state, ownProps) => {
+    return {
+        imageSrc: ownProps.projectsWithImages[state.aboutImgSelectorState].picture//"ANYÁD PICSÁJA" //state.aboutImgSelectorState
+    }
+}
+const mapDispatchToProps_ProjectImage = (dispatch, ownProps) => {
+    return {}
+}
+const ProjectsImage = connect(mapStateToProps_ProjectImage, mapDispatchToProps_ProjectImage)(ImageHolder);
+// ***************************END OF IMAGEHOLDER
+const ListItem = ({id,title,short_descr,onProjectClick}) => {
+    return (
+        <div className="list-group" id={id} onClick={()=>onProjectClick(id)}>
+            <a href="#" className="list-group-item active">
+                <h4 className="list-group-item-heading">{title}</h4>
+                <p className="list-group-item-text">{short_descr}</p>
+            </a>
+        </div>
+    )
+}
+const mapStateToProps_Project = (state,ownProps)=>{return {}}
+const mapDispatchToProps_Project = (dispatch, ownProps)=>{    return {
+    onProjectClick: (id) => {
+        dispatch(addImgNum(id));
+    }}}
+
+const Project = connect (mapStateToProps_Project,mapDispatchToProps_Project )(ListItem)
+const ListOfProjects = ({projectsWithImages, onProjectClick}) => {
+    return (
+        <ul>
+            {projectsWithImages.map(project=><Project
+                key={project.id}
+                {...project}
+            />)}
+        </ul>
+    )
+}
+
 const FelsoKepesLinkesResz = ({projectsWithImages}) => {
     console.log(projectsWithImages)
     return (
         <div className="row">
             <div className="col-xs-3">
-                <p>Linkek jönnek majd ezerrel</p>
-
+                <ListOfProjects projectsWithImages={projectsWithImages}/>
             </div>
-
             <div className="col-xs-9">
-                <img src={projectsWithImages[0].picture} className="img-rounded" alt="Cinque Terre" width="304"
-                     height="236"/>
+                <ProjectsImage projectsWithImages={projectsWithImages}></ProjectsImage>
             </div>
-
         </div>
     );
 }
@@ -133,7 +175,7 @@ const ReactApp = () =>
         <div id="reactApp">
             <Nav/>
             <FelsoKepesLinkesResz projectsWithImages={options.aboutProjects}></FelsoKepesLinkesResz>
-            <Fasz faszalgas="EzAfaszalgas">FASwwsssswZ    </Fasz>
+            <Fasz faszalgas="EzAfaszalgas">FASwwsssswZ </Fasz>
             <TextBoxfromIMGstate>faszbéci</TextBoxfromIMGstate>
             <Footer/>
         </div>
