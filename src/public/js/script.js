@@ -10,7 +10,7 @@ import { combineReducers,createStore } from 'redux';
 //import {AppReducer} from "../reducers/StoreAndReducers"
 
 const aboutImgSelectorState = (state = 0, action)=>{
-    console.log(action);
+    console.log(action,state);
     switch (action.type){
         case 'IMG_SELECT':
             return action.imgNum;

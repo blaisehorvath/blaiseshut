@@ -25,7 +25,7 @@ const AppReducer = combineReducers({
 });
 let store = createStore(AppReducer);
 let app = express();
-
+console.log(store)
 
 /*Constants*/
 const appDirName = path.dirname(require.main.filename);

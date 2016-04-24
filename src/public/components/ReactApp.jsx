@@ -75,7 +75,7 @@ const mapDispatchToProps_fasz = (dispatch, ownProps) => {
 };
 const mapStateToProps_textbox = (state, ownProps) => {
     return {
-        textField: "ANYÁD PICSÁJA" //state.aboutImgSelectorState
+        textField: state.aboutImgSelectorState//"ANYÁD PICSÁJA" //state.aboutImgSelectorState
     }
 }
 const mapDispatchToProps_textbox = (dispatch, ownProps) => {
@@ -88,9 +88,9 @@ const TextBox = ({textField,children}) => {
         </div>
     )
 };
-const TextBoxfromIMGstate = connect(mapDispatchToProps_textbox, mapStateToProps_textbox)(TextBox)
+const TextBoxfromIMGstate = connect(mapStateToProps_textbox, mapDispatchToProps_textbox)(TextBox)
 
-const Pina = ({onBtnClick,children}) => {
+const Pina = ({onBtnClick,children, faszalgas}) => {
     let input;
     return (
         <div>
@@ -101,9 +101,28 @@ const Pina = ({onBtnClick,children}) => {
                 Add number
             </button>
             {children}
+            {faszalgas}
         </div>)
 };
 const Fasz = connect(mapDispatchToProps_fasz, mapDispatchToProps_fasz)(Pina);
+const FelsoKepesLinkesResz = ({projectsWithImages}) => {
+    console.log(projectsWithImages)
+    return (
+        <div className="row">
+            <div className="col-xs-3">
+                <p>Linkek jönnek majd ezerrel</p>
+
+            </div>
+
+            <div className="col-xs-9">
+                <img src={projectsWithImages[0].picture} className="img-rounded" alt="Cinque Terre" width="304"
+                     height="236"/>
+            </div>
+
+        </div>
+    );
+}
+
 
 const ReactApp = () =>
 /***
@@ -113,7 +132,8 @@ const ReactApp = () =>
     (
         <div id="reactApp">
             <Nav/>
-            <Fasz>FASwwsssswZ</Fasz>
+            <FelsoKepesLinkesResz projectsWithImages={options.aboutProjects}></FelsoKepesLinkesResz>
+            <Fasz faszalgas="EzAfaszalgas">FASwwsssswZ    </Fasz>
             <TextBoxfromIMGstate>faszbéci</TextBoxfromIMGstate>
             <Footer/>
         </div>
