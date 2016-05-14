@@ -7,20 +7,7 @@ import { render } from 'react-dom'
 
 import { Provider } from 'react-redux'
 import { combineReducers,createStore } from 'redux';
-//import {AppReducer} from "../reducers/StoreAndReducers"
-
-const aboutImgSelectorState = (state = 0, action)=>{
-    console.log(action,state);
-    switch (action.type){
-        case 'IMG_SELECT':
-            return action.imgNum;
-        default:
-            return state;
-    }
-};
-const AppReducer = combineReducers({
-    aboutImgSelectorState
-});
+import AppReducer from "../reducers/StoreAndReducers"
 console.log(window.__INITIAL_STATE__);
 let store = createStore(AppReducer,window.__INITIAL_STATE__);
 

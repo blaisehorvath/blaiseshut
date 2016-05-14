@@ -11,18 +11,8 @@ import { combineReducers,createStore } from 'redux';
 //import {AppReducer} from "../public/reducers/StoreAndReducers"
 import {connect} from "react-redux"
 import renderHTML from "./renderHTML"
+import AppReducer from "../public/reducers/StoreAndReducers"
 
-const aboutImgSelectorState = (state = 0, action)=>{
-    switch (action.type){
-        case 'IMG_SELECT':
-            return action.imgNum;
-        default:
-            return state;
-    }
-};
-const AppReducer = combineReducers({
-    aboutImgSelectorState
-});
 let store = createStore(AppReducer);
 let app = express();
 console.log(store)

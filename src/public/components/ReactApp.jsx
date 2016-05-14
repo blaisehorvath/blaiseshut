@@ -2,6 +2,8 @@ import Nav from "./Nav";
 import Footer from "./Footer";
 import Main from "./Main";
 import About from "./About"
+import ProjectImage from "../containers/ProjectImage"
+import ProjectListItem from "../containers/ProjectListItem"
 
 import { connect } from 'react-redux'
 import { Provider } from 'react-redux'
@@ -57,109 +59,27 @@ let options = {
         }
     ]
 };
-const addImgNum = (imgNum) => {
-    return {
-        type: "IMG_SELECT",
-        imgNum
-    }
-};
-const mapStateToProps_fasz = (state, ownProps) => {
-    return {};
-}
-const mapDispatchToProps_fasz = (dispatch, ownProps) => {
-    return {
-        onBtnClick: (text) => {
-            dispatch(addImgNum(text));
-        }
-    };
-};
-const mapStateToProps_textbox = (state, ownProps) => {
-    return {
-        textField: state.aboutImgSelectorState//"ANYÁD PICSÁJA" //state.aboutImgSelectorState
-    }
-}
-const mapDispatchToProps_textbox = (dispatch, ownProps) => {
-    return {}
-}
-const TextBox = ({textField,children}) => {
-    return (<div>
-            <p>{textField}</p>
-            <p>{children}</p>
-        </div>
-    )
-};
-const TextBoxfromIMGstate = connect(mapStateToProps_textbox, mapDispatchToProps_textbox)(TextBox)
-
-const Pina = ({onBtnClick,children, faszalgas}) => {
-    let input;
-    return (
-        <div>
-            <input ref={node => {input = node;}}/>
-            <button onClick={e =>{
-                e.preventDefault();
-                onBtnClick(input.value);}}>
-                Add number
-            </button>
-            {children}
-            {faszalgas}
-        </div>)
-};
-const Fasz = connect(mapStateToProps_fasz, mapDispatchToProps_fasz)(Pina);
-
-// ***************************IMAGEHOLDER
-const ImageHolder = ({imageSrc,projectsWithImages}) => {
-    return (
-        <img src={imageSrc} className="img-rounded" alt="Cinque Terre" width="304"
-             height="236"/>
-    )
-};
-const mapStateToProps_ProjectImage = (state, ownProps) => {
-    return {
-        imageSrc: ownProps.projectsWithImages[state.aboutImgSelectorState].picture//"ANYÁD PICSÁJA" //state.aboutImgSelectorState
-    }
-}
-const mapDispatchToProps_ProjectImage = (dispatch, ownProps) => {
-    return {}
-}
-const ProjectsImage = connect(mapStateToProps_ProjectImage, mapDispatchToProps_ProjectImage)(ImageHolder);
-// ***************************END OF IMAGEHOLDER
-const ListItem = ({id,title,short_descr,onProjectClick}) => {
-    return (
-        <div className="list-group" id={id} onClick={()=>onProjectClick(id)}>
-            <a href="#" className="list-group-item active">
-                <h4 className="list-group-item-heading">{title}</h4>
-                <p className="list-group-item-text">{short_descr}</p>
-            </a>
-        </div>
-    )
-}
-const mapStateToProps_Project = (state,ownProps)=>{return {}}
-const mapDispatchToProps_Project = (dispatch, ownProps)=>{    return {
-    onProjectClick: (id) => {
-        dispatch(addImgNum(id));
-    }}}
-
-const Project = connect (mapStateToProps_Project,mapDispatchToProps_Project )(ListItem)
 const ListOfProjects = ({projectsWithImages, onProjectClick}) => {
     return (
         <ul>
-            {projectsWithImages.map(project=><Project
-                key={project.id}
-                {...project}
-            />)}
+            {projectsWithImages.map(project=>
+                <ProjectListItem
+                    key={project.id}
+                    {...project}
+                />)}
         </ul>
     )
 }
 
 const FelsoKepesLinkesResz = ({projectsWithImages}) => {
-    console.log(projectsWithImages)
     return (
         <div className="row">
-            <div className="col-xs-3">
-                <ListOfProjects projectsWithImages={projectsWithImages}/>
+
+            <div className="col-xs-12">
+                <ProjectImage projectsWithImages={projectsWithImages}></ProjectImage>
             </div>
-            <div className="col-xs-9">
-                <ProjectsImage projectsWithImages={projectsWithImages}></ProjectsImage>
+            <div className="col-xs-12">
+                <ListOfProjects projectsWithImages={projectsWithImages}/>
             </div>
         </div>
     );
@@ -175,8 +95,6 @@ const ReactApp = () =>
         <div id="reactApp">
             <Nav/>
             <FelsoKepesLinkesResz projectsWithImages={options.aboutProjects}></FelsoKepesLinkesResz>
-            <Fasz faszalgas="EzAfaszalgas">FASwwsssswZ </Fasz>
-            <TextBoxfromIMGstate>faszbéci</TextBoxfromIMGstate>
             <Footer/>
         </div>
     )

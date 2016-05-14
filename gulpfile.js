@@ -13,7 +13,8 @@ var sources = {
     components : "src/public/components/*",
     publicScripts : "src/public/js/*",
     mainView : "src/server/view/*",
-    reducers : "src/public/reducers/*"
+    reducers : "src/public/reducers/*",
+    containers : "src/public/containers/*"
 };
 
 gulp.task('copy_index', function(){
@@ -46,6 +47,14 @@ gulp.task('copy_components', function(){
               .pipe(gulp.dest('build/public/components'));
 });
 
+//copying components
+gulp.task('copy_containers', function(){
+    return gulp.src(sources.containers)
+        .pipe(plumber())
+        .pipe(babel())
+        .pipe(gulp.dest('build/public/containers'));
+});
+
 //copying public js files
 gulp.task('copy_public_js', function(){
         return gulp.src('./src/public/js/*')
@@ -54,7 +63,7 @@ gulp.task('copy_public_js', function(){
              .pipe(gulp.dest('build/public/js/'));
 });
 
-gulp.task('browserify', ['copy_public_js', 'copy_components'], function () {
+gulp.task('browserify', ['copy_public_js', 'copy_components', 'copy_containers', 'copy_reducers'], function () {
         "use strict";
         return gulp.src('build/public/js/script.js')
              .pipe(plumber())
@@ -73,7 +82,7 @@ gulp.task('build_server', function(){
 });
 
 
-gulp.task('default', ['copy_index', 'copy_css', 'browserify','build_server','copy_reducers'], function () {
+gulp.task('default', ['copy_index', 'copy_css', 'browserify','build_server'], function () {
     "use strict";
 
     // starting the server when everything is done
@@ -83,6 +92,7 @@ gulp.task('default', ['copy_index', 'copy_css', 'browserify','build_server','cop
     gulp.watch( [sources.reducers], ['copy_reducers', server.restart]);
     gulp.watch( [sources.server], ['build_server', server.restart]);
     gulp.watch( [sources.css], ['copy_css', server.restart]);
+    gulp.watch( [sources.containers], ['browserify', server.restart]);
     gulp.watch( [sources.components], ['browserify', server.restart]);
     gulp.watch( [sources.publicScripts], ['browserify', server.restart]);
     gulp.watch( [sources.mainView], ['copy_index', server.restart]);
