@@ -35,11 +35,9 @@ app.get('/', (req, res) => {
         reuqestType : "GET",
         path : req.path
     });
-    let content = ReactDOM.renderToString(<Provider store={store}>{ReactApp}</Provider>);
+    let content = ReactDOM.renderToString(<Provider store={store}><ReactApp/></Provider>);
     let response = renderHTML(content, initialState);
     res.send(response);
-
-    //res.render('index', {content : content, initialState});
 });
 
 app.get('/about', (req, res) => {
