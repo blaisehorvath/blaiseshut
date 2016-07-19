@@ -15,7 +15,7 @@ import AppReducer from "../public/reducers/StoreAndReducers"
 
 let store = createStore(AppReducer);
 let app = express();
-console.log(store)
+console.log(store);
 
 /*Constants*/
 const appDirName = path.dirname(require.main.filename);
