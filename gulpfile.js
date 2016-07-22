@@ -86,14 +86,14 @@ gulp.task('default', ['copy_index', 'copy_css', 'browserify','build_server'], fu
     "use strict";
 
     // starting the server when everything is done
-    server.listen( { path: 'build/server/server.js' } );
+    //server.listen( { path: 'build/server/server.js' } );
 
     // watching files for changes
-    gulp.watch( [sources.reducers], ['copy_reducers', server.restart]);
+    /*gulp.watch( [sources.reducers], ['copy_reducers', server.restart]);
     gulp.watch( [sources.server], ['build_server', server.restart]);
     gulp.watch( [sources.css], ['copy_css', server.restart]);
     gulp.watch( [sources.containers], ['browserify', server.restart]);
     gulp.watch( [sources.components], ['browserify', server.restart]);
     gulp.watch( [sources.publicScripts], ['browserify', server.restart]);
-    gulp.watch( [sources.mainView], ['copy_index', server.restart]);
+    gulp.watch( [sources.mainView], ['copy_index', server.restart]);*/
 });

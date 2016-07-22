@@ -1,5 +1,6 @@
 /*eslint-disable no-unused-vars, no-undef, no-console*/
 /*Modules*/
+var http = require('http');
 import AWS from "aws-sdk";
 import express from "express";
 import path from "path";
@@ -123,6 +124,6 @@ app.get('/projects', (req, res) => {
     res.render('cv', {content : appContent});
 });
 
-app.listen(3000, function () {
-    console.log("Development server is listening on port: 4444");
+http.createServer(app).listen(process.env.PORT || 3000, function () {
+    console.log("Development server is listening on port: 3000");
 });
