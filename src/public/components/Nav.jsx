@@ -37,7 +37,7 @@ export default class Nav extends React.Component {
                                 <input className="form-control" placeholder="Search" type="text"/>
                                 <div className="input-group-btn">
                                     <button className="btn btn-default" type="submit">
-                                        Search
+                                        <span className="glyphicon glyphicon-search"/>
                                     </button>
                                 </div>
                             </div>

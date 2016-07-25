@@ -1,13 +1,7 @@
 import Nav from "./Nav";
 import Footer from "./Footer";
-import Main from "./Main";
-import About from "./About"
 
 import React from 'react'
-
-import {syncHistoryWithStore} from 'react-router-redux'
-import { Router, Route, browserHistory } from 'react-router'
-
 
 /*
  * This is only for testing purposes
@@ -27,5 +21,5 @@ const ReactApp = (props) => {
             <Footer/>
         </div>
     );
-}
+};
 export default ReactApp

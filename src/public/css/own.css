@@ -3,12 +3,17 @@
 --------------------------------------*/
 
 body {
-      background-color: rgb(255, 255, 255);
-      font-family: 'Fira Sans', sans-serif;
-	-webkit-font-smoothing: antialiased;
-	text-rendering: optimizelegibility;
-      -moz-osx-font-smoothing: grayscale;
+    background-color: rgb(255, 255, 255);
+    font-family: 'Fira Sans', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizelegibility;
+    -moz-osx-font-smoothing: grayscale;
 }
+
+button.btn.btn-default {
+    height: 34px; /* I don't know why, but it only works this way*/
+}
+
 
 /*---------------------------------
   Navbar

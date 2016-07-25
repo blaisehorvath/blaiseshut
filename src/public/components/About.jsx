@@ -123,19 +123,8 @@ const AboutLowerTeamPart = () => {
 const About = ()=>{
     return(
         <div>
-        <FelsoKepesLinkesResz projectsWithImages={options.aboutProjects}></FelsoKepesLinkesResz>
-        <AboutLowerTeamPart></AboutLowerTeamPart>
-            <div className="input-group">
-                <div className="input-group-btn">
-                    <button aria-label="Bold" className="btn btn-default" type="button">
-                        <span className="glyphicon glyphicon-bold"/>
-                    </button>
-                    <button aria-label="Italic" className="btn btn-default" type="button">
-                        <span className="glyphicon glyphicon-italic"/>
-                    </button>
-                </div>
-                <input type="text" aria-label="Text input with multiple buttons" className="form-control"/>
-            </div>
+            <FelsoKepesLinkesResz projectsWithImages={options.aboutProjects}></FelsoKepesLinkesResz>
+            <AboutLowerTeamPart></AboutLowerTeamPart>
         </div>
 )};
 export default About
