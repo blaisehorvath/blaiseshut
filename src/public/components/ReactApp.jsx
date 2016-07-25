@@ -13,19 +13,19 @@ import { Router, Route, browserHistory } from 'react-router'
  * This is only for testing purposes
  * */
 
-const ReactApp = (content) =>
-/***
- * This is function is the entry point of the react app. Each page will be a state of this React app.
- * @returns {XML}
- */
-    (
+const ReactApp = (props) => {
+    /***
+     * This is function is the entry point of the react app. Each page will be a state of this React app.
+     * @returns {XML}
+     */
+    return (
         <div id="reactApp">
             <Nav/>
             <div className="container" data-spy="scroll">
-                {content}
+                {props.children}
             </div>
             <Footer/>
         </div>
     );
-
+}
 export default ReactApp
