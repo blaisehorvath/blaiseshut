@@ -4,7 +4,6 @@ import {changeAboutTeamNumber} from "../reducers/StoreAndReducers"
 
 const mapStateToProps = (state, ownProps) => {
     return {
-
         active: ownProps.id === state.AboutTeamNumber
     }
 };

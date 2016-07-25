@@ -14,6 +14,19 @@ button.btn.btn-default {
     height: 34px; /* I don't know why, but it only works this way*/
 }
 
+/* Members */
+.memberName {
+    text-align: center;
+}
+
+.memberPicture{
+    margin: 0 auto;
+    padding: 5%;
+}
+
+.memberBox{
+    padding: 10px 0px 10px 0px;
+}
 
 /*---------------------------------
   Navbar

@@ -84,19 +84,21 @@ const ListOfProjects = ({projectsWithImages, onProjectClick}) => {
         </ul>
     )
 };
-const TeamAndMembers = ({team, bootstrapWidth}) => {
+const TeamAndMembers = ({team}) => {
     return (
         <div className="row">
             {team.map(member=>
-                <div key={member.id} className={bootstrapWidth}>
-                    <MemberWithImage id={member.id} title={member.name} imagesrc={member.img}></MemberWithImage>
+                <div key={member.id} className="col-xs-4 memberBox">
+                    <MemberWithImage id={member.id} title={member.name} imagesrc={member.img}/>
                 </div>)}
         </div>
     );
 };
 const TeamDescription = (team) => {
     return (
-        <p>"ájjjááüóó</p>
+        <div className="row">
+            <p>Victrixs assimilant, tanquam germanus nutrix. Indictios experimentum, tanquam pius bulla. Victrixs assimilant, tanquam germanus nutrix. Indictios experimentum, tanquam pius bulla. Victrixs assimilant, tanquam germanus nutrix. Indictios experimentum, tanquam pius bulla. Victrixs assimilant, tanquam germanus nutrix. Indictios experimentum, tanquam pius bulla. Victrixs assimilant, tanquam germanus nutrix. Indictios experimentum, tanquam pius bulla. Victrixs assimilant, tanquam germanus nutrix. Indictios experimentum, tanquam pius bulla.Victrixs assimilant, tanquam germanus nutrix. Indictios experimentum, tanquam pius bulla. Victrixs assimilant, tanquam germanus nutrix. Indictios experimentum, tanquam pius bulla.</p>
+        </div>
     );
 };
 
@@ -112,19 +114,13 @@ const FelsoKepesLinkesResz = ({projectsWithImages}) => {
         </div>
     );
 };
-const AboutLowerTeamPart = () => {
-    return (
-        <div className="row">
-            <TeamAndMembers team={team} bootstrapWidth="col-xs-4"></TeamAndMembers>
-            <TeamDescription team={team}></TeamDescription>
-        </div>
-    );
-};
+
 const About = ()=>{
     return(
         <div>
-            <FelsoKepesLinkesResz projectsWithImages={options.aboutProjects}></FelsoKepesLinkesResz>
-            <AboutLowerTeamPart></AboutLowerTeamPart>
+            <FelsoKepesLinkesResz projectsWithImages={options.aboutProjects}/>
+            <TeamAndMembers team={team}/>
+            <TeamDescription team={team}/>
         </div>
 )};
 export default About
