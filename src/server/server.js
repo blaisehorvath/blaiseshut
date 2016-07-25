@@ -6,6 +6,7 @@ import express from "express";
 import path from "path";
 import React from "react";
 import ReactApp from "../public/components/ReactApp";
+import About from "../public/components/About"
 import ReactDOM from "react-dom/server"
 import { Provider } from 'react-redux'
 /*App*/
@@ -79,7 +80,7 @@ app.get('/', (req, res) => {
         reuqestType : "GET",
         path : req.path
     });
-    let content = ReactDOM.renderToString(<Provider store={store}><ReactApp/></Provider>);
+    let content = ReactDOM.renderToString(<Provider store={store}><ReactApp content={About}/></Provider>);
     let response = renderHTML(content, initialState);
     res.send(response);
 });
