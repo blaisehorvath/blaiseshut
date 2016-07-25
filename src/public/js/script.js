@@ -12,8 +12,6 @@ let store = createStore(AppReducer,window.__INITIAL_STATE__);
 
 
 render(
-    <Provider store={store}>
-      <ReactApp/>
-     </Provider>,
+    <Provider store={store}><ReactApp/></Provider>,
     document.getElementById('app')
 );

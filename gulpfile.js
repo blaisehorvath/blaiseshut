@@ -5,7 +5,8 @@ var gulp  = require('gulp'),
     babel = require('gulp-babel'),
     server = require('gulp-develop-server'),
     browserify = require('gulp-browserify'),
-    plumber = require('gulp-plumber');
+    plumber = require('gulp-plumber'),
+    livereload = require('gulp-livereload');
 
 var sources = {
     server : "src/server/*",
@@ -21,7 +22,8 @@ gulp.task('copy_index', function(){
     "use strict";
         return gulp.src(sources.mainView)
                 .pipe(plumber())
-                .pipe(gulp.dest('build/server/view/'));
+                .pipe(gulp.dest('build/server/view/'))
+                .pipe(livereload());
 });
 
 //copying css files
@@ -70,7 +72,8 @@ gulp.task('browserify', ['copy_public_js', 'copy_components', 'copy_containers',
              .pipe(browserify({
                 insertGlobals : true
              }))
-             .pipe(gulp.dest('build/public/js/'));
+             .pipe(gulp.dest('build/public/js/'))
+             .pipe(livereload());
 });
 
 //building the server
@@ -78,22 +81,23 @@ gulp.task('build_server', function(){
         return gulp.src('src/server/*')
              .pipe(plumber())
              .pipe(babel())
-             .pipe(gulp.dest('build/server/'));
+             .pipe(gulp.dest('build/server/'))
+             .pipe(livereload());
 });
-
 
 gulp.task('default', ['copy_index', 'copy_css', 'browserify','build_server'], function () {
     "use strict";
+    livereload({ start: true });
 
     // starting the server when everything is done
-    //server.listen( { path: 'build/server/server.js' } );
+    server.listen( { path: 'build/server/server.js' } );
 
     // watching files for changes
-    /*gulp.watch( [sources.reducers], ['copy_reducers', server.restart]);
+    gulp.watch( [sources.reducers], ['copy_reducers', server.restart]);
     gulp.watch( [sources.server], ['build_server', server.restart]);
     gulp.watch( [sources.css], ['copy_css', server.restart]);
     gulp.watch( [sources.containers], ['browserify', server.restart]);
     gulp.watch( [sources.components], ['browserify', server.restart]);
     gulp.watch( [sources.publicScripts], ['browserify', server.restart]);
-    gulp.watch( [sources.mainView], ['copy_index', server.restart]);*/
+    gulp.watch( [sources.mainView], ['copy_index', server.restart]);
 });

@@ -125,8 +125,17 @@ const About = ()=>{
         <div>
         <FelsoKepesLinkesResz projectsWithImages={options.aboutProjects}></FelsoKepesLinkesResz>
         <AboutLowerTeamPart></AboutLowerTeamPart>
-            <form data-example-id="input-group-multiple-buttons" className="bs-example bs-example-form"><div className="row"><div className="col-lg-6"><div className="input-group"><div className="input-group-btn"><button aria-label="Bold" className="btn btn-default" type="button"><span className="glyphicon glyphicon-bold" /></button><button aria-label="Italic" className="btn btn-default" type="button"><span className="glyphicon glyphicon-italic" /></button></div><input type="text" aria-label="Text input with multiple buttons" className="form-control" /></div></div><div className="col-lg-6"><div className="input-group"><input type="text" aria-label="Text input with multiple buttons" className="form-control" /><div className="input-group-btn"><button aria-label="Help" className="btn btn-default" type="button"><span className="glyphicon glyphicon-question-sign" /></button><button className="btn btn-default" type="button">Action</button></div></div></div></div></form>
+            <div className="input-group">
+                <div className="input-group-btn">
+                    <button aria-label="Bold" className="btn btn-default" type="button">
+                        <span className="glyphicon glyphicon-bold"/>
+                    </button>
+                    <button aria-label="Italic" className="btn btn-default" type="button">
+                        <span className="glyphicon glyphicon-italic"/>
+                    </button>
+                </div>
+                <input type="text" aria-label="Text input with multiple buttons" className="form-control"/>
+            </div>
         </div>
-)
-}
+)};
 export default About
