@@ -36,10 +36,11 @@ let admins = {
         salt:""
     }}
 
-app.use(cookieParser());
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
+app.use(cookieParser())
 const saltRounds=10;
+/*TODO: Make sure theres no ";" in the hash...*/
 bcrypt.genSalt(saltRounds,(err,salt)=>
     {
         admins.Viktor.salt=salt
@@ -118,12 +119,15 @@ app.get('/admin', (req, res) => {
         reuqestType : "GET",
         path : req.path
     });
+    if(name in req.cookies && password in req.cookies)//The name cookie exsist
+    {
+
+    }
     let content = ReactDOM.renderToString(<Provider store={store}><ReactApp><Admin/></ReactApp></Provider>);
     let response = renderHTML(content, initialState);
     res.send(response);
 });
 app.post("/admin",(req,res)=>{
-    console.log(req)
     if(req.body.user in admins){
         bcrypt.compare(req.body.password,admins[req.body.user].hash,(err,result)=>{
             if(result)
