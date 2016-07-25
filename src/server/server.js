@@ -7,15 +7,16 @@ import path from "path";
 import React from "react";
 import ReactApp from "../public/components/ReactApp";
 import About from "../public/components/About"
+import Admin from "../public/components/Admin"
 import ReactDOM from "react-dom/server"
 import { Provider } from 'react-redux'
 /*App*/
-import { combineReducers,createStore } from 'redux';
-//import {AppReducer} from "../public/reducers/StoreAndReducers"
-import {connect} from "react-redux"
+import bodyParser from 'body-parser'
+import {createStore } from 'redux';
 import renderHTML from "./renderHTML"
 import AppReducer from "../public/reducers/StoreAndReducers"
-
+import cookieParser from "cookie-parser"
+import bcrypt from "bcrypt"
 let store = createStore(AppReducer);
 let app = express();
 console.log(store);
@@ -23,13 +24,40 @@ console.log(store);
 /*Constants*/
 const appDirName = path.dirname(require.main.filename);
 
-///*Configuring the templating endgine*/
-//app.set('views', __dirname + '/view');
-//app.set('view engine', 'jsx');
-//app.engine('jsx', require('express-react-views').createEngine());
+/* Setting up encryption etc...*/
+let admins = {
+    Viktor:{
 
+        hash:"",
+        salt:""
+    },
+    Blaise:{
+        hash:"",
+        salt:""
+    }}
 
+app.use(bodyParser.urlencoded({extended:true}));
+app.use(bodyParser.json());
+app.use(cookieParser())
+const saltRounds=10;
+/*TODO: Make sure theres no ";" in the hash...*/
+bcrypt.genSalt(saltRounds,(err,salt)=>
+    {
+        admins.Viktor.salt=salt
+        bcrypt.hash("qwertz",salt,(err,hash)=> {admins.Viktor.hash=hash})
+    }
+)
+bcrypt.genSalt(saltRounds,(err,salt)=>
+    {
+        admins.Blaise.salt=salt
+        bcrypt.hash("Seabythelive",salt,(err,hash)=>{admins.Blaise.hash=hash})
+    }
+)
 
+let user = "Viktor"
+if(user in admins){
+    console.log(admins[user]);
+}else console.log("lofasz\n")
 ///*Setting up amazon AWS connection.
 // Should have a credentials file in ~/.aws with the following content:
 /*[default]
@@ -84,6 +112,35 @@ app.get('/', (req, res) => {
     let response = renderHTML(content, initialState);
     res.send(response);
 });
+app.get('/admin', (req, res) => {
+    "use strict";
+
+    console.log({
+        reuqestType : "GET",
+        path : req.path
+    });
+    if(name in req.cookies && password in req.cookies)//The name cookie exsist
+    {
+
+    }
+    let content = ReactDOM.renderToString(<Provider store={store}><ReactApp><Admin/></ReactApp></Provider>);
+    let response = renderHTML(content, initialState);
+    res.send(response);
+});
+app.post("/admin",(req,res)=>{
+    if(req.body.user in admins){
+        bcrypt.compare(req.body.password,admins[req.body.user].hash,(err,result)=>{
+            if(result)
+            {
+                res.setHeader("Set-Cookie", ["name="+req.body.user, "hash="+admins[req.body.user].hash]);
+                res.end('bye\n');
+                //TODO:Go to real admin site
+            }
+            //TODO:Wrong password warning back to front
+            })
+    }
+    //TODO: Wrong user warning back to front
+})
 app.get('/about', (req, res) => {
     "use strict";
     console.log({
