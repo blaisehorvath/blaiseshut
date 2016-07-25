@@ -8,6 +8,7 @@ import React from "react";
 import ReactApp from "../public/components/ReactApp";
 import About from "../public/components/About"
 import Admin from "../public/components/Admin"
+import AdminLoggedIn from "../public/components/AdminLoggedIn"
 import ReactDOM from "react-dom/server"
 import { Provider } from 'react-redux'
 /*App*/
@@ -28,12 +29,10 @@ const appDirName = path.dirname(require.main.filename);
 let admins = {
     Viktor:{
 
-        hash:"",
-        salt:""
+        hash:""
     },
     Blaise:{
-        hash:"",
-        salt:""
+        hash:""
     }}
 
 app.use(bodyParser.urlencoded({extended:true}));
@@ -43,13 +42,11 @@ const saltRounds=10;
 /*TODO: Make sure theres no ";" in the hash...*/
 bcrypt.genSalt(saltRounds,(err,salt)=>
     {
-        admins.Viktor.salt=salt
         bcrypt.hash("qwertz",salt,(err,hash)=> {admins.Viktor.hash=hash})
     }
 )
 bcrypt.genSalt(saltRounds,(err,salt)=>
     {
-        admins.Blaise.salt=salt
         bcrypt.hash("Seabythelive",salt,(err,hash)=>{admins.Blaise.hash=hash})
     }
 )
@@ -119,11 +116,20 @@ app.get('/admin', (req, res) => {
         reuqestType : "GET",
         path : req.path
     });
-    if(name in req.cookies && password in req.cookies)//The name cookie exsist
+    let content = "";
+    if("name" in req.cookies && "hash" in req.cookies)//The name cookie exsist
     {
-
+        if(req.cookies.name in admins)//If the cookie name in admins
+        {
+            if("hash" in admins[req.cookies.name])
+            {
+                if(req.cookies.hash = admins[req.cookies.name].hash)
+                    content = ReactDOM.renderToString(<Provider store={store}><ReactApp><AdminLoggedIn/></ReactApp></Provider>);
+            }
+        }
     }
-    let content = ReactDOM.renderToString(<Provider store={store}><ReactApp><Admin/></ReactApp></Provider>);
+    else
+        content = ReactDOM.renderToString(<Provider store={store}><ReactApp><Admin/></ReactApp></Provider>);
     let response = renderHTML(content, initialState);
     res.send(response);
 });
@@ -133,8 +139,7 @@ app.post("/admin",(req,res)=>{
             if(result)
             {
                 res.setHeader("Set-Cookie", ["name="+req.body.user, "hash="+admins[req.body.user].hash]);
-                res.end('bye\n');
-                //TODO:Go to real admin site
+                res.redirect('/admin');
             }
             //TODO:Wrong password warning back to front
             })
