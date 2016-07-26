@@ -109,7 +109,7 @@ app.get('/', (req, res) => {
     let response = renderHTML(content, initialState);
     res.send(response);
 });
-app.get('/admin', (req, res) => {
+app.get('/admin', (req, res) => {//TODO:HTTPS
     "use strict";
 
     console.log({
@@ -117,19 +117,24 @@ app.get('/admin', (req, res) => {
         path : req.path
     });
     let content = "";
+    content = ReactDOM.renderToString(<Provider store={store}><ReactApp><Admin/></ReactApp></Provider>);
     if("name" in req.cookies && "hash" in req.cookies)//The name cookie exsist
     {
+        console.log("here1")
         if(req.cookies.name in admins)//If the cookie name in admins
         {
+            console.log("here2")
             if("hash" in admins[req.cookies.name])
             {
+                console.log("here3")
                 if(req.cookies.hash = admins[req.cookies.name].hash)
+                {
+                    console.log("here4")
                     content = ReactDOM.renderToString(<Provider store={store}><ReactApp><AdminLoggedIn/></ReactApp></Provider>);
+                }
             }
         }
-    }
-    else
-        content = ReactDOM.renderToString(<Provider store={store}><ReactApp><Admin/></ReactApp></Provider>);
+    }//TODO: this is a bit ugly, content is rendered twice if logged in
     let response = renderHTML(content, initialState);
     res.send(response);
 });
@@ -138,13 +143,23 @@ app.post("/admin",(req,res)=>{
         bcrypt.compare(req.body.password,admins[req.body.user].hash,(err,result)=>{
             if(result)
             {
-                res.setHeader("Set-Cookie", ["name="+req.body.user, "hash="+admins[req.body.user].hash]);
+                //res.setHeader("Set-Cookie", ["name="+req.body.user, "hash="+admins[req.body.user].hash]);
+                res.cookie('name',req.body.user,{});
+                res.cookie('hash',admins[req.body.user].hash,{});
                 res.redirect('/admin');
             }
+            else res.redirect('/admin')
             //TODO:Wrong password warning back to front
             })
     }
+    else res.redirect('/admin');
     //TODO: Wrong user warning back to front
+})
+app.post("/logout",(req,res)=>{
+    console.log(new Date().toISOString())
+    res.cookie('name','',{Expires: new Date().toISOString(),path:'/'});
+    res.cookie('hash','',{Expires: new Date().toISOString(),path:'/'});
+    res.redirect('/admin');
 })
 app.get('/about', (req, res) => {
     "use strict";
