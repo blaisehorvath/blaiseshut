@@ -24,6 +24,7 @@
     "babel": "^6.5.2",
     "bcrypt": "^0.8.7",
     "body-parser": "^1.15.2",
+    "bower": "^1.7.9",
     "browserify": "^12.0.1",
     "cookie-parser": "^1.4.3",
     "dev": "^0.1.3",
@@ -35,13 +36,18 @@
     "gulp-develop-server": "^0.4.3",
     "gulp-livereload": "^3.8.1",
     "gulp-plumber": "^1.0.1",
+    "medium-editor": "^5.21.0",
     "react": "^0.14.2",
     "react-dom": "^0.14.2",
+    "react-medium-editor": "^1.8.0",
     "react-redux": "^4.4.5",
     "react-router": "^2.4.0",
     "react-router-redux": "^4.0.4",
+    "react-wysiwyg-editor": "0.0.9",
     "redux": "^3.4.0",
     "tern-gulp": "^0.2.0",
-    "tern-node-express": "^0.3.0"
+    "tern-node-express": "^0.3.0",
+    "wysihtml": "^0.5.5",
+    "wysiwyg-editor-react": "^0.1.6"
   }
 }

@@ -8,6 +8,7 @@ import React from "react";
 import ReactApp from "../public/components/ReactApp";
 import About from "../public/components/About"
 import Admin from "../public/components/Admin"
+import AdminLoggedIn from "../public/components/AdminLoggedIn"
 import ReactDOM from "react-dom/server"
 import { Provider } from 'react-redux'
 /*App*/
@@ -28,12 +29,10 @@ const appDirName = path.dirname(require.main.filename);
 let admins = {
     Viktor:{
 
-        hash:"",
-        salt:""
+        hash:""
     },
     Blaise:{
-        hash:"",
-        salt:""
+        hash:""
     }}
 
 app.use(bodyParser.urlencoded({extended:true}));
@@ -43,13 +42,11 @@ const saltRounds=10;
 /*TODO: Make sure theres no ";" in the hash...*/
 bcrypt.genSalt(saltRounds,(err,salt)=>
     {
-        admins.Viktor.salt=salt
         bcrypt.hash("qwertz",salt,(err,hash)=> {admins.Viktor.hash=hash})
     }
 )
 bcrypt.genSalt(saltRounds,(err,salt)=>
     {
-        admins.Blaise.salt=salt
         bcrypt.hash("Seabythelive",salt,(err,hash)=>{admins.Blaise.hash=hash})
     }
 )
@@ -112,18 +109,32 @@ app.get('/', (req, res) => {
     let response = renderHTML(content, initialState);
     res.send(response);
 });
-app.get('/admin', (req, res) => {
+app.get('/admin', (req, res) => {//TODO:HTTPS
     "use strict";
 
     console.log({
         reuqestType : "GET",
         path : req.path
     });
-    if(name in req.cookies && password in req.cookies)//The name cookie exsist
+    let content = "";
+    content = ReactDOM.renderToString(<Provider store={store}><ReactApp><Admin/></ReactApp></Provider>);
+    if("name" in req.cookies && "hash" in req.cookies)//The name cookie exsist
     {
-
-    }
-    let content = ReactDOM.renderToString(<Provider store={store}><ReactApp><Admin/></ReactApp></Provider>);
+        console.log("here1")
+        if(req.cookies.name in admins)//If the cookie name in admins
+        {
+            console.log("here2")
+            if("hash" in admins[req.cookies.name])
+            {
+                console.log("here3")
+                if(req.cookies.hash = admins[req.cookies.name].hash)
+                {
+                    console.log("here4")
+                    content = ReactDOM.renderToString(<Provider store={store}><ReactApp><AdminLoggedIn/></ReactApp></Provider>);
+                }
+            }
+        }
+    }//TODO: this is a bit ugly, content is rendered twice if logged in
     let response = renderHTML(content, initialState);
     res.send(response);
 });
@@ -132,14 +143,23 @@ app.post("/admin",(req,res)=>{
         bcrypt.compare(req.body.password,admins[req.body.user].hash,(err,result)=>{
             if(result)
             {
-                res.setHeader("Set-Cookie", ["name="+req.body.user, "hash="+admins[req.body.user].hash]);
-                res.end('bye\n');
-                //TODO:Go to real admin site
+                //res.setHeader("Set-Cookie", ["name="+req.body.user, "hash="+admins[req.body.user].hash]);
+                res.cookie('name',req.body.user,{});
+                res.cookie('hash',admins[req.body.user].hash,{});
+                res.redirect('/admin');
             }
+            else res.redirect('/admin')
             //TODO:Wrong password warning back to front
             })
     }
+    else res.redirect('/admin');
     //TODO: Wrong user warning back to front
+})
+app.post("/logout",(req,res)=>{
+    console.log(new Date().toISOString())
+    res.cookie('name','',{Expires: new Date().toISOString(),path:'/'});
+    res.cookie('hash','',{Expires: new Date().toISOString(),path:'/'});
+    res.redirect('/admin');
 })
 app.get('/about', (req, res) => {
     "use strict";
