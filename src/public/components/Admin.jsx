@@ -5,7 +5,6 @@ import React from "react";
 const Admin = ()=>{
     return(
         <div>
-            <br/><br/><br/><br/><br/><br/>
                 <form method="post" action="/admin">
                     <input type="text" placeholder="User" name="user"/>
                     <br/>

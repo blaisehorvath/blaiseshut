@@ -26,7 +26,7 @@ export default class Nav extends React.Component {
                         <li id="home" className="active"><a href="/">Home<span className="sr-only">(current)</span></a>
                         </li>
                         <li id="aboutus"><a href="/cv">About us</a></li>
-                        <li id="blog"><a>Blog</a></li>
+                        <li id="blog"><a href="/blog">Blog</a></li>
                         <li id="contactUs"><a>Contact Us</a></li>
                         <li id="projects"><a>Projects</a></li>
                     </ul>
