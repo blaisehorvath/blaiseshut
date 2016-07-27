@@ -24,7 +24,6 @@ console.log(store);
 
 /*Constants*/
 const appDirName = path.dirname(require.main.filename);
-const AWSENABLE=true;
 //************************************************SETTING UP SECURITY, COOKIES******************************************
 let admins = {
     Viktor:{
@@ -62,7 +61,7 @@ const checkHash=(name,hash)=>{
         }
         else resolve(false);
     })
-}
+};
 const checkPassword=(name,password)=>{
     return new Promise((resolve,reject)=> {
         if (name in admins) {
@@ -87,9 +86,11 @@ aws_access_key_id = "Your access key id"
 
 aws_secret_access_key = "Your secret access key"
 These keys can be obtained from the IAM console/Users/Your User/Security Credentials/Create Acess key
-The DB is obtained by the parameters in app_config.json/*/
+The DB is obtained by the parameters in app_config.json/
+Db function can be disabled with AWSENABLE*/
 //var config = fs.readFileSync('./server/app_config.json', 'utf8');
 //TODO: EXPORT to standalone file gulp etc.
+const AWSENABLE=true;
 var config = {
     "AWS_REGION": "eu-central-1",
     "STARTUP_SIGNUP_TABLE": "SWABlog"
