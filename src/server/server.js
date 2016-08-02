@@ -175,12 +175,12 @@ app.post("/adminfaszpinafaszfaszhitlerPOLPOT",(req,res)=>{
     res.writeHead(200, {'Content-Type': 'text/plain'});
     res.end('_testcb(\'{"message": "Hello world!"}\')');
 
-})
+});
 app.post("/logout",(req,res)=>{
     res.cookie('name','',{Expires: new Date().toISOString(),path:'/'});
     res.cookie('hash','',{Expires: new Date().toISOString(),path:'/'});
     res.redirect('/admin');
-})
+});
 app.post("/newblogpost",(req,res)=>{
     if(req.body.text != ""){
         blogPostToDb(req.body.text,(new Date).toISOString(),req.cookies.name);
