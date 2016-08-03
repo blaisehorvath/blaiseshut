@@ -1,5 +1,8 @@
 /*eslint-disable no-unused-vars, no-undef, no-console*/
 /*Modules*/
+import crypto from 'crypto';
+import https from 'https'
+import fs from 'fs'
 var http = require('http');
 import AWS from "aws-sdk";
 import express from "express";
@@ -25,6 +28,11 @@ console.log(store);
 /*Constants*/
 const appDirName = path.dirname(require.main.filename);
 //************************************************SETTING UP SECURITY, COOKIES******************************************
+var privateKey = fs.readFileSync('build/server/server.key');
+var certificate = fs.readFileSync('build/server/server.pem');
+
+var credentials = crypto.createCredentials({key: privateKey, cert: certificate, passphrase: 'w0balubadubdub'});
+
 let admins = {
     Viktor:{
         hash:""
@@ -162,11 +170,17 @@ app.post("/admin",(req,res)=>{
         }
     });
 });
+app.post("/adminfaszpinafaszfaszhitlerPOLPOT",(req,res)=>{
+    console.log(req.body);
+    res.writeHead(200, {'Content-Type': 'text/plain'});
+    res.end('_testcb(\'{"message": "Hello world!"}\')');
+
+});
 app.post("/logout",(req,res)=>{
     res.cookie('name','',{Expires: new Date().toISOString(),path:'/'});
     res.cookie('hash','',{Expires: new Date().toISOString(),path:'/'});
     res.redirect('/admin');
-})
+});
 app.post("/newblogpost",(req,res)=>{
     if(req.body.text != ""){
         blogPostToDb(req.body.text,(new Date).toISOString(),req.cookies.name);
@@ -214,6 +228,9 @@ app.get('/projects', (req, res) => {
     res.render('cv', {content : appContent});
 });
 
+/*https.createServer(credentials,app).listen(process.env.PORT || 3000, function () {
+    console.log("Development server is listening on port: 3000");
+});*/
 http.createServer(app).listen(process.env.PORT || 3000, function () {
     console.log("Development server is listening on port: 3000");
 });

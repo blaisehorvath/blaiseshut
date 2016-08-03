@@ -78,14 +78,19 @@ gulp.task('browserify', ['copy_public_js', 'copy_components', 'copy_containers',
 
 //building the server
 gulp.task('build_server', function(){
-        return gulp.src('src/server/*')
+        return gulp.src('src/server/*.{js,jsx}')
              .pipe(plumber())
              .pipe(babel())
              .pipe(gulp.dest('build/server/'))
              .pipe(livereload());
 });
-
-gulp.task('default', ['copy_index', 'copy_css', 'browserify','build_server'], function () {
+//Moving the credentials
+gulp.task('move_creds', function(){
+    return gulp.src('src/server/*.{key,pem}')
+        .pipe(gulp.dest('build/server/'))
+        .pipe(livereload());
+});
+gulp.task('default', ['copy_index', 'copy_css', 'browserify','build_server','move_creds'], function () {
     "use strict";
     livereload({ start: true });
 
