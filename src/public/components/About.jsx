@@ -2,6 +2,7 @@ import React from "react";
 import ProjectImage from "../containers/ProjectImage"
 import ProjectListItem from "../containers/ProjectListItem"
 import MemberWithImage from"../containers/MemberWithImage"
+import ProjectList from "./ProjectList";
 
 let team =
     [
@@ -121,6 +122,8 @@ const About = ()=>{
             <FelsoKepesLinkesResz projectsWithImages={options.aboutProjects}/>
             <TeamAndMembers team={team}/>
             <TeamDescription team={team}/>
+            <h1>UJ ProjectList</h1>
+            <ProjectList/>
         </div>
 )};
 export default About
