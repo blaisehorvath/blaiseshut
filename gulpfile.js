@@ -67,12 +67,12 @@ gulp.task('copy_public_js', function(){
 
 gulp.task('browserify', ['copy_public_js', 'copy_components', 'copy_containers', 'copy_reducers'], function () {
         "use strict";
-        return gulp.src('build/public/js/script.js')
+        return gulp.src('build/public/js/{script.js,scriptAdmin.js}')
              .pipe(plumber())
              .pipe(browserify({
                 insertGlobals : true
              }))
-             .pipe(gulp.dest('build/public/js/'))
+             .pipe(gulp.dest('build/private/js/'))
              .pipe(livereload());
 });
 

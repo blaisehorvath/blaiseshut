@@ -5,7 +5,7 @@
 import React from "react";
 import { render } from 'react-dom'
 import ReactApp from "../components/ReactApp";
-import Admin from "../components/Admin";
+import AdminLoggedIn from"../components/AdminLoggedIn";
 import About from "../components/About"
 import { Provider } from 'react-redux'
 import { combineReducers,createStore } from 'redux';
@@ -17,7 +17,7 @@ console.log("FRONTEND RUNNING");
 let store = createStore(AppReducer,window.__INITIAL_STATE__);
 
 Page('/admin', ()=>{render(
-    <Provider store={store}><ReactApp><Admin/></ReactApp></Provider>,
+    <Provider store={store}><ReactApp><AdminLoggedIn/></ReactApp></Provider>,
     document.getElementById('app')
 );});
 Page('/about', ()=>{render(

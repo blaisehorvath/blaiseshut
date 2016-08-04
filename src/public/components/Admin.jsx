@@ -4,13 +4,12 @@ import React from "react";
 //TODO:remove brs...
 export default class Admin extends React.Component {
 
-    constructor(props){
+    constructor(props) {
         super(props);
-        //asdasd.bind(this);
-        console.log(this)
     };
 
-    asdasd(e) {
+    AdminLoginAjax(e) {
+        console.log(this);
         e.preventDefault();
         let data =
         {
@@ -19,32 +18,33 @@ export default class Admin extends React.Component {
         };
 
         // Submit form via jQuery/AJAX
-        $.ajax({
+        $.ajax({//outer this cannot be accessed from success function of .ajax
             type: 'POST',
             url: '/adminlogged',
             data,
-            success:function(data){
-                if("name" in data && "hash" in data){
-                    document.cookie="name="+data.name;
-                    document.cookie="hash="+data.hash;
-                }else if ("errormsg" in data) console.log(data.errormsg);
-                }
+        }).done((data)=>{
+            if ("name" in data && "hash" in data) {
+                document.cookie = "name=" + data.name;
+                document.cookie = "hash=" + data.hash;
+                location.reload();
+            } else if ("errormsg" in data) {this.errormsg.innerHTML=data.errormsg}//this.errormsg.value = data.errormsg;
+
         })
     }
 
-    render() {
+    render() {// TODO: Better styling
         return (
             <div>
-                <form id="idForm">
-                    <input ref={(ref)=>this.user = ref}type="text" placeholder="User" name="user"/>
-                    <br/>
-                    <input ref={(ref)=>this.password = ref} type="password" placeholder="Password" name="password"/>
-                    <br/>
-                    <input id="fasz" type="button" value="This has a binded function"
-                           onClick={this.asdasd.bind(this)}/>
-                    <br/>
-                    <input type="submit" value="Submit"/>
-                </form>
+                <input ref={(ref)=>this.user = ref} type="text" placeholder="User" name="user"/>
+                <br/>
+                <input ref={(ref)=>this.password = ref} type="password" placeholder="Password" name="password"/>
+                <br/>
+                <h5 ref={(ref)=>this.errormsg = ref} type="text" placeholder=" " name="errormsg"></h5>
+                <br/>
+
+                <input id="fasz" type="button" value="LogIn"
+                       onClick={this.AdminLoginAjax.bind(this)}/>
+
             </div>
 
         )

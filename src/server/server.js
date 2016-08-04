@@ -173,12 +173,10 @@ app.post("/admin",(req,res)=>{
 app.post("/adminlogged",(req,res)=>{
     checkPassword(req.body.user, req.body.password).then((result)=>{
     if(result){
-        console.log(JSON.stringify({name:req.body.user,hash:admins[req.body.user].hash}))
         res.send({name:req.body.user,hash:admins[req.body.user].hash});
     }
     else {
-        res.writeHead(200, {'Content-Type': 'text/plain'});
-        res.end("Wrong username or password");
+        res.send({errormsg:"wrong pw user"});
     }
 });
 
@@ -235,7 +233,19 @@ app.get('/projects', (req, res) => {
     let appContent = ReactDOM.renderToString(React.createElement(ReactApp));
     res.render('cv', {content : appContent});
 });
-
+app.get('/private/script.js', (req, res) => {
+    console.log("anyádfasza");
+    console.log({
+        reuqestType : "GET",
+        path : req.path,
+        cookies : req.cookies
+    });
+    checkHash(req.cookies.name,req.cookies.hash).then((result)=>{
+        if(!result){res.sendfile("build/public/js/script.js");} //ha nincs login akkor az alap js-t kuldjuk TODO: NE A PUBLICBAN LEGYEN
+            else{res.sendfile("build/public/js/scriptAdmin.js");}//TODO: NE A PUBLICBAN LEGYEN
+        return;
+    });
+});
 /*https.createServer(credentials,app).listen(process.env.PORT || 3000, function () {
     console.log("Development server is listening on port: 3000");
 });*/
