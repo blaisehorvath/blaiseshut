@@ -1,0 +1,20 @@
+A HTML headjében van egy ilyen: <script src="needed.js"></script>
+
+Szerveroldalon figyeljük hogy jon e kerdes a /needed.js utvonalra a browsertol a : 
+
+app.get('/needed.js', (req, res) => {
+    "use strict";
+    console.log({
+        reuqestType : "GET",
+        path : req.path,
+        cookies : req.cookies
+    });
+    if (req.cookies.loginhash == db.hash) {
+        res.sendfile("build/server/nem_autentikalt.js"); /ha nincs login akkor az alap js-t kuldjuk
+    } else {
+        res.sendfile("build/server/autentikalt.js"); 
+    }
+
+});
+
+Tokmindegy hogy milyen nevu js fajlt kuldunk vissza, hiszen a browsert csak az UTVONALrol erkezo valasz erdekli
