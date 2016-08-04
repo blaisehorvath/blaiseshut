@@ -170,10 +170,18 @@ app.post("/admin",(req,res)=>{
         }
     });
 });
-app.post("/adminfaszpinafaszfaszhitlerPOLPOT",(req,res)=>{
-    console.log(req.body);
-    res.writeHead(200, {'Content-Type': 'text/plain'});
-    res.end('_testcb(\'{"message": "Hello world!"}\')');
+app.post("/adminlogged",(req,res)=>{
+    checkPassword(req.body.user, req.body.password).then((result)=>{
+    if(result){
+        console.log(JSON.stringify({name:req.body.user,hash:admins[req.body.user].hash}))
+        res.send({name:req.body.user,hash:admins[req.body.user].hash});
+    }
+    else {
+        res.writeHead(200, {'Content-Type': 'text/plain'});
+        res.end("Wrong username or password");
+    }
+});
+
 
 });
 app.post("/logout",(req,res)=>{

@@ -20,6 +20,10 @@ Page('/admin', ()=>{render(
     <Provider store={store}><ReactApp><Admin/></ReactApp></Provider>,
     document.getElementById('app')
 );});
+Page('/adminlogged', ()=>{render(
+    <Provider store={store}><ReactApp><AdminLoggedIn/></ReactApp></Provider>,
+    document.getElementById('app')
+);});
 Page('/about', ()=>{render(
     <Provider store={store}><ReactApp><About/></ReactApp></Provider>,
     document.getElementById('app')
