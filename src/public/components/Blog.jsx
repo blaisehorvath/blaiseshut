@@ -2,7 +2,7 @@ import React from "react";
 
 
 //TODO:remove brs...
-export default class Admin extends React.Component {
+export default class Blog extends React.Component {
 
     constructor(props) {
         super(props);
@@ -32,6 +32,7 @@ export default class Admin extends React.Component {
     render() {// TODO: Better styling
         return (
             <div>
+                <h1>This is the BLOG</h1>
                 <input ref={(ref)=>this.user = ref} type="text" placeholder="User" name="user"/>
                 <br/>
                 <input ref={(ref)=>this.password = ref} type="password" placeholder="Password" name="password"/>
@@ -47,4 +48,4 @@ export default class Admin extends React.Component {
         )
     }
 };
-export default Admin
+export default Blog

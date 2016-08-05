@@ -1,19 +1,17 @@
 /**
  * This sript will is the entry point for the app in the browser
  */
-
+//TODO: This script has to be updated whenever we change server.js... Possible workaround?
 import React from "react";
 import { render } from 'react-dom'
-import ReactApp from "../components/ReactApp";
-import AdminLoggedIn from"../components/AdminLoggedIn";
-import About from "../components/About"
 import { Provider } from 'react-redux'
 import { combineReducers,createStore } from 'redux';
 import AppReducer from "../reducers/StoreAndReducers";
 import Page from  "page";
 
-console.log("FRONTEND RUNNING");
-
+import ReactApp from "../components/ReactApp";
+import AdminLoggedIn from"../components/AdminLoggedIn";
+import About from "../components/About"
 let store = createStore(AppReducer,window.__INITIAL_STATE__);
 
 Page('/admin', ()=>{render(

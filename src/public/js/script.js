@@ -4,15 +4,15 @@
 
 import React from "react";
 import { render } from 'react-dom'
-import ReactApp from "../components/ReactApp";
-import Admin from "../components/Admin";
-import About from "../components/About"
 import { Provider } from 'react-redux'
 import { combineReducers,createStore } from 'redux';
 import AppReducer from "../reducers/StoreAndReducers";
 import Page from  "page";
 
-console.log("FRONTEND RUNNING");
+import ReactApp from "../components/ReactApp";
+import Admin from "../components/Admin";
+import About from "../components/About"
+import Blog from "../components/Blog"
 
 let store = createStore(AppReducer,window.__INITIAL_STATE__);
 
@@ -26,6 +26,10 @@ Page('/about', ()=>{render(
 );});
 Page('/', ()=>{render(
     <Provider store={store}><ReactApp><About/></ReactApp></Provider>,
+    document.getElementById('app')
+);});
+Page('/blog', ()=>{render(
+    <Provider store={store}><ReactApp><Blog/></ReactApp></Provider>,
     document.getElementById('app')
 );});
 Page();

@@ -8,10 +8,6 @@ import AWS from "aws-sdk";
 import express from "express";
 import path from "path";
 import React from "react";
-import ReactApp from "../public/components/ReactApp";
-import About from "../public/components/About"
-import Admin from "../public/components/Admin"
-import AdminLoggedIn from "../public/components/AdminLoggedIn"
 import ReactDOM from "react-dom/server"
 import { Provider } from 'react-redux'
 /*App*/
@@ -23,7 +19,13 @@ import cookieParser from "cookie-parser"
 import bcrypt from "bcrypt"
 let store = createStore(AppReducer);
 let app = express();
-console.log(store);
+
+import ReactApp from "../public/components/ReactApp";
+import About from "../public/components/About"
+import Admin from "../public/components/Admin"
+import AdminLoggedIn from "../public/components/AdminLoggedIn"
+import Blog from "../public/components/Blog"
+
 
 /*Constants*/
 const appDirName = path.dirname(require.main.filename);
@@ -157,42 +159,6 @@ app.get('/admin', (req, res) => {//TODO:HTTPS
         res.send(response);
     })
 });
-
-app.post("/admin",(req,res)=>{
-    checkPassword(req.body.user, req.body.password).then((result)=>{
-        if(result){
-            res.cookie('name',req.body.user,{});
-            res.cookie('hash',admins[req.body.user].hash,{});
-            res.redirect('/admin');
-        }
-        else {
-            res.redirect('/admin');//TODO: Wrong user warning back to front with AJAX
-        }
-    });
-});
-app.post("/adminlogged",(req,res)=>{
-    checkPassword(req.body.user, req.body.password).then((result)=>{
-    if(result){
-        res.send({name:req.body.user,hash:admins[req.body.user].hash});
-    }
-    else {
-        res.send({errormsg:"wrong pw user"});
-    }
-});
-
-
-});
-app.post("/logout",(req,res)=>{
-    res.cookie('name','',{Expires: new Date().toISOString(),path:'/'});
-    res.cookie('hash','',{Expires: new Date().toISOString(),path:'/'});
-    res.redirect('/admin');
-});
-app.post("/newblogpost",(req,res)=>{
-    if(req.body.text != ""){
-        blogPostToDb(req.body.text,(new Date).toISOString(),req.cookies.name);
-    }
-    res.redirect('/admin')
-})
 app.get('/about', (req, res) => {
     "use strict";
     console.log({
@@ -220,8 +186,10 @@ app.get('/blog', (req, res) => {
         reuqestType : "GET",
         path : req.path
     });
-    let appContent = ReactDOM.renderToString(React.createElement(ReactApp));
-    res.render('cv', {content : appContent});
+
+    let content = <Provider store={store}><ReactApp><Blog/></ReactApp></Provider>;
+    let response = renderHTML(content, initialState);
+    res.send(response);
 });
 
 app.get('/projects', (req, res) => {
@@ -233,6 +201,7 @@ app.get('/projects', (req, res) => {
     let appContent = ReactDOM.renderToString(React.createElement(ReactApp));
     res.render('cv', {content : appContent});
 });
+/* This is the handler for hiding admin side scripts from client*/
 app.get('/private/script.js', (req, res) => {
     console.log("anyádfasza");
     console.log({
@@ -241,11 +210,48 @@ app.get('/private/script.js', (req, res) => {
         cookies : req.cookies
     });
     checkHash(req.cookies.name,req.cookies.hash).then((result)=>{
-        if(!result){res.sendfile("build/public/js/script.js");} //ha nincs login akkor az alap js-t kuldjuk TODO: NE A PUBLICBAN LEGYEN
-            else{res.sendfile("build/public/js/scriptAdmin.js");}//TODO: NE A PUBLICBAN LEGYEN
+        if(!result){res.sendfile("build/private/js/script.js");} //ha nincs login akkor az alap js-t kuldjuk TODO: NE A PUBLICBAN LEGYEN
+            else{res.sendfile("build/private/js/scriptAdmin.js");}//TODO: NE A PUBLICBAN LEGYEN
         return;
     });
 });
+//*******************************POST REQUESTS
+app.post("/adminlogged",(req,res)=>{
+    checkPassword(req.body.user, req.body.password).then((result)=>{
+        if(result){
+            res.send({name:req.body.user,hash:admins[req.body.user].hash});
+        }
+        else {
+            res.send({errormsg:"wrong pw user"});
+        }
+    });
+
+
+});
+app.post("/logout",(req,res)=>{
+    res.cookie('name','',{Expires: new Date().toISOString(),path:'/'});
+    res.cookie('hash','',{Expires: new Date().toISOString(),path:'/'});
+    res.redirect('/admin');
+});
+app.post("/newblogpost",(req,res)=>{
+    if(req.body.text != ""){
+        blogPostToDb(req.body.text,(new Date).toISOString(),req.cookies.name);
+    }
+    res.redirect('/admin')
+});
+app.post("/admin",(req,res)=>{
+    checkPassword(req.body.user, req.body.password).then((result)=>{
+        if(result){
+            res.cookie('name',req.body.user,{});
+            res.cookie('hash',admins[req.body.user].hash,{});
+            res.redirect('/admin');
+        }
+        else {
+            res.redirect('/admin');//TODO: Wrong user warning back to front with AJAX
+        }
+    });
+});
+//*******************************END OF POST REQUESTS
 /*https.createServer(credentials,app).listen(process.env.PORT || 3000, function () {
     console.log("Development server is listening on port: 3000");
 });*/
