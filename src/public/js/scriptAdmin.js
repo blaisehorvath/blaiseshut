@@ -12,6 +12,8 @@ import Page from  "page";
 import ReactApp from "../components/ReactApp";
 import AdminLoggedIn from"../components/AdminLoggedIn";
 import About from "../components/About"
+import Blog from "../components/Blog"
+
 let store = createStore(AppReducer,window.__INITIAL_STATE__);
 
 Page('/admin', ()=>{render(
@@ -24,6 +26,10 @@ Page('/about', ()=>{render(
 );});
 Page('/', ()=>{render(
     <Provider store={store}><ReactApp><About/></ReactApp></Provider>,
+    document.getElementById('app')
+);});
+Page('/blog', ()=>{render(
+    <Provider store={store}><ReactApp><Blog/></ReactApp></Provider>,
     document.getElementById('app')
 );});
 Page();

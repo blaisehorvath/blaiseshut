@@ -105,8 +105,23 @@ var config = {
     "AWS_REGION": "eu-central-1",
     "STARTUP_SIGNUP_TABLE": "SWABlog"
 };
-var db = new AWS.DynamoDB({region: config.AWS_REGION});
-var idnum = 0;
+let db = new AWS.DynamoDB({region: config.AWS_REGION});
+let doc = new AWS.DynamoDB.DocumentClient({region: config.AWS_REGION});
+let idnum = 0;
+let params = {
+    TableName : "SWABlog",
+    Count: true
+};
+
+doc.scan(params, function(err, data) {//TODO: This could be cleaner.. Now it gets the maximum id.
+    if (err) {
+        console.error("Unable to query. Error:", JSON.stringify(err, null, 2));
+    } else {
+        console.log("Query succeeded.");
+        idnum = data.Count;
+    }
+});
+
 const blogPostToDb =(text,date,user)=> {
     if(AWSENABLE){
         let form = {
@@ -138,7 +153,7 @@ app.get('/', (req, res) => {
         reuqestType : "GET",
         path : req.path
     });
-    let content = ReactDOM.renderToString(<Provider store={store}><ReactApp ><About/></ReactApp></Provider>);
+    let content = ReactDOM.renderToString(<Provider store={store}><ReactApp><About/></ReactApp></Provider>);
     let response = renderHTML(content, initialState);
     res.send(response);
 });
@@ -151,7 +166,7 @@ app.get('/admin', (req, res) => {//TODO:HTTPS
     });
     let content = "";
     checkHash(req.cookies.name,req.cookies.hash).then((result)=>{
-        if(result) content = ReactDOM.renderToString(<Provider store={store}><ReactApp><AdminLoggedIn/></ReactApp></Provider>);
+        if(result) content = ReactDOM.renderToString(<Provider store={store}><ReactApp><AdminLoggedIn tags={{elso:"fasz"}}>tagss={{elso:"fasz"}}</AdminLoggedIn></ReactApp></Provider>);
         else  content = ReactDOM.renderToString(<Provider store={store}><ReactApp><Admin/></ReactApp></Provider>);
         return;
     }).then(()=>{
@@ -225,8 +240,6 @@ app.post("/adminlogged",(req,res)=>{
             res.send({errormsg:"wrong pw user"});
         }
     });
-
-
 });
 app.post("/logout",(req,res)=>{
     res.cookie('name','',{Expires: new Date().toISOString(),path:'/'});
@@ -235,7 +248,12 @@ app.post("/logout",(req,res)=>{
 });
 app.post("/newblogpost",(req,res)=>{
     if(req.body.text != ""){
-        blogPostToDb(req.body.text,(new Date).toISOString(),req.cookies.name);
+        blogPostToDb({
+            blogHTML:   req.body.text,
+            date:       (new Date).toISOString(),
+            name:       req.cookies.name,
+            tags:       req.body.tags
+        });
     }
     res.redirect('/admin')
 });
