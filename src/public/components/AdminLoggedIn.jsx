@@ -3,13 +3,21 @@ import React from "react";
 export default class AdminLoggedIn extends React.Component {
     constructor(props) {
         super(props);
-        console.log(this)
+        this.getTagsAjax = this.getTagsAjax.bind(this)
     };
+    componentDidMount(){
+        this.getTagsAjax()
+    }
+    getTagsAjax(){
+        $.ajax({type:"POST",url:"/getTags"}).done((data)=>{
+            if("tags" in data){this.tags.value=data.tags}
+            else if ("errormsg" in data){console.log(data.errormsg)}
+        })}
+
     render() {
         return (
             <div className="row">
                 <div className="col-xs-8">
-                    <h1>PlanktonWe-e-eed</h1>
                     <form method="post" action="/newblogpost">
                         <textarea className="form-control" name="text" rows="15" placeholder="blogpost"></textarea>
                         <br/><br/>
@@ -23,10 +31,11 @@ export default class AdminLoggedIn extends React.Component {
                     </form>
                 </div>
                 <div className="col-xs-4">
-                    <h1></h1>
+                    <textarea readOnly="true" className="form-control" rows="15" ref={(ref)=>this.tags = ref}></textarea>
                 </div>
             </div>
         )
     };
 }
+//
 export default AdminLoggedIn
