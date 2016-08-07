@@ -6,11 +6,12 @@ var gulp = require('gulp'),
     server = require('gulp-develop-server'),
     browserify = require('gulp-browserify'),
     plumber = require('gulp-plumber'),
-    livereload = require('gulp-livereload');
+    livereload = require('gulp-livereload'),
+    sass = require('gulp-sass');
 
 var sources = {
     server: "src/server/*",
-    css: "src/public/css/own.css",
+    css: "src/public/css/styles.scss",
     components: "src/public/components/*",
     publicScripts: "src/public/js/*",
     mainView: "src/server/view/*",
@@ -18,6 +19,7 @@ var sources = {
     containers: "src/public/containers/*"
 };
 
+//live reloading the page in the browser is anything changed in the code, this needs the chrome addon LiveReload
 gulp.task('copy_index', function () {
     "use strict";
     return gulp.src(sources.mainView)
@@ -27,8 +29,9 @@ gulp.task('copy_index', function () {
 });
 
 //copying css files
-gulp.task('copy_css', function () {
+gulp.task('compile_css', function () {
     return gulp.src(sources.css)
+        .pipe(sass.sync().on('error', sass.logError))
         .pipe(plumber())
         .pipe(gulp.dest('build/public/css/'));
 });
@@ -90,7 +93,7 @@ gulp.task('move_creds', function () {
         .pipe(gulp.dest('build/server/'))
         .pipe(livereload());
 });
-gulp.task('default', ['copy_index', 'copy_css', 'browserify', 'build_server', 'move_creds'], function () {
+gulp.task('default', ['copy_index', 'compile_css', 'browserify', 'build_server', 'move_creds'], function () {
     "use strict";
     livereload({start: true});
 
@@ -100,7 +103,7 @@ gulp.task('default', ['copy_index', 'copy_css', 'browserify', 'build_server', 'm
     // watching files for changes
     gulp.watch([sources.reducers], ['copy_reducers', server.restart]);
     gulp.watch([sources.server], ['build_server', server.restart]);
-    gulp.watch([sources.css], ['copy_css', server.restart]);
+    gulp.watch([sources.css], ['compile_css', server.restart]);
     gulp.watch([sources.containers], ['browserify', server.restart]);
     gulp.watch([sources.components], ['browserify', server.restart]);
     gulp.watch([sources.publicScripts], ['browserify', server.restart]);
