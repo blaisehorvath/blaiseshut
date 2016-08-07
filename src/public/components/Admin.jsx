@@ -20,30 +20,31 @@ export default class Admin extends React.Component {
             type: 'POST',
             url: '/adminlogged',
             data,
-        }).done((data)=>{
+        }).done((data)=> {
             if ("name" in data && "hash" in data) {
                 document.cookie = "name=" + data.name;
                 document.cookie = "hash=" + data.hash;
                 location.reload();
-            } else if ("errormsg" in data) {this.errormsg.innerHTML=data.errormsg}
+            } else if ("errormsg" in data) {
+                this.errormsg.innerHTML = data.errormsg
+            }
 
         })
     }
+
     render() {// TODO: Better styling
         return (
-            <div>
-                <input ref={(ref)=>this.user = ref} type="text" placeholder="User" name="user"/>
-                <br/>
-                <input ref={(ref)=>this.password = ref} type="password" placeholder="Password" name="password"/>
-                <br/>
-                <h5 ref={(ref)=>this.errormsg = ref} type="text" placeholder=" " name="errormsg"></h5>
-                <br/>
+                <form>
+                    <input ref={(ref)=>this.user = ref} type="text" placeholder="User" name="user"/>
+                    <br/>
+                    <input ref={(ref)=>this.password = ref} type="password" placeholder="Password" name="password"/>
+                    <br/>
+                    <h5 ref={(ref)=>this.errormsg = ref} type="text" placeholder=" " name="errormsg"></h5>
+                    <br/>
 
-                <input id="fasz" type="button" value="LogIn"
-                       onClick={this.AdminLoginAjax.bind(this)}/>
-
-            </div>
-
+                    <input id="fasz" type="submit" value="LogIn"
+                           onClick={this.AdminLoginAjax.bind(this)}/>
+                </form>
         )
     }
 };

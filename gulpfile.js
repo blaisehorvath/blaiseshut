@@ -69,7 +69,6 @@ gulp.task('browserify', ['copy_public_js', 'copy_components', 'copy_containers',
     "use strict";
     return gulp.src('build/public/js/{script.js,scriptAdmin.js}')
         .pipe(plumber())//TODO: Why double plumber?
-        .pipe(plumber())//TODO: Why double plumber?
         .pipe(browserify({
             insertGlobals: true
         }))

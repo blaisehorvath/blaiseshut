@@ -31,7 +31,7 @@ export default class Blog extends React.Component {
     }
     render() {// TODO: Better styling
         return (
-            <div>
+            <div className="row">
                 <h1>This is the BLOG</h1>
                 <input ref={(ref)=>this.user = ref} type="text" placeholder="User" name="user"/>
                 <br/>
