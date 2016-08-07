@@ -19,9 +19,33 @@ const AboutTeamNumber = (state = 0, action) =>
             return state;
     }
 }
+const Tags = (state = [], action) =>
+{
+    switch (action.type){
+        case 'ADD_ALL_TAGS':
+            return [...action.tags]//TOOD:Rewrite all exsisting tags
+        case 'ADD_TAG':
+            return [action.tag,...state]
+        default:
+            return state;
+    }
+}
+export const setInitialTags = (tags)=>{
+    return{
+        type:'ADD_ALL_TAGS',
+        tags
+    }
+}
+export const addTag=(tag)=>{
+    return{
+        type:'ADD_TAG',
+        tag
+    }
+}
 let AppReducer = combineReducers({
     aboutImgSelectorState,
-    AboutTeamNumber
+    AboutTeamNumber,
+    Tags
 });
 
 export const addImgNum = (imgNum) => {
@@ -36,5 +60,4 @@ export const changeAboutTeamNumber = (teamNum) =>{
         teamNum
     }
 }
-
 export default AppReducer;

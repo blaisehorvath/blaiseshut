@@ -26,6 +26,7 @@ import Admin from "../public/components/Admin"
 import AdminLoggedIn from "../public/components/AdminLoggedIn"
 import Blog from "../public/components/Blog"
 
+import {setInitialTags,addTag} from "../public/reducers/StoreAndReducers"
 
 /*Constants*/
 const appDirName = path.dirname(require.main.filename);
@@ -121,6 +122,8 @@ doc.scan(params, function(err, data) {//TODO: This could be cleaner.. Now it get
         idnum = data.Count;
     }
 });
+//TODO:GET TAGS BEFORE SENDIND THE STORE TO ANYONE!!
+let Tags=[{id:0,str:"tagone"},{id:1,str:"tagtwo"}]
 
 const blogPostToDb =(text,date,user)=> {
     if(AWSENABLE){
@@ -145,8 +148,12 @@ const blogPostToDb =(text,date,user)=> {
 //*******************************************************END OF DB SETUP************************************************
 /*Setting the static directory*/
 app.use(express.static(__dirname + '/../public'));
+
+
+store.dispatch(setInitialTags(Tags));
+store.dispatch(addTag({id:2, str:"tagthree"}))
 const initialState = store.getState();
-console.log(initialState);
+
 app.get('/', (req, res) => {
     "use strict";
     console.log({
@@ -166,8 +173,10 @@ app.get('/admin', (req, res) => {//TODO:HTTPS
     });
     let content = "";
     checkHash(req.cookies.name,req.cookies.hash).then((result)=>{
-        if(result) content = ReactDOM.renderToString(<Provider store={store}><ReactApp><AdminLoggedIn></AdminLoggedIn></ReactApp></Provider>);
-        else  content = ReactDOM.renderToString(<Provider store={store}><ReactApp><Admin/></ReactApp></Provider>);
+        if(result)
+            content = ReactDOM.renderToString(<Provider store={store}><ReactApp><AdminLoggedIn></AdminLoggedIn></ReactApp></Provider>);
+        else
+            content = ReactDOM.renderToString(<Provider store={store}><ReactApp><Admin/></ReactApp></Provider>);
         return;
     }).then(()=>{
         let response = renderHTML(content, initialState);
@@ -232,7 +241,6 @@ app.get('/private/script.js', (req, res) => {
 });
 //*******************************POST REQUESTS
 app.post("/getTags",(req,res)=>{
-    console.log("tagrequest")
     checkHash(req.cookies.name,req.cookies.hash).then((result)=>{
         if(result){
             res.send({tags:["tagone","tagtwo..."]});
@@ -245,6 +253,7 @@ app.post("/getTags",(req,res)=>{
 app.post("/adminlogged",(req,res)=>{
     checkPassword(req.body.user, req.body.password).then((result)=>{
         if(result){
+            console.log("goodpw")
             res.send({name:req.body.user,hash:admins[req.body.user].hash});
         }
         else {
