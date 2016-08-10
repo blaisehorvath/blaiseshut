@@ -3,20 +3,20 @@
 import crypto from 'crypto';
 import https from 'https'
 import fs from 'fs'
-var http = require('http');
+import  http from 'http';
 import AWS from "aws-sdk";
 import express from "express";
 import path from "path";
 import React from "react";
 import ReactDOM from "react-dom/server"
-import { Provider } from 'react-redux'
+import {Provider} from 'react-redux'
 /*App*/
 import bodyParser from 'body-parser'
-import {createStore } from 'redux';
+import {createStore} from 'redux';
 import renderHTML from "./renderHTML"
 import AppReducer from "../public/reducers/StoreAndReducers"
 import cookieParser from "cookie-parser"
-import bcrypt from "bcrypt"
+import credential from "credential"
 let store = createStore(AppReducer);
 let app = express();
 
@@ -26,46 +26,37 @@ import Admin from "../public/components/Admin"
 import AdminLoggedIn from "../public/components/AdminLoggedIn"
 import Blog from "../public/components/Blog"
 
-import {setInitialTags,addTag} from "../public/reducers/StoreAndReducers"
+import {setInitialTags, addTag} from "../public/reducers/StoreAndReducers"
 
 /*Constants*/
 const appDirName = path.dirname(require.main.filename);
 //************************************************SETTING UP SECURITY, COOKIES******************************************
-var privateKey = fs.readFileSync('build/server/server.key');
-var certificate = fs.readFileSync('build/server/server.pem');
-
-var credentials = crypto.createCredentials({key: privateKey, cert: certificate, passphrase: 'w0balubadubdub'});
-
+let privateKey = fs.readFileSync('build/server/server.key');
+let certificate = fs.readFileSync('build/server/server.pem');
+let credentials = crypto.createCredentials({key: privateKey, cert: certificate, passphrase: 'w0balubadubdub'});
+let pw = credential()
 let admins = {
-    Viktor:{
-        hash:""
+    Viktor: {
+        hash: ""
     },
-    Blaise:{
-        hash:""
+    Blaise: {
+        hash: ""
     }
 };
 
-app.use(bodyParser.urlencoded({extended:true}));
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(cookieParser());
-const saltRounds=10;
+const saltRounds = 10;
 /*TODO: Make sure theres no ";" in the hash, to make it work in any browser....*/
-bcrypt.genSalt(saltRounds,(err,salt)=>
-    {
-        bcrypt.hash("qwertz",salt,(err,hash)=> {admins.Viktor.hash=hash})
-    }
-);
-bcrypt.genSalt(saltRounds,(err,salt)=>
-    {
-        bcrypt.hash("Seabythelive",salt,(err,hash)=>{admins.Blaise.hash=hash})
-    }
-);
-const checkHash=(name,hash)=>{
-    return new Promise((resolve,reject)=>{
-        if(name in admins)
-        {
-            if ("hash" in admins[name])
-            {
+pw.hash("qwertz",(err,hash)=>{if(err) throw err
+    admins.Viktor.hash=hash})
+pw.hash("Seabythelive",(err,hash)=>{if(err) throw err
+    admins.Blaise.hash=hash})
+const checkHash = (name, hash)=> {
+    return new Promise((resolve, reject)=> {
+        if (name in admins) {
+            if ("hash" in admins[name]) {
                 resolve(hash === admins[name].hash);
             }
             else resolve(false);
@@ -73,12 +64,12 @@ const checkHash=(name,hash)=>{
         else resolve(false);
     })
 };
-const checkPassword=(name,password)=>{
-    return new Promise((resolve,reject)=> {
+const checkPassword = (name, password)=> {
+    return new Promise((resolve, reject)=> {
         if (name in admins) {
-            bcrypt.compare(password, admins[name].hash, (err, result)=> {
-                if (err) reject(err);
-                else resolve(result);
+            pw.verify(admins[name].hash,password,(err,isValid)=>{
+                if(err) throw err
+                resolve(isValid)
             })
         }
         else resolve(false)
@@ -93,15 +84,15 @@ const checkPassword=(name,password)=>{
 // Should have a credentials file in ~/.aws with the following content:
 /*[default]
 
-aws_access_key_id = "Your access key id"
+ aws_access_key_id = "Your access key id"
 
-aws_secret_access_key = "Your secret access key"
-These keys can be obtained from the IAM console/Users/Your User/Security Credentials/Create Acess key
-The DB is obtained by the parameters in app_config.json/
-Db function can be disabled with AWSENABLE*/
+ aws_secret_access_key = "Your secret access key"
+ These keys can be obtained from the IAM console/Users/Your User/Security Credentials/Create Acess key
+ The DB is obtained by the parameters in app_config.json/
+ Db function can be disabled with AWSENABLE*/
 //var config = fs.readFileSync('./server/app_config.json', 'utf8');
 //TODO: EXPORT to standalone file gulp etc.
-const AWSENABLE=true;
+const AWSENABLE = true;
 var config = {
     "AWS_REGION": "eu-central-1",
     "STARTUP_SIGNUP_TABLE": "SWABlog"
@@ -110,11 +101,11 @@ let db = new AWS.DynamoDB({region: config.AWS_REGION});
 let doc = new AWS.DynamoDB.DocumentClient({region: config.AWS_REGION});
 let idnum = 0;
 let params = {
-    TableName : "SWABlog",
+    TableName: "SWABlog",
     Count: true
 };
 
-doc.scan(params, function(err, data) {//TODO: This could be cleaner.. Now it gets the maximum id.
+doc.scan(params, function (err, data) {//TODO: This could be cleaner.. Now it gets the maximum id.
     if (err) {
         console.error("Unable to query. Error:", JSON.stringify(err, null, 2));
     } else {
@@ -123,10 +114,10 @@ doc.scan(params, function(err, data) {//TODO: This could be cleaner.. Now it get
     }
 });
 //TODO:GET TAGS BEFORE SENDIND THE STORE TO ANYONE!!
-let Tags=[{id:0,str:"tagone"},{id:1,str:"tagtwo"}]
+let Tags = [{id: 0, str: "tagone"}, {id: 1, str: "tagtwo"}]
 
-const blogPostToDb =(text,date,user)=> {
-    if(AWSENABLE){
+const blogPostToDb = ({text, date, user, tags})=> {
+    if (AWSENABLE) {
         let form = {
             TableName: config.STARTUP_SIGNUP_TABLE,
             Item: {
@@ -136,9 +127,9 @@ const blogPostToDb =(text,date,user)=> {
                 user: {'S': user}
             }
         }
-        db.putItem(form,function(err,data){
+        db.putItem(form, function (err, data) {
             if (err) {
-                console.log('Error adding item to database: ', err);
+                console.log('Error adding item to database: ', err)
             } else {
                 console.log('Form data added to database.');
             }
@@ -151,14 +142,14 @@ app.use(express.static(__dirname + '/../public'));
 
 
 store.dispatch(setInitialTags(Tags));
-store.dispatch(addTag({id:2, str:"tagthree"}))
+store.dispatch(addTag({id: 2, str: "tagthree"}))
 const initialState = store.getState();
 
 app.get('/', (req, res) => {
     "use strict";
     console.log({
-        reuqestType : "GET",
-        path : req.path
+        reuqestType: "GET",
+        path: req.path
     });
     let content = ReactDOM.renderToString(<Provider store={store}><ReactApp><About/></ReactApp></Provider>);
     let response = renderHTML(content, initialState);
@@ -168,17 +159,18 @@ app.get('/admin', (req, res) => {//TODO:HTTPS
     "use strict";
 
     console.log({
-        reuqestType : "GET",
-        path : req.path
+        reuqestType: "GET",
+        path: req.path
     });
     let content = "";
-    checkHash(req.cookies.name,req.cookies.hash).then((result)=>{
-        if(result)
-            content = ReactDOM.renderToString(<Provider store={store}><ReactApp><AdminLoggedIn></AdminLoggedIn></ReactApp></Provider>);
+    checkHash(req.cookies.name, req.cookies.hash).then((result)=> {
+        if (result)
+            content = ReactDOM.renderToString(<Provider
+                store={store}><ReactApp><AdminLoggedIn></AdminLoggedIn></ReactApp></Provider>);
         else
             content = ReactDOM.renderToString(<Provider store={store}><ReactApp><Admin/></ReactApp></Provider>);
         return;
-    }).then(()=>{
+    }).then(()=> {
         let response = renderHTML(content, initialState);
         res.send(response);
     })
@@ -186,8 +178,8 @@ app.get('/admin', (req, res) => {//TODO:HTTPS
 app.get('/about', (req, res) => {
     "use strict";
     console.log({
-        reuqestType : "GET",
-        path : req.path
+        reuqestType: "GET",
+        path: req.path
     });
     let content = ReactDOM.renderToString(<Provider store={store}><ReactApp/></Provider>);
     let response = renderHTML(content, initialState);
@@ -197,18 +189,18 @@ app.get('/about', (req, res) => {
 app.get('/contact', (req, res) => {
     "use strict";
     console.log({
-        reuqestType : "GET",
-        path : req.path
+        reuqestType: "GET",
+        path: req.path
     });
     let appContent = ReactDOM.renderToString(React.createElement(ReactApp));
-    res.render('cv', {content : appContent});
+    res.render('cv', {content: appContent});
 });
 
 app.get('/blog', (req, res) => {
     "use strict";
     console.log({
-        reuqestType : "GET",
-        path : req.path
+        reuqestType: "GET",
+        path: req.path
     });
 
     let content = <Provider store={store}><ReactApp><Blog/></ReactApp></Provider>;
@@ -219,69 +211,73 @@ app.get('/blog', (req, res) => {
 app.get('/projects', (req, res) => {
     "use strict";
     console.log({
-        reuqestType : "GET",
-        path : req.path
+        reuqestType: "GET",
+        path: req.path
     });
     let appContent = ReactDOM.renderToString(React.createElement(ReactApp));
-    res.render('cv', {content : appContent});
+    res.render('cv', {content: appContent});
 });
 /* This is the handler for hiding admin side scripts from client*/
 app.get('/private/script.js', (req, res) => {
-    console.log("anyádfasza");
     console.log({
-        reuqestType : "GET",
-        path : req.path,
-        cookies : req.cookies
+        reuqestType: "GET",
+        path: req.path,
+        cookies: req.cookies
     });
-    checkHash(req.cookies.name,req.cookies.hash).then((result)=>{
-        if(!result){res.sendfile("build/private/js/script.js");} //ha nincs login akkor az alap js-t kuldjuk TODO: NE A PUBLICBAN LEGYEN
-            else{res.sendfile("build/private/js/scriptAdmin.js");}//TODO: NE A PUBLICBAN LEGYEN
+    checkHash(req.cookies.name, req.cookies.hash).then((result)=> {
+        if (!result) {
+            res.sendfile("build/private/js/script.js");
+        } //ha nincs login akkor az alap js-t kuldjuk TODO: NE A PUBLICBAN LEGYEN
+        else {
+            res.sendfile("build/private/js/scriptAdmin.js");
+        }//TODO: NE A PUBLICBAN LEGYEN
         return;
     });
 });
 //*******************************POST REQUESTS
-app.post("/getTags",(req,res)=>{
-    checkHash(req.cookies.name,req.cookies.hash).then((result)=>{
-        if(result){
-            res.send({tags:["tagone","tagtwo..."]});
+app.post("/getTags", (req, res)=> {
+    checkHash(req.cookies.name, req.cookies.hash).then((result)=> {
+        if (result) {
+            res.send({tags: ["tagone", "tagtwo..."]});
         }
         else {
-            res.send({errormsg:"wrong pw user"});
+            res.send({errormsg: "wrong pw user"});
         }
     });
 });
-app.post("/adminlogged",(req,res)=>{
-    checkPassword(req.body.user, req.body.password).then((result)=>{
-        if(result){
+app.post("/adminlogged", (req, res)=> {
+    checkPassword(req.body.user, req.body.password).then((result)=> {
+        if (result) {
             console.log("goodpw")
-            res.send({name:req.body.user,hash:admins[req.body.user].hash});
+            res.send({name: req.body.user, hash: admins[req.body.user].hash});
         }
         else {
-            res.send({errormsg:"wrong pw user"});
+            res.send({errormsg: "wrong pw user"});
         }
     });
 });
-app.post("/logout",(req,res)=>{
-    res.cookie('name','',{Expires: new Date().toISOString(),path:'/'});
-    res.cookie('hash','',{Expires: new Date().toISOString(),path:'/'});
+app.post("/logout", (req, res)=> {
+    res.cookie('name', '', {Expires: new Date().toISOString(), path: '/'});
+    res.cookie('hash', '', {Expires: new Date().toISOString(), path: '/'});
     res.redirect('/admin');
 });
-app.post("/newblogpost",(req,res)=>{
-    if(req.body.text != ""){
+app.post("/newblogpost", (req, res)=> {//TODO: Auth...
+    console.log(req.body)
+    if (req.body.text != "") {
         blogPostToDb({
-            blogHTML:   req.body.text,
-            date:       (new Date).toISOString(),
-            name:       req.cookies.name,
-            tags:       req.body.tags
+            text: req.body.text,
+            date: (new Date).toISOString(),
+            user: req.cookies.name,
+            tags: req.body.tags
         });
     }
     res.redirect('/admin')
 });
-app.post("/admin",(req,res)=>{
-    checkPassword(req.body.user, req.body.password).then((result)=>{
-        if(result){
-            res.cookie('name',req.body.user,{});
-            res.cookie('hash',admins[req.body.user].hash,{});
+app.post("/admin", (req, res)=> {
+    checkPassword(req.body.user, req.body.password).then((result)=> {
+        if (result) {
+            res.cookie('name', req.body.user, {});
+            res.cookie('hash', admins[req.body.user].hash, {});
             res.redirect('/admin');
         }
         else {
@@ -291,8 +287,8 @@ app.post("/admin",(req,res)=>{
 });
 //*******************************END OF POST REQUESTS
 /*https.createServer(credentials,app).listen(process.env.PORT || 3000, function () {
-    console.log("Development server is listening on port: 3000");
-});*/
+ console.log("Development server is listening on port: 3000");
+ });*/
 http.createServer(app).listen(process.env.PORT || 3000, function () {
     console.log("Development server is listening on port: 3000");
 });
