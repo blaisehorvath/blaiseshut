@@ -103,13 +103,13 @@ const TeamDescription = (team) => {
     );
 };
 
-const FelsoKepesLinkesResz = ({projectsWithImages}) => {
+const ProjectImageSelector = ({projectsWithImages}) => {
     return (
-        <div className="row">
-            <div className="col-xs-6">
+        <div className="row projectImageSelector">
+            <div className="col-xs-6 projectImageList">
                 <ListOfProjects projectsWithImages={projectsWithImages}/>
             </div>
-            <div className="col-xs-6">
+            <div className="col-xs-6 projectImage">
                 <ProjectImage projectsWithImages={projectsWithImages}></ProjectImage>
             </div>
         </div>
@@ -119,7 +119,7 @@ const FelsoKepesLinkesResz = ({projectsWithImages}) => {
 const About = ()=>{
     return(
         <div>
-            <FelsoKepesLinkesResz projectsWithImages={options.aboutProjects}/>
+            <ProjectImageSelector projectsWithImages={options.aboutProjects}/>
             <TeamAndMembers team={team}/>
             <TeamDescription team={team}/>
             <h1>UJ ProjectList</h1>

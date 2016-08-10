@@ -101,7 +101,7 @@ The DB is obtained by the parameters in app_config.json/
 Db function can be disabled with AWSENABLE*/
 //var config = fs.readFileSync('./server/app_config.json', 'utf8');
 //TODO: EXPORT to standalone file gulp etc.
-const AWSENABLE=true;
+const AWSENABLE=false;
 var config = {
     "AWS_REGION": "eu-central-1",
     "STARTUP_SIGNUP_TABLE": "SWABlog"

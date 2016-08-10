@@ -137,3 +137,17 @@ body {
 #tags {
   font-weight: bold;
 }
+
+/* ------------------------------------------------
+                        About
+-------------------------------------------------- */
+.projectImageSelector {
+  background: deeppink;
+  height: 250px;
+}
+
+.img-responsive {
+  display: block;
+  width: auto;
+  max-height: 100%;
+}
