@@ -105,7 +105,7 @@ let params = {
     Count: true
 };
 
-doc.scan(params, function (err, data) {//TODO: This could be cleaner.. Now it gets the maximum id.
+if(AWSENABLE)doc.scan(params, function (err, data) {//TODO: This could be cleaner.. Now it gets the maximum id.
     if (err) {
         console.error("Unable to query. Error:", JSON.stringify(err, null, 2));
     } else {
