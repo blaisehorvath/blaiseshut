@@ -11,7 +11,7 @@ export default class Footer extends React.Component {
                       <div className="col-sm-4">
                         <h4>About me</h4>
                         <p>
-                          My name is Blaise Horvath, I'm a Programmer, Bioinformatician, Molecular Biologist and a tech geek.
+                          For a muddy heated curry, add some lemon juice and oregano. Yellow, sweet pudding is best garnished with clammy kefir.
                         </p>
                       </div> {/* col-sm-4*/}
 

@@ -8,18 +8,14 @@ $media-bootstrap-md-min: 992px;
 $media-bootstrap-md-max: 1199px;
 $media-bootstrap-lg-min: 1200px;
 
-
-/* The body in every page */
-body {
-  background-color: rgb(255, 255, 255);
-  font-family: 'Fira Sans', sans-serif;
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizelegibility;
-  -moz-osx-font-smoothing: grayscale;
-}
+$col_blue: rgb(14, 201, 190);
+$col_lightred: rgb(242, 78, 78);
+$col_purple: rgb(228, 46, 139);
+$col_gray: rgb(189, 189, 189);
+$col_ligth_blue: rgba(14, 201, 190, 0.14);
 
 /*-------------------------------------
-      Everything
+      The body in every page
 --------------------------------------*/
 
 body {
@@ -29,45 +25,52 @@ body {
   text-rendering: optimizelegibility;
   -moz-osx-font-smoothing: grayscale;
   min-width:400px; /*the minimum size of the body*/
-}
 
-button.btn.btn-default {
-  height: 34px; /* I don't know why, but it only works this way*/
+  button.btn.btn-default {
+    height: 34px; /* Something messes up bootstrap buttons. I don't know what or why, but it only works this way*/
+  }
+
+  .row {
+    margin: 0;
+  }
 }
 
 /*-------------------------------------
-      Everything - Bootstrap overwrites
+               Own Styles
 --------------------------------------*/
-.row {
-  margin: 0;
-}
+
 
 /*---------------------------------
-  Navbar
+                Navbar
 ---------------------------------*/
 
 nav.navbar {
-  background: rgb(14, 201, 190)
-}
+    background: $col_blue;
+    margin:0;
+    padding: 0;
+    border: 0;
+    font-size: 1.1em;
+    //todo: increase the text size for nav
 
-
-ul.nav.navbar-nav li a {
-  color: white;
-}
-
-ul.nav.navbar-nav li.active a {
-  color: white;
-  background: rgb(242, 78, 78);
-}
-
-ul.nav.navbar-nav li.active a:hover {
-  color: white;
-  background: rgb(228, 46, 139);
-}
-
-ul.nav.navbar-nav li a:hover {
-  color: white;
-  background: rgb(228, 46, 139);
+  ul.nav.navbar-nav {
+    li {
+      a {
+        color: white;
+      }
+      &.active a {
+        color: white;
+        background: $col_lightred;
+        &:hover {
+          color: white;
+          background: $col_purple;
+        }
+      }
+      &:hover {
+        color: white;
+        background: $col_purple;
+      }
+    }
+  }
 }
 
 #brandText {
@@ -76,7 +79,7 @@ ul.nav.navbar-nav li a:hover {
 }
 
 #myDropDown[aria-expanded="true"] {
-  background: rgb(228, 46, 139);
+  background: $col_purple;
   color: white;
 }
 
@@ -92,25 +95,23 @@ li.dropdown ul.dropdown-menu li a {
  ---------------------------------*/
 
 div#app {
-  margin-top: 60px;
+  //margin-top: 60px;
   margin-bottom: 130px;
 }
 
 /*---------------------------------
-  Footer
+            Footer
 ---------------------------------*/
 footer {
-  background: rgb(189, 189, 189);
-}
-
-footer ul {
-  list-style: none;
-  padding: 0;
-}
-
-footer a:hover {
-  text-decoration: none;
-  font-weight: bold;
+  background: $col_gray;
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+  a:hover {
+    text-decoration: none;
+    font-weight: bold;
+  }
 }
 
 /* ------------------------------------------------
@@ -131,22 +132,34 @@ body {
 }
 
 /* ------------------------------------------------
-      Articles in the Main React Class
--------------------------------------------------- */
-#article {
-  margin: 5px 0 15px 0;
-}
-
-#tags {
-  font-weight: bold;
-}
-
-/* ------------------------------------------------
                         About
 -------------------------------------------------- */
 
+/* About Us */
 
+header {
+  .container {
+    padding: 60px 0 50px 0;
 
+    .jumbotron {
+      background: $col_ligth_blue;
+
+      h1 {
+        margin-top: 0;
+        font-size: 4em;
+      }
+      p {
+        font-size: 1.8em;
+      }
+      .more {
+        font-size:1em;
+      }
+    }
+  }
+}
+
+/* ============================ end =============================*/
+/*
 .projectImageSelector {
   background: yellow;
   padding: 0;
@@ -185,7 +198,7 @@ body {
   }
 }
 
-/* Members */
+!* Members *!
 .memberName {
   text-align: center;
 }
@@ -219,7 +232,7 @@ body {
 .list-group-item{
   margin-top: auto;
   margin-bottom: auto;
-}
+}*/
 
 //.img-responsive {
 //  display: block;

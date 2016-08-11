@@ -15,9 +15,7 @@ const ReactApp = (props) => {
     return (
         <div id="reactApp">
             <Nav/>
-            <div className="container" data-spy="scroll">
                 {props.children}
-            </div>
             <Footer/>
         </div>
     );
