@@ -41,26 +41,45 @@ const BlogPosts = (state = {lastBlogPost:0,posts:[]}, action)=>{//TODO: Get all 
         default:
             return state;
     }
-}
+};
+const LoggedIn = (state = false, action)=>{
+    switch (action.type){
+        case 'LOGIN':
+            return true;
+        case 'LOGOUT':
+            return false;
+        default:
+            return state;
+    }
+};
+export const logout=()=>{
+    return{
+        type:'LOGOUT'
+    }
+};
+export const login=()=>{
+    return{
+        type:'LOGIN'
+    }
+};
 export const addBlogPosts = (posts) =>{
     return {
         type:'NEW_BLOG_POSTS',
         posts
     }
-}
+};
 export const setInitialTags = (tags)=>{
     return{
         type:'ADD_ALL_TAGS',
         tags
     }
-}
+};
 export const addTag=(tag)=>{
     return{
         type:'ADD_TAG',
         tag
     }
-}
-
+};
 export const addImgNum = (imgNum) => {
     return {
         type: "IMG_SELECT",
@@ -77,6 +96,7 @@ let AppReducer = combineReducers({
     aboutImgSelectorState,
     AboutTeamNumber,
     Tags,
-    BlogPosts
+    BlogPosts,
+    LoggedIn
 });
 export default AppReducer;

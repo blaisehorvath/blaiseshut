@@ -11,6 +11,7 @@ import React from "react";
 import ReactDOM from "react-dom/server"
 import {Provider} from 'react-redux'
 /*App*/
+import hipsteripsom from 'hipsteripsum'
 import bodyParser from 'body-parser'
 import {createStore} from 'redux';
 import renderHTML from "./renderHTML"
@@ -54,7 +55,7 @@ pw.hash("qwertz",(err,hash)=>{if(err) throw err
 pw.hash("Seabythelive",(err,hash)=>{if(err) throw err
     admins.Blaise.hash=hash})
 const checkHash = (name, hash)=> {
-    return new Promise((resolve, reject)=> {
+    return new Promise((resolve, reject)=> { //TODO: make a result variable and resolve that...
         if (name in admins) {
             if ("hash" in admins[name]) {
                 resolve(hash === admins[name].hash);
@@ -105,25 +106,26 @@ let params = {
 };
 
 //TODO:GET TAGS BEFORE SENDIND THE STORE TO ANYONE!!
-let Tags = [{id: 0, str: "tagone"}, {id: 1, str: "tagtwo"}]
-const  queryBlogPosts = (fromId,numberOfQuery)=>{//TODO: date is a reserved keyword
+const  queryBlogPosts = (fromId,numberOfQuery,withTag)=>{//TODO: date is a reserved keyword
     //console.log(typeof fromId + "   " + typeof numberOfQuery )
     let queryparams ={
         TableName: "SWAblog",
-        ProjectionExpression:"#id, #date, #text, #user",
+        ProjectionExpression:"#id, #date, #text, #user, #tags, #precontent, #title",
         FilterExpression: "#id between :start and :end",
         ExpressionAttributeNames:{
             "#id": "id",
             "#date": "date",
             "#text": "text",
-            "#user": "user"
-
+            "#user": "user",
+            "#tags": "tags",
+            "#precontent": "precontent",
+            "#title": "title"
         },
         ExpressionAttributeValues:{
             ":start": fromId,
             ":end": fromId+numberOfQuery -1
         }
-        }
+        };
     return new Promise((resolve,reject)=>{
         doc.scan(queryparams,(err,data)=>{
             if (err) console.log(err)
@@ -133,19 +135,21 @@ const  queryBlogPosts = (fromId,numberOfQuery)=>{//TODO: date is a reserved keyw
 
         })
     })
-}
-const blogPostToDb = ({text, date, user, tags, title})=> {
+};
+const blogPostToDb = ({text, precontent, date, user, tags, title})=> {
     if (AWSENABLE) {
         let form = {
             TableName: config.STARTUP_SIGNUP_TABLE,
             Item: {
                 id: {'N': (idnum++).toString()},
+                precontent:{'S':precontent},
                 text: {'S': text},
                 date: {'S': date},
                 user: {'S': user},
-                title: {'S': title}
+                title: {'S': title},
+                tags: {'S': tags}
             }
-        }
+        };
         db.putItem(form, function (err, data) {
             if (err) {
                 console.log('Error adding item to database: ', err)
@@ -154,15 +158,60 @@ const blogPostToDb = ({text, date, user, tags, title})=> {
             }
         })
     }
-}
+};
+const fillBlogPostsDb = ()=>{
+    for (let i = 0; i<10;i++) {
+        blogPostToDb({
+            id: i,
+            text: hipsteripsom.get(2),
+            precontent: hipsteripsom.get(4),
+            date: new Date().toISOString(),
+            user: i%2?'Viktor':'Blaise',
+            title: "This is the no." + i + "BlogPost",
+            tags: "tag"+i+" tag"+Number(i+1)
+        })
+    }
+};
+//fillBlogPostsDb();
+let Tags = []; //Tags are in a format like{name,id,relevance} where relevance is the times it has been in any post
+const getTags=()=>{
+    new Promise((resolve,reject)=>{
+    doc.scan({TableName: "SWAblog"},(err, data)=>{
+        if (err) console.log(err);
+        resolve(data)
+    })
+    }).then((data)=>{//TODO:This could be a good excersize in functional programming
+        let currentTagId = 0;
+        for(let i = 0; i<data.Items.length;i++){
+            let blogTags = data.Items[i].tags.split(" ");
+            for(let j = 0; j < blogTags.length; j++){
+                if (Tags.map(tag=>{return tag.name}).indexOf(blogTags[j]) > -1){
+                    Tags[Tags.map(tag=>{return tag.name}).indexOf(blogTags[j])].relevance++;
+                }
+                else {
+                    Tags.push({name:blogTags[j],relevance:1,id:currentTagId++})
+                }
+            }
+        }
+        return Tags
+    })
+        .then((tags)=>{
+            store.dispatch(setInitialTags(tags));
+            initialState = store.getState();// TODO:Maybe this should be a little bit more logical??
+            // console.log(initialState)
+        })
+};
+getTags();
+
 //*******************************************************END OF DB SETUP************************************************
 /*Setting the static directory*/
 app.use(express.static(__dirname + '/../public'));
 
 
-store.dispatch(setInitialTags(Tags));
-store.dispatch(addTag({id: 2, str: "tagthree"}))
-const initialState = store.getState();
+ // store.dispatch(setInitialTags(Tags));
+// store.dispatch(addTag({id: 2, str: "tagthree"}));
+console.log(store.getState());
+let initialState;
 
 app.get('/', (req, res) => {
     "use strict";
