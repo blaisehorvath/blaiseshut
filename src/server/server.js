@@ -74,7 +74,6 @@ const checkPassword = (name, password)=> {
         }
         else resolve(false)
     });
-    //else return false;
 };
 //************************************************END OF SETTING UP SECURITY, COOKIES***********************************
 
@@ -95,36 +94,56 @@ const checkPassword = (name, password)=> {
 const AWSENABLE = true;
 var config = {
     "AWS_REGION": "eu-central-1",
-    "STARTUP_SIGNUP_TABLE": "SWABlog"
+    "STARTUP_SIGNUP_TABLE": "SWAblog"
 };
 let db = new AWS.DynamoDB({region: config.AWS_REGION});
 let doc = new AWS.DynamoDB.DocumentClient({region: config.AWS_REGION});
 let idnum = 0;
 let params = {
-    TableName: "SWABlog",
+    TableName: "SWAblog",
     Count: true
 };
 
-if(AWSENABLE)doc.scan(params, function (err, data) {//TODO: This could be cleaner.. Now it gets the maximum id.
-    if (err) {
-        console.error("Unable to query. Error:", JSON.stringify(err, null, 2));
-    } else {
-        console.log("Query succeeded.");
-        idnum = data.Count;
-    }
-});
 //TODO:GET TAGS BEFORE SENDIND THE STORE TO ANYONE!!
 let Tags = [{id: 0, str: "tagone"}, {id: 1, str: "tagtwo"}]
+const  queryBlogPosts = (fromId,numberOfQuery)=>{//TODO: date is a reserved keyword
+    //console.log(typeof fromId + "   " + typeof numberOfQuery )
+    let queryparams ={
+        TableName: "SWAblog",
+        ProjectionExpression:"#id, #date, #text, #user",
+        FilterExpression: "#id between :start and :end",
+        ExpressionAttributeNames:{
+            "#id": "id",
+            "#date": "date",
+            "#text": "text",
+            "#user": "user"
 
-const blogPostToDb = ({text, date, user, tags})=> {
+        },
+        ExpressionAttributeValues:{
+            ":start": fromId,
+            ":end": fromId+numberOfQuery -1
+        }
+        }
+    return new Promise((resolve,reject)=>{
+        doc.scan(queryparams,(err,data)=>{
+            if (err) console.log(err)
+            else{
+                resolve(data)
+            }
+
+        })
+    })
+}
+const blogPostToDb = ({text, date, user, tags, title})=> {
     if (AWSENABLE) {
         let form = {
             TableName: config.STARTUP_SIGNUP_TABLE,
             Item: {
-                id: {'S': (idnum++).toString()},
+                id: {'N': (idnum++).toString()},
                 text: {'S': text},
                 date: {'S': date},
-                user: {'S': user}
+                user: {'S': user},
+                title: {'S': title}
             }
         }
         db.putItem(form, function (err, data) {
@@ -268,7 +287,8 @@ app.post("/newblogpost", (req, res)=> {//TODO: Auth...
             text: req.body.text,
             date: (new Date).toISOString(),
             user: req.cookies.name,
-            tags: req.body.tags
+            tags: req.body.tags,
+            title: req.body.title
         });
     }
     res.redirect('/admin')
@@ -285,6 +305,10 @@ app.post("/admin", (req, res)=> {
         }
     });
 });
+app.post("/getBlogPosts",(req,res)=>{//TODO:error handling
+    //console.log("req.body.lastBlogPost: " +req.body.lastBlogPost + "  req.body.queryBlogNum: "+ req.body.queryBlogNum)
+    queryBlogPosts(+req.body.lastBlogPost,+req.body.queryBlogNum).then((data)=>{res.send(data)})
+})
 //*******************************END OF POST REQUESTS
 /*https.createServer(credentials,app).listen(process.env.PORT || 3000, function () {
  console.log("Development server is listening on port: 3000");

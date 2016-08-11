@@ -30,6 +30,24 @@ const Tags = (state = [], action) =>
             return state;
     }
 }
+
+const BlogPosts = (state = {lastBlogPost:0,posts:[]}, action)=>{//TODO: Get all blogposts in the right order (time added)
+    switch (action.type){
+        case 'NEW_BLOG_POSTS':
+            let returnState = Object.assign({},state)
+            returnState.lastBlogPost += action.posts.length;
+            returnState.posts = returnState.posts.concat(action.posts);
+            return returnState;
+        default:
+            return state;
+    }
+}
+export const addBlogPosts = (posts) =>{
+    return {
+        type:'NEW_BLOG_POSTS',
+        posts
+    }
+}
 export const setInitialTags = (tags)=>{
     return{
         type:'ADD_ALL_TAGS',
@@ -42,11 +60,6 @@ export const addTag=(tag)=>{
         tag
     }
 }
-let AppReducer = combineReducers({
-    aboutImgSelectorState,
-    AboutTeamNumber,
-    Tags
-});
 
 export const addImgNum = (imgNum) => {
     return {
@@ -60,4 +73,10 @@ export const changeAboutTeamNumber = (teamNum) =>{
         teamNum
     }
 }
+let AppReducer = combineReducers({
+    aboutImgSelectorState,
+    AboutTeamNumber,
+    Tags,
+    BlogPosts
+});
 export default AppReducer;
