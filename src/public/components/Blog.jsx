@@ -1,13 +1,39 @@
 import React from "react";
 import {addBlogPosts} from "../reducers/StoreAndReducers"
 import {connect} from 'react-redux'
+// TODO:This code is duplicated from AdminLoggedIn....
+const mapStateToProps = (state, ownProps) => {
+    return {
+        Tags: state.Tags
+    }
+};
+const mapDispatchToProps = (dispatch, ownProps) => {
+    return {}
+};
+const Tag = ({tag, addTagToField})=> {
+    return (
+        <a onClick={()=> {
+            addTagToField(tag.name)
+        }}>{tag.name + " "}</a>
+    )
+}
+const TagList = ({Tags, addTagToField})=> {
+    return (
+        <div>
+            {Tags.map((tag)=> {
+                return <Tag key={tag.id} tag={tag} addTagToField={addTagToField}/>
+            })}
+        </div>
+    );
+};
+const TagListWithStore = connect(mapStateToProps, mapDispatchToProps)(TagList)
+// TODO:This code is duplicated from AdminLoggedIn....
 
 const BlogPost = ({post})=> {
-
     return <div className="panel panel-default">
         <div className="panel-heading">
             <div className="row">
-                <div className="col-xs-8">Post by {post.user}</div>
+                <div className="col-xs-8">Post by {post.user} <br/>{post.title}</div>
                 <div className="col-xs-4">Creted at {post.date}</div>
             </div>
         </div>
@@ -71,10 +97,6 @@ const
     }
 const
     BlogPostsWithAjax = connect(mapStateToPropsBlogPosts, mapDispatchToPropsBlogPosts)(BlogPosts)
-const
-    TagBox = ()=> {
-        return <div>TagBox</div>
-    }
 //TODO:remove brs...
 export
 default
@@ -90,7 +112,7 @@ class Blog extends React.Component {
                     <BlogPostsWithAjax/>
                 </div>
                 <div className="col-xs-4">
-                    <TagBox/>
+                    <TagListWithStore/>
                 </div>
             </div>
 
