@@ -9,19 +9,19 @@ let team =
         {
             id: 0,
             name: "Team",
-            img: "https://pbs.twimg.com/profile_images/1732538128/Fotolia_2976920_XS.jpg"
+            img: "https://placehold.it/250x140"
         },
         {
             id: 1,
             name: "Balazs",
-            img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQAsl0jS3eHn95JzbgWU1_G18Bx1qNHqy0w6BIePQZsuoMXhcus"
+            img: "https://placehold.it/250x140"
 
         }
         ,
         {
             id: 2,
             name: "Viktor",
-            img: "http://static.theglobeandmail.ca/5e1/migration_catalog/article4071753.ece/ALTERNATES/w620/tech+geek+-+iStock+-+1500x844"
+            img: "https://placehold.it/250x140"
         }
     ];
 
@@ -30,7 +30,7 @@ let options = {
         {
             id: 0,
             title: "CNC",
-            picture: "http://www.finmech.hu/wp-content/uploads/2015/08/Close-up-of-CNC-machine-at-work.jpg",
+            picture: "http://placehold.it/470x250",
             short_descr: "Nagyon durva bááázee"
         },
         {
@@ -76,18 +76,18 @@ let options = {
 
 const ListOfProjects = ({projectsWithImages, onProjectClick}) => {
     return (
-        <ul>
+        <div className="list-group">
             {projectsWithImages.map(project=>
                 <ProjectListItem
                     key={project.id}
                     {...project}
                 />)}
-        </ul>
+        </div>
     )
 };
 const TeamAndMembers = ({team}) => {
     return (
-        <div className="row">
+        <div className="row teamRow">
             {team.map(member=>
                 <div key={member.id} className="col-xs-4 memberBox">
                     <MemberWithImage id={member.id} title={member.name} imagesrc={member.img}/>
@@ -106,10 +106,10 @@ const TeamDescription = (team) => {
 const ProjectImageSelector = ({projectsWithImages}) => {
     return (
         <div className="row projectImageSelector">
-            <div className="col-xs-6 projectImageList">
+            <div className="col-xs-12 col-sm-6 projectImageDescriptionList">
                 <ListOfProjects projectsWithImages={projectsWithImages}/>
             </div>
-            <div className="col-xs-6 projectImage">
+            <div className="hidden-xs col-sm-6 projectImage">
                 <ProjectImage projectsWithImages={projectsWithImages}></ProjectImage>
             </div>
         </div>

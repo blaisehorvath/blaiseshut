@@ -1,5 +1,14 @@
 @import "normalize";
 
+/*Variables*/
+
+$media-bootstrap-sm-min: 768px;
+$media-bootstrap-sm-max: 991px;
+$media-bootstrap-md-min: 992px;
+$media-bootstrap-md-max: 1199px;
+$media-bootstrap-lg-min: 1200px;
+
+
 /* The body in every page */
 body {
   background-color: rgb(255, 255, 255);
@@ -19,24 +28,18 @@ body {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizelegibility;
   -moz-osx-font-smoothing: grayscale;
+  min-width:400px; /*the minimum size of the body*/
 }
 
 button.btn.btn-default {
   height: 34px; /* I don't know why, but it only works this way*/
 }
 
-/* Members */
-.memberName {
-  text-align: center;
-}
-
-.memberPicture{
-  margin: 0 auto;
-  padding: 5%;
-}
-
-.memberBox{
-  padding: 10px 0px 10px 0px;
+/*-------------------------------------
+      Everything - Bootstrap overwrites
+--------------------------------------*/
+.row {
+  margin: 0;
 }
 
 /*---------------------------------
@@ -141,13 +144,85 @@ body {
 /* ------------------------------------------------
                         About
 -------------------------------------------------- */
+
+
+
 .projectImageSelector {
-  background: deeppink;
-  height: 250px;
+  background: yellow;
+  padding: 0;
+  margin: 0;
+  min-width: 240px;
+
+  .projectImageDescriptionList {
+    background: royalblue;
+    padding: 0;
+
+    .list-group-item {
+      height: 83px;
+    }
+
+    .active {
+      height: 83px;
+      background: yellowgreen;
+    }
+
+  }
+
+  .projectImage {
+    background: deeppink;
+    height: 250px;
+    padding: 0;
+    min-width: 0;
+
+    .projectImageHolder {
+      display: block;
+      width: auto;
+      margin-left: auto;
+      margin-right: auto;
+      max-height: 100%;
+    }
+
+  }
 }
 
-.img-responsive {
-  display: block;
-  width: auto;
-  max-height: 100%;
+/* Members */
+.memberName {
+  text-align: center;
 }
+
+.memberPicture{
+  margin: 0 auto;
+  padding: 5%;
+}
+
+.memberBox{
+  padding: 10px 0px 10px 0px;
+}
+
+.imageAndText {position: relative;}
+.imageAndText .col {position: absolute; z-index: 1; top: 0; left: 0;}
+
+.teamRow {
+  background: orangered;
+  height: 250px;
+  .list-group-item {
+    height: 85%;
+
+    img {
+      max-height: 75%;
+      width: auto;
+    }
+
+  }
+}
+
+.list-group-item{
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+//.img-responsive {
+//  display: block;
+//  width: auto;
+//  max-height: 100%;
+//}
