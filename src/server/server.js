@@ -20,12 +20,14 @@ import cookieParser from "cookie-parser"
 import credential from "credential"
 let store = createStore(AppReducer);
 let app = express();
+import url from "url";
 
 import ReactApp from "../public/components/ReactApp";
 import About from "../public/components/About"
 import Admin from "../public/components/Admin"
 import AdminLoggedIn from "../public/components/AdminLoggedIn"
 import Blog from "../public/components/Blog"
+import SinglePost from "../public/components/SinglePost"
 
 import {setInitialTags, addTag} from "../public/reducers/StoreAndReducers"
 
@@ -50,10 +52,14 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 const saltRounds = 10;
 /*TODO: Make sure theres no ";" in the hash, to make it work in any browser....*/
-pw.hash("qwertz",(err,hash)=>{if(err) throw err
-    admins.Viktor.hash=hash})
-pw.hash("Seabythelive",(err,hash)=>{if(err) throw err
-    admins.Blaise.hash=hash})
+pw.hash("qwertz", (err, hash)=> {
+    if (err) throw err
+    admins.Viktor.hash = hash
+})
+pw.hash("Seabythelive", (err, hash)=> {
+    if (err) throw err
+    admins.Blaise.hash = hash
+})
 const checkHash = (name, hash)=> {
     return new Promise((resolve, reject)=> { //TODO: make a result variable and resolve that...
         if (name in admins) {
@@ -68,8 +74,8 @@ const checkHash = (name, hash)=> {
 const checkPassword = (name, password)=> {
     return new Promise((resolve, reject)=> {
         if (name in admins) {
-            pw.verify(admins[name].hash,password,(err,isValid)=>{
-                if(err) throw err
+            pw.verify(admins[name].hash, password, (err, isValid)=> {
+                if (err) throw err
                 resolve(isValid)
             })
         }
@@ -106,13 +112,13 @@ let params = {
 };
 
 //TODO:GET TAGS BEFORE SENDIND THE STORE TO ANYONE!!
-const  queryBlogPosts = (fromId,numberOfQuery,withTag)=>{//TODO: date is a reserved keyword
+const queryBlogPosts = (fromId, numberOfQuery, withTag)=> {//TODO: date is a reserved keyword
     //console.log(typeof fromId + "   " + typeof numberOfQuery )
-    let queryparams ={
+    let queryparams = {
         TableName: "SWAblog",
-        ProjectionExpression:"#id, #date, #text, #user, #tags, #precontent, #title",
+        ProjectionExpression: "#id, #date, #text, #user, #tags, #precontent, #title",
         FilterExpression: "#id between :start and :end",
-        ExpressionAttributeNames:{
+        ExpressionAttributeNames: {
             "#id": "id",
             "#date": "date",
             "#text": "text",
@@ -121,15 +127,15 @@ const  queryBlogPosts = (fromId,numberOfQuery,withTag)=>{//TODO: date is a reser
             "#precontent": "precontent",
             "#title": "title"
         },
-        ExpressionAttributeValues:{
+        ExpressionAttributeValues: {
             ":start": fromId,
-            ":end": fromId+numberOfQuery -1
+            ":end": fromId + numberOfQuery - 1
         }
-        };
-    return new Promise((resolve,reject)=>{
-        doc.scan(queryparams,(err,data)=>{
+    };
+    return new Promise((resolve, reject)=> {
+        doc.scan(queryparams, (err, data)=> {
             if (err) console.log(err)
-            else{
+            else {
                 resolve(data)
             }
 
@@ -142,7 +148,7 @@ const blogPostToDb = ({text, precontent, date, user, tags, title})=> {
             TableName: config.STARTUP_SIGNUP_TABLE,
             Item: {
                 id: {'N': (idnum++).toString()},
-                precontent:{'S':precontent},
+                precontent: {'S': precontent},
                 text: {'S': text},
                 date: {'S': date},
                 user: {'S': user},
@@ -159,43 +165,47 @@ const blogPostToDb = ({text, precontent, date, user, tags, title})=> {
         })
     }
 };
-const fillBlogPostsDb = ()=>{
-    for (let i = 0; i<10;i++) {
+const fillBlogPostsDb = ()=> {
+    for (let i = 0; i < 10; i++) {
         blogPostToDb({
             id: i,
             text: hipsteripsom.get(2),
             precontent: hipsteripsom.get(4),
             date: new Date().toISOString(),
-            user: i%2?'Viktor':'Blaise',
-            title: "This is the no." + i + "BlogPost",
-            tags: "tag"+i+" tag"+Number(i+1)
+            user: i % 2 ? 'Viktor' : 'Blaise',
+            title: "This is the number" + i + " BlogPost",
+            tags: "tag" + i + " tag" + Number(i + 1)
         })
     }
 };
-//fillBlogPostsDb();
+// fillBlogPostsDb();
 let Tags = []; //Tags are in a format like{name,id,relevance} where relevance is the times it has been in any post
-const getTags=()=>{
-    new Promise((resolve,reject)=>{
-    doc.scan({TableName: "SWAblog"},(err, data)=>{
-        if (err) console.log(err);
-        resolve(data)
-    })
-    }).then((data)=>{//TODO:This could be a good excersize in functional programming
+const getTags = ()=> {
+    new Promise((resolve, reject)=> {
+        doc.scan({TableName: "SWAblog"}, (err, data)=> {
+            if (err) console.log(err);
+            resolve(data)
+        })
+    }).then((data)=> {//TODO:This could be a good excersize in functional programming
         let currentTagId = 0;
-        for(let i = 0; i<data.Items.length;i++){
+        for (let i = 0; i < data.Items.length; i++) {
             let blogTags = data.Items[i].tags.split(" ");
-            for(let j = 0; j < blogTags.length; j++){
-                if (Tags.map(tag=>{return tag.name}).indexOf(blogTags[j]) > -1){
-                    Tags[Tags.map(tag=>{return tag.name}).indexOf(blogTags[j])].relevance++;
+            for (let j = 0; j < blogTags.length; j++) {
+                if (Tags.map(tag=> {
+                        return tag.name
+                    }).indexOf(blogTags[j]) > -1) {
+                    Tags[Tags.map(tag=> {
+                        return tag.name
+                    }).indexOf(blogTags[j])].relevance++;
                 }
                 else {
-                    Tags.push({name:blogTags[j],relevance:1,id:currentTagId++})
+                    Tags.push({name: blogTags[j], relevance: 1, id: currentTagId++})
                 }
             }
         }
         return Tags
     })
-        .then((tags)=>{
+        .then((tags)=> {
             store.dispatch(setInitialTags(tags));
             initialState = store.getState();// TODO:Maybe this should be a little bit more logical??
             // console.log(initialState)
@@ -208,7 +218,7 @@ getTags();
 app.use(express.static(__dirname + '/../public'));
 
 
- // store.dispatch(setInitialTags(Tags));
+// store.dispatch(setInitialTags(Tags));
 // store.dispatch(addTag({id: 2, str: "tagthree"}));
 console.log(store.getState());
 let initialState;
@@ -263,17 +273,46 @@ app.get('/contact', (req, res) => {
     let appContent = ReactDOM.renderToString(React.createElement(ReactApp));
     res.render('cv', {content: appContent});
 });
-
-app.get('/blog', (req, res) => {
+app.get('/blog/:blogTitle', (req, res) => {//TODO:Better regex, only match /string_like_this
     "use strict";
     console.log({
         reuqestType: "GET",
         path: req.path
     });
+        queryBlogPosts(0,50)
+            .then(data=>{//TODO:This is really bad
+        return data.Items.filter((blogpost)=>{return blogpost.title === decodeURIComponent(req.params.blogTitle)})
+    })
+            .then((blogPost)=>{
+                let content = <Provider store={store}><ReactApp><SinglePost/></ReactApp></Provider>;
+                let response = renderHTML(content, initialState);
+                res.send(response);
+            });
+    //TODO:Write query function which gets the right blogpost!
 
-    let content = <Provider store={store}><ReactApp><Blog/></ReactApp></Provider>;
-    let response = renderHTML(content, initialState);
-    res.send(response);
+});
+
+
+app.get('/blog', (req, res) => {//TODO:Better regex, only match /string_like_this
+    "use strict";
+    console.log({
+        reuqestType: "GET",
+        path: req.path
+    });
+    checkHash(req.cookies.name, req.cookies.hash).then((result)=> {
+        if (!result) {
+            let content = <Provider store={store}><ReactApp><Blog/></ReactApp></Provider>;
+            let response = renderHTML(content, initialState);
+            res.send(response);
+        }
+        else {
+            console.log("okkke")
+            let content = <Provider store={store}><ReactApp><Blog loggedIn={true}/></ReactApp></Provider>;
+            let response = renderHTML(content, initialState);
+            res.send(response);
+        }
+    })
+
 });
 
 app.get('/projects', (req, res) => {
@@ -287,12 +326,14 @@ app.get('/projects', (req, res) => {
 });
 /* This is the handler for hiding admin side scripts from client*/
 app.get('/private/script.js', (req, res) => {
-    console.log({
-        reuqestType: "GET",
-        path: req.path,
-        cookies: req.cookies
-    });
-    checkHash(req.cookies.name, req.cookies.hash).then((result)=> {
+
+     console.log({
+     reuqestType: "GET",
+     path: req.path,
+     cookies: req.cookies
+     });
+
+    checkHash(req.cookies.name, req.cookies.hash).then((result)=> {// TODO: This may not be needed bc scriptAdmin?
         if (!result) {
             res.sendfile("build/private/js/script.js");
         } //ha nincs login akkor az alap js-t kuldjuk TODO: NE A PUBLICBAN LEGYEN
@@ -354,9 +395,11 @@ app.post("/admin", (req, res)=> {
         }
     });
 });
-app.post("/getBlogPosts",(req,res)=>{//TODO:error handling
+app.post("/getBlogPosts", (req, res)=> {//TODO:error handling
     //console.log("req.body.lastBlogPost: " +req.body.lastBlogPost + "  req.body.queryBlogNum: "+ req.body.queryBlogNum)
-    queryBlogPosts(+req.body.lastBlogPost,+req.body.queryBlogNum).then((data)=>{res.send(data)})
+    queryBlogPosts(+req.body.lastBlogPost, +req.body.queryBlogNum).then((data)=> {
+        res.send(data)
+    })
 })
 //*******************************END OF POST REQUESTS
 /*https.createServer(credentials,app).listen(process.env.PORT || 3000, function () {
