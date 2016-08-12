@@ -13,6 +13,7 @@ import ReactApp from "../components/ReactApp";
 import Admin from "../components/Admin";
 import About from "../components/About"
 import Blog from "../components/Blog"
+import SinglePost from "../components/SinglePost"
 
 let store = createStore(AppReducer,window.__INITIAL_STATE__);
 
@@ -30,6 +31,10 @@ Page('/', ()=>{render(
 );});
 Page('/blog', ()=>{render(
     <Provider store={store}><ReactApp><Blog/></ReactApp></Provider>,
+    document.getElementById('app')
+);});
+Page('/blog/:blogTitle', (blogTitle)=>{console.log(blogTitle); render(
+    <Provider store={store}><ReactApp><SinglePost blogTitle={blogTitle}/></ReactApp></Provider>,
     document.getElementById('app')
 );});
 Page();
