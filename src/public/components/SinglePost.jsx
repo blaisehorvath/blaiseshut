@@ -8,8 +8,7 @@ const mapStateToProps = (state, ownProps) => {
 };
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
-        onAjaxBlogPost: (blogPost)=>
-        {
+        onAjaxBlogPost: (blogPost)=> {
             dispatch(loadBlogPost(blogPost))
         }
 
@@ -18,29 +17,25 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 class SinglePostWithoutStore extends React.Component {
     constructor(props) {
         super(props);
-    }
-        componentWillMount(){
-             if (this.props.blogPostFromServer === undefined) {//Front-end rendering
-                $.ajax({
-                    type: 'POST',
-                    url: this.props.blogTitle.path
-                }).done((blogPost)=> {
-                    this.props.onAjaxBlogPost(blogPost) // Comes from the connect..
-                })
-             }
+        if(this.props.blogTitle) {// If we are coming from blog or somewhere else from this site on front end
+            $.ajax({// This could be sooo much better without this
+                type: 'POST',
+                url: this.props.blogTitle.path
+            }).done((blogPost)=> {
+                this.props.onAjaxBlogPost(blogPost) // Comes from the connect..
+            })
         }
-
-
+    }
     render() {
-        return <div>
-            <div>{(this.props.blogPostFromServer===undefined)?this.props.blogPost.date:this.props.blogPostFromServer.date}</div>
-            <div>{(this.props.blogPostFromServer===undefined)?this.props.blogPost.user:this.props.blogPostFromServer.user}</div>
-            <div>{(this.props.blogPostFromServer===undefined)?this.props.blogPost.title:this.props.blogPostFromServer.title}</div>
-            <div>{(this.props.blogPostFromServer===undefined)?this.props.blogPost.precontent:this.props.blogPostFromServer.precontent}</div>
-            <div>{(this.props.blogPostFromServer===undefined)?this.props.blogPost.text:this.props.blogPostFromServer.text}</div>
-            <div>{(this.props.blogPostFromServer===undefined)?this.props.blogPost.tags:this.props.blogPostFromServer.tags}</div>
+        return <div> <br/><br/><br/>
+            <div>{this.props.blogPost.title}</div>
+            <div>{this.props.blogPost.user}</div>
+            <div>{this.props.blogPost.date}</div>
+            <div>{this.props.blogPost.precontent}</div>
+            <div>{this.props.blogPost.text}</div>
+            <div>{this.props.blogPost.tags}</div>
         </div>
     }
 }
-const SinglePost = connect(mapStateToProps,mapDispatchToProps)(SinglePostWithoutStore);
+const SinglePost = connect(mapStateToProps, mapDispatchToProps)(SinglePostWithoutStore);
 export default SinglePost

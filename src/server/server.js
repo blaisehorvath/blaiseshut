@@ -29,7 +29,7 @@ import AdminLoggedIn from "../public/components/AdminLoggedIn"
 import Blog from "../public/components/Blog"
 import SinglePost from "../public/components/SinglePost"
 
-import {setInitialTags, addTag} from "../public/reducers/StoreAndReducers"
+import {setInitialTags, addTag, loadBlogPost} from "../public/reducers/StoreAndReducers"
 
 /*Constants*/
 const appDirName = path.dirname(require.main.filename);
@@ -281,11 +281,11 @@ app.get('/blog/:blogTitle', (req, res) => {//TODO:Better regex, only match /stri
     });
         queryBlogPosts(0,50)
             .then(data=>{//TODO:This is really bad
-        return data.Items.filter((blogpost)=>{return blogpost.title === decodeURIComponent(req.params.blogTitle)})[0]
+                store.dispatch(loadBlogPost(data.Items.filter((blogpost)=>{return blogpost.title === decodeURIComponent(req.params.blogTitle)})[0]))
     })
-            .then((blogPost)=>{
-                let content = ReactDOM.renderToString(<Provider store={store}><ReactApp><SinglePost blogPostFromServer={blogPost}/></ReactApp></Provider>);
-                let response = renderHTML(content, initialState);
+            .then(()=>{
+                let content = ReactDOM.renderToString(<Provider store={store}><ReactApp><SinglePost/></ReactApp></Provider>);
+                let response = renderHTML(content, store.getState());
                 res.send(response);
             });
     //TODO:Write query function which gets the right blogpost!
