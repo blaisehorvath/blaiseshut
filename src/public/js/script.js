@@ -33,7 +33,7 @@ Page('/blog', ()=>{render(
     <Provider store={store}><ReactApp><Blog/></ReactApp></Provider>,
     document.getElementById('app')
 );});
-Page('/blog/:blogTitle', (blogTitle)=>{render(
+Page('/blog/:blogTitle', (blogTitle)=>{console.log(blogTitle); render(
     <Provider store={store}><ReactApp><SinglePost blogTitle={blogTitle}/></ReactApp></Provider>,
     document.getElementById('app')
 );});

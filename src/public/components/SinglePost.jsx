@@ -2,16 +2,14 @@ import React from "react";
 import {loadBlogPost} from "../reducers/StoreAndReducers"
 import {connect} from "react-redux"
 const mapStateToProps = (state, ownProps) => {
-
     return {
-        blogPostAjax: state.BlogPost
+        blogPost: state.BlogPost
     }
 };
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
         onAjaxBlogPost: (blogPost)=>
         {
-            console.log('hereindispatch', blogPost)
             dispatch(loadBlogPost(blogPost))
         }
 
@@ -20,28 +18,27 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 class SinglePostWithoutStore extends React.Component {
     constructor(props) {
         super(props);
-        this.blogPost = {user: 0, date: 0, title: 0, precontent: 0, text: 0, text: 0}//DEBUG
-        if (this.props.blogPostFromServer === undefined) {//Front-end rendering
-            $.ajax({
-                type: 'POST',
-                url: this.props.blogTitle.path
-            }).done((blogPost)=> {
-                this.props.onAjaxBlogPost(blogPost) // Comes from the connect..
-                console.log(this)
-            })
-
-        }
-        else this.blogPost = this.props.blogPostFromServer;
     }
+        componentWillMount(){
+             if (this.props.blogPostFromServer === undefined) {//Front-end rendering
+                $.ajax({
+                    type: 'POST',
+                    url: this.props.blogTitle.path
+                }).done((blogPost)=> {
+                    this.props.onAjaxBlogPost(blogPost) // Comes from the connect..
+                })
+             }
+        }
+
 
     render() {
-        return <div> fasz
-            <div>{this.blogPost.date}</div>
-            <div>{this.blogPost.user}</div>
-            <div>{this.blogPost.title}</div>
-            <div>{this.blogPost.precontent}</div>
-            <div>{this.blogPost.text}</div>
-            <div>{this.blogPost.tags}</div>
+        return <div>
+            <div>{(this.props.blogPostFromServer===undefined)?this.props.blogPost.date:this.props.blogPostFromServer.date}</div>
+            <div>{(this.props.blogPostFromServer===undefined)?this.props.blogPost.user:this.props.blogPostFromServer.user}</div>
+            <div>{(this.props.blogPostFromServer===undefined)?this.props.blogPost.title:this.props.blogPostFromServer.title}</div>
+            <div>{(this.props.blogPostFromServer===undefined)?this.props.blogPost.precontent:this.props.blogPostFromServer.precontent}</div>
+            <div>{(this.props.blogPostFromServer===undefined)?this.props.blogPost.text:this.props.blogPostFromServer.text}</div>
+            <div>{(this.props.blogPostFromServer===undefined)?this.props.blogPost.tags:this.props.blogPostFromServer.tags}</div>
         </div>
     }
 }

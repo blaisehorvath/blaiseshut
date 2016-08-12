@@ -220,7 +220,7 @@ app.use(express.static(__dirname + '/../public'));
 
 // store.dispatch(setInitialTags(Tags));
 // store.dispatch(addTag({id: 2, str: "tagthree"}));
-console.log(store.getState());
+// console.log(store.getState());
 let initialState;
 
 app.get('/', (req, res) => {
