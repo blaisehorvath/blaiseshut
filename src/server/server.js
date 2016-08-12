@@ -281,16 +281,34 @@ app.get('/blog/:blogTitle', (req, res) => {//TODO:Better regex, only match /stri
     });
         queryBlogPosts(0,50)
             .then(data=>{//TODO:This is really bad
-        return data.Items.filter((blogpost)=>{return blogpost.title === decodeURIComponent(req.params.blogTitle)})
+        return data.Items.filter((blogpost)=>{return blogpost.title === decodeURIComponent(req.params.blogTitle)})[0]
     })
             .then((blogPost)=>{
-                let content = <Provider store={store}><ReactApp><SinglePost/></ReactApp></Provider>;
+                let content = ReactDOM.renderToString(<Provider store={store}><ReactApp><SinglePost blogPostFromServer={blogPost}/></ReactApp></Provider>);
                 let response = renderHTML(content, initialState);
                 res.send(response);
             });
     //TODO:Write query function which gets the right blogpost!
 
 });
+app.post('/blog/:blogTitle', (req, res) => {//TODO:Better regex, only match /string_like_this
+    "use strict";
+    console.log({
+        reuqestType: "POST",
+        path: req.path
+    });
+    queryBlogPosts(0,50)
+        .then(data=>{//TODO:This is really bad
+            req.path.split("/")
+            return data.Items.filter((blogpost)=>{return blogpost.title === decodeURIComponent(req.params.blogTitle)})[0]
+        })
+        .then((blogPost)=>{
+            res.send(blogPost);
+        });
+    //TODO:Write query function which gets the right blogpost!
+
+});
+
 
 
 app.get('/blog', (req, res) => {//TODO:Better regex, only match /string_like_this
@@ -301,7 +319,7 @@ app.get('/blog', (req, res) => {//TODO:Better regex, only match /string_like_thi
     });
     checkHash(req.cookies.name, req.cookies.hash).then((result)=> {
         if (!result) {
-            let content = <Provider store={store}><ReactApp><Blog/></ReactApp></Provider>;
+            let content = ReactDOM.renderToString(<Provider store={store}><ReactApp><Blog loggedIn={false}/></ReactApp></Provider>);
             let response = renderHTML(content, initialState);
             res.send(response);
         }

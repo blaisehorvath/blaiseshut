@@ -52,6 +52,14 @@ const LoggedIn = (state = false, action)=>{
             return state;
     }
 };
+const BlogPost =(state = {},action)=>{
+    switch (action.type){
+        case 'LOAD_POST':
+            return action.blogPost;
+        default:
+            return state;
+    }
+}
 export const logout=()=>{
     return{
         type:'LOGOUT'
@@ -60,6 +68,12 @@ export const logout=()=>{
 export const login=()=>{
     return{
         type:'LOGIN'
+    }
+};
+export const loadBlogPost = (blogPost) =>{
+    return {
+        type: "LOAD_POST",
+        blogPost
     }
 };
 export const addBlogPosts = (posts) =>{
@@ -97,6 +111,7 @@ let AppReducer = combineReducers({
     AboutTeamNumber,
     Tags,
     BlogPosts,
-    LoggedIn
+    LoggedIn,
+    BlogPost
 });
 export default AppReducer;

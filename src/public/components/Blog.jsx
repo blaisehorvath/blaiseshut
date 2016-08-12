@@ -30,7 +30,7 @@ const TagListWithStore = connect(mapStateToProps, mapDispatchToProps)(TagList)
 // TODO:This code is duplicated from AdminLoggedIn....
 
 const BlogPost = ({post,loggedIn})=> {
-    console.log(loggedIn?1:0)
+    // console.log(loggedIn?1:0)
     return <div className="panel panel-default">
         <div className="panel-heading">
             <div className="row">
@@ -69,14 +69,13 @@ class BlogPosts extends React.Component {
     }
 
     render() {
-        console.log(this)
         if(this.props.posts)
         return (<div>{this.props.posts.map(
-            post=> {
+            post=> {//TODO:This is not the BLOG! loggedIn is elsewhere
                 return <div key={post.id}>
-                    <BlogPost post={post} loggedIn={this.props.loggedIn}/> //TODO:This is not the BLOG! loggedIn is elsewhere
+                    <BlogPost post={post} loggedIn={this.props.loggedIn}/>
                 </div>
-            })}<div onClick={()=>{this.getNewBlogPosts(1)}} className="panel">Show me more!!</div></div>)//TODO: FRONT-END! Change this to scroll event
+            })}<div onClick={()=>{this.getNewBlogPosts(1)}} className="panel">Show me more!! <br/><br/></div></div>)//TODO: FRONT-END! Change this to scroll event
         else return <div></div>
     }
 
@@ -106,7 +105,6 @@ default
 class Blog extends React.Component {
     constructor(props) {
         super(props);
-        console.log(this)
     };
 
     render() {// TODO: Better styling
@@ -122,6 +120,9 @@ class Blog extends React.Component {
 
         )
     }
-}
-;
+};
+
+Blog.childContextTypes = {
+    loggedIn: React.PropTypes.object.isRequired
+};
 export default Blog
