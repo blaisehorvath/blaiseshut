@@ -29,7 +29,7 @@ Page('/', ()=>{render(
     document.getElementById('app')
 );});
 Page('/blog', ()=>{render(
-    <Provider store={store}><ReactApp><Blog/></ReactApp></Provider>,
+    <Provider store={store}><ReactApp><Blog loggedIn={true}/></ReactApp></Provider>,
     document.getElementById('app')
 );});
 Page();

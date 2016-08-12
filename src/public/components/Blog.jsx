@@ -29,7 +29,8 @@ const TagList = ({Tags, addTagToField})=> {
 const TagListWithStore = connect(mapStateToProps, mapDispatchToProps)(TagList)
 // TODO:This code is duplicated from AdminLoggedIn....
 
-const BlogPost = ({post})=> {
+const BlogPost = ({post,loggedIn})=> {
+    console.log(loggedIn?1:0)
     return <div className="panel panel-default">
         <div className="panel-heading">
             <div className="row">
@@ -38,7 +39,8 @@ const BlogPost = ({post})=> {
             </div>
         </div>
         <div className="panel-body">{post.text}</div>
-        <div className="panel-footer">{post.tags}</div>
+        <div className="panel-footer">{post.tags.toString() + "   " +
+        loggedIn?<a method="get" href={"/blog/"+encodeURIComponent(post.title)}>read more!</a>:""}</div>
     </div>
 }
 class BlogPosts extends React.Component {
@@ -67,11 +69,12 @@ class BlogPosts extends React.Component {
     }
 
     render() {
+        console.log(this)
         if(this.props.posts)
         return (<div>{this.props.posts.map(
             post=> {
                 return <div key={post.id}>
-                    <BlogPost post={post}/>
+                    <BlogPost post={post} loggedIn={this.props.loggedIn}/> //TODO:This is not the BLOG! loggedIn is elsewhere
                 </div>
             })}<div onClick={()=>{this.getNewBlogPosts(1)}} className="panel">Show me more!!</div></div>)//TODO: FRONT-END! Change this to scroll event
         else return <div></div>
@@ -103,6 +106,7 @@ default
 class Blog extends React.Component {
     constructor(props) {
         super(props);
+        console.log(this)
     };
 
     render() {// TODO: Better styling
