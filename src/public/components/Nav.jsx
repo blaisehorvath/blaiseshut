@@ -13,7 +13,6 @@ export default class Nav extends React.Component {
                         <button type="button" className="navbar-toggle collapsed" data-toggle="collapse"
                                 data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
                             <span className="sr-only">Toggle navigation</span>
-                            <div className="menuSign">Menu</div>
                             <div className="menuSign">
                                 <span className="icon-bar"></span>
                                 <span className="icon-bar"></span>

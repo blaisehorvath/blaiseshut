@@ -33,7 +33,7 @@ gulp.task('compile_css', function () {
     return gulp.src(sources.css)
         .pipe(sass.sync().on('error', sass.logError))
         .pipe(plumber())
-        .pipe(gulp.dest('build/public/css/'));
+        .pipe(gulp.dest('build/public/css/'))
 });
 
 //copying reducer files
@@ -93,6 +93,15 @@ gulp.task('move_creds', function () {
         .pipe(gulp.dest('build/server/'))
         .pipe(livereload());
 });
+
+gulp.task('reload_css', function () {
+    return gulp.src(sources.css)
+        .pipe(sass.sync().on('error', sass.logError))
+        .pipe(plumber())
+        .pipe(gulp.dest('build/public/css/'))
+        .pipe(livereload());
+});
+
 gulp.task('default', ['copy_index', 'compile_css', 'browserify', 'build_server', 'move_creds'], function () {
     "use strict";
     livereload({start: true});
@@ -103,7 +112,7 @@ gulp.task('default', ['copy_index', 'compile_css', 'browserify', 'build_server',
     // watching files for changes
     gulp.watch([sources.reducers], ['copy_reducers', server.restart]);
     gulp.watch([sources.server], ['build_server', server.restart]);
-    gulp.watch([sources.css], ['compile_css', server.restart]);
+    gulp.watch([sources.css], ['reload_css']);
     gulp.watch([sources.containers], ['browserify', server.restart]);
     gulp.watch([sources.components], ['browserify', server.restart]);
     gulp.watch([sources.publicScripts], ['browserify', server.restart]);

@@ -130,6 +130,21 @@ const About = ()=>{
                     </div>
                 </div>
             </header>
+            <section id="projects">
+                <div className="container">
+                    <h1>Projects</h1>
+                </div>
+            </section>
+            <section id="team">
+                <div className="container">
+                    <h1>Team</h1>
+                </div>
+            </section>
+            <section id="contactUs">
+                <div className="container">
+                    <h1>Contact Us</h1>
+                </div>
+            </section>
         </div>
 )};
 export default About

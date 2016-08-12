@@ -13,6 +13,7 @@ $col_lightred: rgb(242, 78, 78);
 $col_purple: rgb(228, 46, 139);
 $col_gray: rgb(189, 189, 189);
 $col_ligth_blue: rgba(14, 201, 190, 0.14);
+$col_complementer_orange: #FF7912;
 
 /*-------------------------------------
       The body in every page
@@ -60,29 +61,34 @@ nav.navbar {
         background: $col_lightred;
         &:hover {
           color: white;
-          background: $col_purple;
+          background: $col_complementer_orange;
         }
       }
       &:hover {
         color: white;
-        background: $col_purple;
+        background: $col_complementer_orange;
       }
     }
-
-
   }
 
-  // the mobile menu toggler
-  button.navbar-toggle {
-    background: yellow;
-    width: 200px;
+  /* The mobile menu toggler */
 
-    .menuSign {
-      display: inline-block;
+  button.navbar-toggle {
+
+    &:hover {
+      background: $col_purple;
+    }
+    &:focus {
+      background: $col_lightred;
+    }
+    &[aria-expanded=true] {
+      background: $col_lightred;
+    }
+
+    .icon-bar{
+      background-color: white;
     }
   }
-
-
 }
 
 #brandText {
@@ -90,7 +96,7 @@ nav.navbar {
   font-family: 'Slabo 27px', serif;
 }
 
-#myDropDown[aria-expanded="true"] {
+/*#myDropDown[aria-expanded="true"] {
   background: $col_purple;
   color: white;
 }
@@ -101,7 +107,7 @@ nav.navbar {
 
 li.dropdown ul.dropdown-menu li a {
   color: black;
-}
+}*/
 
 /*---------------------------------
       Content
@@ -157,7 +163,7 @@ header {
     padding: 60px 0 50px 0;
 
     .jumbotron {
-      background: $col_ligth_blue;
+      background: #E9B995;//$col_complementer_orange ;//$col_ligth_blue;
 
       h1 {
         margin-top: 0;
@@ -185,6 +191,27 @@ header {
       }
     }
   }
+}
+
+/* Projects */
+
+section#projects {
+  height: 600px;
+  background: lightgoldenrodyellow;
+}
+
+/* Team */
+
+section#team {
+  height: 600px;
+  background: #baf8e7;
+}
+
+/* Contact Us */
+
+section#contactUs {
+  height: 600px;
+  background: #a9ff4f;
 }
 
 /* ============================ end =============================*/
