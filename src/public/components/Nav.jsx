@@ -1,4 +1,6 @@
 import React from "react";
+import NavButtonContainer from "../containers/NavButtonsContainer";
+
 
 export default class Nav extends React.Component {
     constructor(props) {
@@ -23,14 +25,9 @@ export default class Nav extends React.Component {
                     </div>
 
 
+
                     <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                        <ul className="nav navbar-nav">
-                            <li id="home" className="active"><a href="/">About Us</a></li>
-                            <li id="projects"><a>Projects</a></li>
-                            <li id="team"><a href="">Team</a></li>
-                            <li id="contactUs"><a>Contact Us</a></li>
-                            <li id="blog"><a href="/blog">Blog</a></li>
-                        </ul>
+                        <NavButtonContainer/>
 
                         <div className="pull-right">
                             <form className="navbar-form" role="search">
@@ -53,5 +50,4 @@ export default class Nav extends React.Component {
         );
     }
 };
-
 

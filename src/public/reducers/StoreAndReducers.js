@@ -60,6 +60,24 @@ const BlogPost =(state = {},action)=>{
             return state;
     }
 }
+
+const ActiveNavButtonId = (state = "home", action) => {
+    switch (action.type) {
+        case 'SET_ACTIVE_NAVBUTTON':
+            console.log("recieved action", action);
+            return action.id;
+        default:
+            return state;
+    }
+};
+
+export const setActiveNavButton = (id) => {
+  return {
+      type : "SET_ACTIVE_NAVBUTTON",
+      id : id
+  };
+};
+
 export const logout=()=>{
     return{
         type:'LOGOUT'
@@ -112,6 +130,7 @@ let AppReducer = combineReducers({
     Tags,
     BlogPosts,
     LoggedIn,
-    BlogPost
+    BlogPost,
+    ActiveNavButtonId
 });
 export default AppReducer;
