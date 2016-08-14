@@ -1,9 +1,4 @@
-import React from "react";
-import ProjectImage from "../containers/ProjectImage"
-import ProjectListItem from "../containers/ProjectListItem"
-import MemberWithImage from"../containers/MemberWithImage"
-import ProjectList from "./ProjectList";
-
+import React from "react";5
 let team =
     [
         {
@@ -73,49 +68,6 @@ let options = {
         }
     ]
 };
-
-const ListOfProjects = ({projectsWithImages, onProjectClick}) => {
-    return (
-        <div className="list-group">
-            {projectsWithImages.map(project=>
-                <ProjectListItem
-                    key={project.id}
-                    {...project}
-                />)}
-        </div>
-    )
-};
-const TeamAndMembers = ({team}) => {
-    return (
-        <div className="row teamRow">
-            {team.map(member=>
-                <div key={member.id} className="col-xs-4 memberBox">
-                    <MemberWithImage id={member.id} title={member.name} imagesrc={member.img}/>
-                </div>)}
-        </div>
-    );
-};
-const TeamDescription = (team) => {
-    return (
-        <div className="row">
-            <p>Victrixs assimilant, tanquam germanus nutrix. Indictios experimentum, tanquam pius bulla. Victrixs assimilant, tanquam germanus nutrix. Indictios experimentum, tanquam pius bulla. Victrixs assimilant, tanquam germanus nutrix. Indictios experimentum, tanquam pius bulla. Victrixs assimilant, tanquam germanus nutrix. Indictios experimentum, tanquam pius bulla. Victrixs assimilant, tanquam germanus nutrix. Indictios experimentum, tanquam pius bulla. Victrixs assimilant, tanquam germanus nutrix. Indictios experimentum, tanquam pius bulla.Victrixs assimilant, tanquam germanus nutrix. Indictios experimentum, tanquam pius bulla. Victrixs assimilant, tanquam germanus nutrix. Indictios experimentum, tanquam pius bulla.</p>
-        </div>
-    );
-};
-
-const ProjectImageSelector = ({projectsWithImages}) => {
-    return (
-        <div className="row projectImageSelector">
-            <div className="col-xs-12 col-sm-6 projectImageDescriptionList">
-                <ListOfProjects projectsWithImages={projectsWithImages}/>
-            </div>
-            <div className="hidden-xs col-sm-6 projectImage">
-                <ProjectImage projectsWithImages={projectsWithImages}></ProjectImage>
-            </div>
-        </div>
-    );
-};
-
 const About = ()=>{
     return(
         <div>
@@ -148,9 +100,3 @@ const About = ()=>{
         </div>
 )};
 export default About
-
-// <ProjectImageSelector projectsWithImages={options.aboutProjects}/>
-// <TeamAndMembers team={team}/>
-//     <TeamDescription team={team}/>
-//     <h1>UJ ProjectList</h1>
-// <ProjectList/>

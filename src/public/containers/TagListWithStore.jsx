@@ -1,4 +1,5 @@
 import { connect } from 'react-redux'
+import React from 'react'
 //TODO: This code didnt worked well when imported!!!???
 const mapStateToPropsTagList = (state, ownProps) => {
     return {

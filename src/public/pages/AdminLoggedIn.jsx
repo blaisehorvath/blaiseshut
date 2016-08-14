@@ -1,31 +1,6 @@
 import React from "react";
 import {connect} from 'react-redux'
-//import TagListWithStore from '../containers/TagListWithStore' TODO: This should work
-const mapStateToProps = (state, ownProps) => {
-    return {
-        Tags: state.Tags
-    }
-};
-const mapDispatchToProps = (dispatch, ownProps) => {
-    return {}
-};
-const Tag = ({tag, addTagToField})=> {
-    return (
-        <a onClick={()=> {
-            addTagToField(tag.name)
-        }}>{tag.name + " "}</a>
-    )
-}
-const TagList = ({Tags, addTagToField})=> {
-    return (
-        <div>
-            {Tags.map((tag)=> {
-                return <Tag key={tag.id} tag={tag} addTagToField={addTagToField}/>
-            })}
-        </div>
-    );
-};
-const TagListWithStore = connect(mapStateToProps, mapDispatchToProps)(TagList)
+import TagListWithStore from '../containers/TagListWithStore'
 
 class PostEditor extends React.Component {
     constructor(props) {
@@ -77,6 +52,7 @@ export default class AdminLoggedIn extends React.Component {
                     <PostEditor ref={(ref)=>this.postEditor = ref}/>
                 </div>
                 <div className="col-xs-4">
+                    <br/><br/><br/><br/><br/><br/>
                     <TagListWithStore addTagToField={this.addTagToField}/>
                 </div>
             </div>

@@ -10,10 +10,10 @@ import AppReducer from "../reducers/StoreAndReducers";
 import Page from  "page";
 
 import ReactApp from "../components/ReactApp";
-import Admin from "../components/Admin";
-import About from "../components/About"
-import Blog from "../components/Blog"
-import SinglePost from "../components/SinglePost"
+import Admin from "../pages/Admin";
+import About from "../pages/About"
+import Blog from "../pages/Blog"
+import SinglePost from "../pages/SinglePost"
 
 let store = createStore(AppReducer,window.__INITIAL_STATE__);
 

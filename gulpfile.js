@@ -16,7 +16,8 @@ var sources = {
     publicScripts: "src/public/js/*",
     mainView: "src/server/view/*",
     reducers: "src/public/reducers/*",
-    containers: "src/public/containers/*"
+    containers: "src/public/containers/*",
+    pages: "src/public/pages/*"
 };
 
 //live reloading the page in the browser is anything changed in the code, this needs the chrome addon LiveReload
@@ -51,13 +52,19 @@ gulp.task('copy_components', function () {
         .pipe(babel())
         .pipe(gulp.dest('build/public/components'));
 });
-
-//copying components
+//copying containers
 gulp.task('copy_containers', function () {
     return gulp.src(sources.containers)
         .pipe(plumber())
         .pipe(babel())
         .pipe(gulp.dest('build/public/containers'));
+});
+//copying pages
+gulp.task('copy_pages', function () {
+    return gulp.src(sources.pages)
+        .pipe(plumber())
+        .pipe(babel())
+        .pipe(gulp.dest('build/public/pages'));
 });
 
 //copying public js files
@@ -68,7 +75,7 @@ gulp.task('copy_public_js', function () {//TODO: Why these files are even copied
         .pipe(gulp.dest('build/public/js/'));
 });
 
-gulp.task('browserify', ['copy_public_js', 'copy_components', 'copy_containers', 'copy_reducers'], function () {
+gulp.task('browserify', ['copy_public_js', 'copy_components', 'copy_containers', 'copy_reducers', "copy_pages"], function () {
     "use strict";
     return gulp.src('build/public/js/{script.js,scriptAdmin.js}')
         .pipe(plumber())//TODO: Why double plumber?
@@ -115,6 +122,7 @@ gulp.task('default', ['copy_index', 'compile_css', 'browserify', 'build_server',
     gulp.watch([sources.css], ['reload_css']);
     gulp.watch([sources.containers], ['browserify', server.restart]);
     gulp.watch([sources.components], ['browserify', server.restart]);
+    gulp.watch([sources.pages],['browserify', server.restart]);
     gulp.watch([sources.publicScripts], ['browserify', server.restart]);
     gulp.watch([sources.mainView], ['copy_index', server.restart]);
 });

@@ -23,11 +23,11 @@ let app = express();
 import url from "url";
 
 import ReactApp from "../public/components/ReactApp";
-import About from "../public/components/About"
-import Admin from "../public/components/Admin"
-import AdminLoggedIn from "../public/components/AdminLoggedIn"
-import Blog from "../public/components/Blog"
-import SinglePost from "../public/components/SinglePost"
+import About from "../public/pages/About"
+import Admin from "../public/pages/Admin"
+import AdminLoggedIn from "../public/pages/AdminLoggedIn"
+import Blog from "../public/pages/Blog"
+import SinglePost from "../public/pages/SinglePost"
 
 import {setInitialTags, addTag, loadBlogPost} from "../public/reducers/StoreAndReducers"
 
@@ -180,6 +180,7 @@ const fillBlogPostsDb = ()=> {
 };
 // fillBlogPostsDb();
 let Tags = []; //Tags are in a format like{name,id,relevance} where relevance is the times it has been in any post
+//Tags should be a Set!!!!
 const getTags = ()=> {
     new Promise((resolve, reject)=> {
         doc.scan({TableName: "SWAblog"}, (err, data)=> {

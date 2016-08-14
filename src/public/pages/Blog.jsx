@@ -1,33 +1,7 @@
 import React from "react";
 import {addBlogPosts} from "../reducers/StoreAndReducers"
 import {connect} from 'react-redux'
-// TODO:This code is duplicated from AdminLoggedIn....
-const mapStateToProps = (state, ownProps) => {
-    return {
-        Tags: state.Tags
-    }
-};
-const mapDispatchToProps = (dispatch, ownProps) => {
-    return {}
-};
-const Tag = ({tag, addTagToField})=> {
-    return (
-        <a onClick={()=> {
-            addTagToField(tag.name)
-        }}>{tag.name + " "}</a>
-    )
-}
-const TagList = ({Tags, addTagToField})=> {
-    return (
-        <div>
-            {Tags.map((tag)=> {
-                return <Tag key={tag.id} tag={tag} addTagToField={addTagToField}/>
-            })}
-        </div>
-    );
-};
-const TagListWithStore = connect(mapStateToProps, mapDispatchToProps)(TagList)
-// TODO:This code is duplicated from AdminLoggedIn....
+import TagListWithStore from "../containers/TagListWithStore"
 
 const BlogPost = ({post,loggedIn})=> {
     // console.log(loggedIn?1:0)
@@ -104,6 +78,7 @@ export
 default
 class Blog extends React.Component {
     constructor(props) {
+        console.log(TagListWithStore)
         super(props);
     };
 
@@ -114,6 +89,7 @@ class Blog extends React.Component {
                     <BlogPostsWithAjax/>
                 </div>
                 <div className="col-xs-4">
+                    <br/><br/><br/><br/><br/><br/><br/><br/><br/>
                     <TagListWithStore/>
                 </div>
             </div>
@@ -122,7 +98,4 @@ class Blog extends React.Component {
     }
 };
 
-Blog.childContextTypes = {
-    loggedIn: React.PropTypes.object.isRequired
-};
 export default Blog
