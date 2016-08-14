@@ -27,7 +27,7 @@ import About from "../public/pages/About"
 import Admin from "../public/pages/Admin"
 import AdminLoggedIn from "../public/pages/AdminLoggedIn"
 import Blog from "../public/pages/Blog"
-import SinglePost from "../public/pages/SinglePost"
+import BlogPost from "../public/pages/BlogPost"
 
 import {setInitialTags, addTag, loadBlogPost} from "../public/reducers/StoreAndReducers"
 
@@ -285,7 +285,7 @@ app.get('/blog/:blogTitle', (req, res) => {//TODO:Better regex, only match /stri
                 store.dispatch(loadBlogPost(data.Items.filter((blogpost)=>{return blogpost.title === decodeURIComponent(req.params.blogTitle)})[0]))
     })
             .then(()=>{
-                let content = ReactDOM.renderToString(<Provider store={store}><ReactApp><SinglePost/></ReactApp></Provider>);
+                let content = ReactDOM.renderToString(<Provider store={store}><ReactApp><BlogPost/></ReactApp></Provider>);
                 let response = renderHTML(content, store.getState());
                 res.send(response);
             });

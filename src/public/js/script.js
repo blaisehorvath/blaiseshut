@@ -13,7 +13,7 @@ import ReactApp from "../components/ReactApp";
 import Admin from "../pages/Admin";
 import About from "../pages/About"
 import Blog from "../pages/Blog"
-import SinglePost from "../pages/SinglePost"
+import SinglePost from "../pages/BlogPost"
 
 let store = createStore(AppReducer,window.__INITIAL_STATE__);
 

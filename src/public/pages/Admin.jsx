@@ -16,7 +16,7 @@ export default class Admin extends React.Component {
             user: this.user.value
         };
         // Submit form via jQuery/AJAX
-        $.ajax({//outer this cannot be accessed from success function of .ajax
+        $.ajax({
             type: 'POST',
             url: '/adminlogged',
             data,
@@ -35,11 +35,12 @@ export default class Admin extends React.Component {
     render() {// TODO: Better styling
         return (
                 <form>
+                    <br/><br/><br/><br/><br/>
                     <input ref={(ref)=>this.user = ref} type="text" placeholder="User" name="user"/>
                     <br/>
                     <input ref={(ref)=>this.password = ref} type="password" placeholder="Password" name="password"/>
                     <br/>
-                    <h5 ref={(ref)=>this.errormsg = ref} type="text" placeholder=" " name="errormsg"></h5>
+                    <h5 ref={(ref)=>this.errormsg = ref} type="text" placeholder=" " name="errormsg"/>
                     <br/>
 
                     <input id="fasz" type="submit" value="LogIn"
