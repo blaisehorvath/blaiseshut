@@ -72,7 +72,7 @@ const About = ()=>{
     return(
         <div>
             <header>
-                <div id="aboutUs" className="container">
+                <div id="home" className="container">
                     <div className="jumbotron">
                             <h1>Welcome to S.W.A.</h1>
                             <p>
