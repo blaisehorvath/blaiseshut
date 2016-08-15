@@ -1,5 +1,5 @@
 import React from "react";
-import NavButtonContainer from "../containers/NavButtonsContainer";
+//import NavButtonContainer from "../containers/NavButtonsContainer";
 
 
 export default class Nav extends React.Component {
@@ -9,7 +9,7 @@ export default class Nav extends React.Component {
 
     render() {
         return (
-            <nav className="navbar navbar-default navbar-fixed-top navbar-custom affix">
+            <nav className="scrollNav navbar navbar-default navbar-fixed-top navbar-custom affix">
                 <div className="container-fluid">
                     <div className="navbar-header">
                         <button type="button" className="navbar-toggle collapsed" data-toggle="collapse"
@@ -24,10 +24,17 @@ export default class Nav extends React.Component {
                         <a className="navbar-brand" id="brandText" href="#">S.W.A.</a>
                     </div>
 
-
-
                     <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                        <NavButtonContainer/>
+                        {/*<NavButtonContainer/>*/}
+
+                        <ul className="nav navbar-nav">
+                            <li><a href="#aboutUs">About us</a></li>
+                            <li><a href="#projects">Projects</a></li>
+                            <li><a href="#team">Team</a></li>
+                            <li><a href="#contactUs">Contact us</a></li>
+                            <li><a href="#blog">Blog</a></li>
+                        </ul>
+
 
                         <div className="pull-right">
                             <form className="navbar-form" role="search">
