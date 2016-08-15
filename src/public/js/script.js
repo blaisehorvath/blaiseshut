@@ -5,7 +5,7 @@
 import React from "react";
 import { render } from 'react-dom'
 import { Provider } from 'react-redux'
-import { combineReducers,createStore } from 'redux';
+import { createStore } from 'redux';
 import AppReducer from "../reducers/StoreAndReducers";
 import Page from  "page";
 

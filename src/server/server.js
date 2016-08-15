@@ -13,14 +13,18 @@ import {Provider} from 'react-redux'
 /*App*/
 import hipsteripsom from 'hipsteripsum'
 import bodyParser from 'body-parser'
-import {createStore} from 'redux';
 import renderHTML from "./renderHTML"
 import AppReducer from "../public/reducers/StoreAndReducers"
 import cookieParser from "cookie-parser"
 import credential from "credential"
-let store = createStore(AppReducer);
+
+//TODO:Make this work on front end. The createStore in script.js should include our middleWares
+import createLogger from 'redux-logger'
+import {createStore,applyMiddleware} from 'redux';
+const logger = createLogger();
+let store = createStore(AppReducer/*,applyMiddleware(logger)*/);
+
 let app = express();
-import url from "url";
 
 import ReactApp from "../public/components/ReactApp";
 import About from "../public/pages/About"

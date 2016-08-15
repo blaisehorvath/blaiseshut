@@ -51,6 +51,7 @@
     "react-router-redux": "^4.0.4",
     "react-wysiwyg-editor": "0.0.9",
     "redux": "^3.4.0",
+    "redux-logger": "^2.6.1",
     "tern-gulp": "^0.2.0",
     "tern-node-express": "^0.3.0",
     "wysihtml": "^0.5.5",

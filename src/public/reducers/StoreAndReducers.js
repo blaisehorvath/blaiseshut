@@ -59,7 +59,7 @@ const BlogPost =(state = {},action)=>{
         default:
             return state;
     }
-}
+};
 
 const ActiveNavButtonId = (state = "home", action) => {
     switch (action.type) {
@@ -69,6 +69,50 @@ const ActiveNavButtonId = (state = "home", action) => {
         default:
             return state;
     }
+};
+
+const ActiveTags = (state=[], action)=>{
+    switch (action.type){
+        case 'ADD_ACTIVE_TAG':
+            return [action.tag,...state];
+        case 'REMOVE_ACTIVE_TAG':
+            return [...state].filter((tag)=>tag !== action.tag);
+        case 'SWITCH_ACTIVE_TAG':
+            if (state.indexOf(action.tag) > -1){
+                return [...state].filter((tag)=> tag !== action.tag)
+            }
+            else
+                return [action.tag,...state];
+        default:
+            return state;
+    }
+};
+
+const ActiveBlogPosts = (state = [],action)=>{
+    switch (action.type){
+        default:
+            return state;
+    }
+};
+
+export const switchActiveTag =(tag) =>{
+    return {
+        type: 'SWITCH_ACTIVE_TAG',
+        tag
+    }
+}
+
+export const addActiveTag = (tag) => {
+  return {
+      type: 'ADD_ACTIVE_TAG',
+      tag
+  }
+};
+export const removeActiveTag = (tag)=>{
+  return {
+      type:'REMOVE_ACTIVE_TAG',
+      tag
+  }
 };
 
 export const setActiveNavButton = (id) => {
@@ -131,6 +175,8 @@ let AppReducer = combineReducers({
     BlogPosts,
     LoggedIn,
     BlogPost,
-    ActiveNavButtonId
+    ActiveNavButtonId,
+    ActiveTags,
+    ActiveBlogPosts
 });
 export default AppReducer;

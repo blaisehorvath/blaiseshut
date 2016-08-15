@@ -1,5 +1,6 @@
 import { connect } from 'react-redux'
 import React from 'react'
+import SingleTag from "../containers/SingleTag"
 //TODO: This code didnt worked well when imported!!!???
 const mapStateToPropsTagList = (state, ownProps) => {
     return {
@@ -9,18 +10,18 @@ const mapStateToPropsTagList = (state, ownProps) => {
 const mapDispatchToPropsTagList = (dispatch, ownProps) => {
     return {}
 };
-const Tag = ({tag, addTagToField})=> {
-    return (
-        <a onClick={()=> {
-            addTagToField(tag.name)
-        }}>{tag.name + " "}</a>
-    )
-};
+// const Tag = ({tag, addTagToField})=> {
+//     return (
+//         <a onClick={()=> {
+//             addTagToField(tag.name)
+//         }}>{tag.name + " "}</a>
+//     )
+// };
 const TagList = ({Tags, addTagToField})=> {
     return (
         <div>
             {Tags.map((tag)=> {
-                return <Tag key={tag.id} tag={tag} addTagToField={addTagToField}/>
+                return <SingleTag key={tag.id} tag={tag} addTagToField={addTagToField}/>
             })}
         </div>
     );
