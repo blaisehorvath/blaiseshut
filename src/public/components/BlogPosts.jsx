@@ -16,8 +16,7 @@ class BlogPosts extends React.Component {
             let data = {
                 lastBlogPost: this.props.lastBlogPost,
                 queryBlogNum: numOfNewPosts,
-                activeTags
-            };
+                activeTags: this.props.activeTags            };
         $.ajax({
             type: 'POST',
             url: '/getBlogPosts',
