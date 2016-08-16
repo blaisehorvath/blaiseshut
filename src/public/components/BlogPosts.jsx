@@ -22,7 +22,7 @@ class BlogPosts extends React.Component {
             url: '/getBlogPosts',
             data,
         }).done((data)=> {
-            this.props.onAjaxFinish(data.Items);// Comes from the connect..
+            this.props.onAjaxFinish(data);// Comes from the connect..
         })
     }
 

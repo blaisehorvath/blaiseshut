@@ -20,7 +20,7 @@ import credential from "credential"
 
 //TODO:Make this work on front end. The createStore in script.js should include our middleWares
 import createLogger from 'redux-logger'
-import {createStore,applyMiddleware} from 'redux';
+import {createStore, applyMiddleware} from 'redux';
 const logger = createLogger();
 let store = createStore(AppReducer/*,applyMiddleware(logger)*/);
 
@@ -114,14 +114,14 @@ let params = {
     TableName: "SWAblog",
     Count: true
 };
-
+let querycache = undefined;
 //TODO:GET TAGS BEFORE SENDIND THE STORE TO ANYONE!!
-const queryBlogPosts = (fromId, numberOfQuery, withTag)=> {//TODO: date is a reserved keyword
+const queryBlogPosts = (fromId, numberOfQuery, activeTags)=> {//TODO: date is a reserved keyword
     //console.log(typeof fromId + "   " + typeof numberOfQuery )
     let queryparams = {
         TableName: "SWAblog",
         ProjectionExpression: "#id, #date, #text, #user, #tags, #precontent, #title",
-        FilterExpression: "#id between :start and :end",
+        //FilterExpression: "",//"#id between :start and :end",
         ExpressionAttributeNames: {
             "#id": "id",
             "#date": "date",
@@ -130,20 +130,50 @@ const queryBlogPosts = (fromId, numberOfQuery, withTag)=> {//TODO: date is a res
             "#tags": "tags",
             "#precontent": "precontent",
             "#title": "title"
-        },
-        ExpressionAttributeValues: {
-            ":start": fromId,
-            ":end": fromId + numberOfQuery - 1
-        }
+        }//,
+        // ExpressionAttributeValues: {
+        //     ":start": fromId,
+        //     ":end": fromId + numberOfQuery - 1
+        // }
     };
     return new Promise((resolve, reject)=> {
-        doc.scan(queryparams, (err, data)=> {
-            if (err) console.log(err)
-            else {
-                resolve(data)
-            }
-
-        })
+        let numOfCurrentResults = 0;
+        let filterFunction = (items)=> {
+            let filteredItems = activeTags
+                ? items.filter(post=>
+                activeTags
+                    .map(tag=>tag.name)
+                    .reduce((prev, curr)=>
+                    post.tags.split(" ").indexOf(curr) > -1 && prev, true))
+                : items;
+            console.log({filteredItems: filteredItems.map(it=>it.id)})
+            return filteredItems.sort((a, b)=> { // descending order
+                return a.id < b.id ? 1 : -1
+            })
+                .filter((elem, indx, arr)=> {
+                    console.log({
+                        arrlength: arr.length,
+                        elemid: elem.id,
+                        numberOfQuery,
+                        fromId,
+                        numOfCurrentResults
+                    });
+                    if ((arr.length - fromId) > elem.id && numOfCurrentResults < numberOfQuery) {
+                        numOfCurrentResults++;
+                        return true
+                    }
+                    else return false
+                })
+        };
+        if (!querycache)
+            doc.scan(queryparams, (err, data)=> {
+                if (err) console.log(err);
+                else querycache = data;
+                resolve(filterFunction(querycache.Items));
+            });
+        else {
+            resolve(filterFunction(querycache.Items));
+        }
     })
 };
 const blogPostToDb = ({text, precontent, date, user, tags, title})=> {
@@ -284,15 +314,17 @@ app.get('/blog/:blogTitle', (req, res) => {//TODO:Better regex, only match /stri
         reuqestType: "GET",
         path: req.path
     });
-        queryBlogPosts(0,50)
-            .then(data=>{//TODO:This is really bad
-                store.dispatch(loadBlogPost(data.Items.filter((blogpost)=>{return blogpost.title === decodeURIComponent(req.params.blogTitle)})[0]))
-    })
-            .then(()=>{
-                let content = ReactDOM.renderToString(<Provider store={store}><ReactApp><BlogPost/></ReactApp></Provider>);
-                let response = renderHTML(content, store.getState());
-                res.send(response);
-            });
+    queryBlogPosts(0, 50)
+        .then(data=> {//TODO:This is really bad
+            store.dispatch(loadBlogPost(data.Items.filter((blogpost)=> {
+                return blogpost.title === decodeURIComponent(req.params.blogTitle)
+            })[0]))
+        })
+        .then(()=> {
+            let content = ReactDOM.renderToString(<Provider store={store}><ReactApp><BlogPost/></ReactApp></Provider>);
+            let response = renderHTML(content, store.getState());
+            res.send(response);
+        });
     //TODO:Write query function which gets the right blogpost!
 
 });
@@ -302,18 +334,19 @@ app.post('/blog/:blogTitle', (req, res) => {//TODO:Better regex, only match /str
         reuqestType: "POST",
         path: req.path
     });
-    queryBlogPosts(0,50)
-        .then(data=>{//TODO:This is really bad
+    queryBlogPosts(0, 50)
+        .then(data=> {//TODO:This is really bad
             req.path.split("/")
-            return data.Items.filter((blogpost)=>{return blogpost.title === decodeURIComponent(req.params.blogTitle)})[0]
+            return data.Items.filter((blogpost)=> {
+                return blogpost.title === decodeURIComponent(req.params.blogTitle)
+            })[0]
         })
-        .then((blogPost)=>{
+        .then((blogPost)=> {
             res.send(blogPost);
         });
     //TODO:Write query function which gets the right blogpost!
 
 });
-
 
 
 app.get('/blog', (req, res) => {//TODO:Better regex, only match /string_like_this
@@ -350,11 +383,11 @@ app.get('/projects', (req, res) => {
 /* This is the handler for hiding admin side scripts from client*/
 app.get('/private/script.js', (req, res) => {
 
-     console.log({
-     reuqestType: "GET",
-     path: req.path,
-     cookies: req.cookies
-     });
+    console.log({
+        reuqestType: "GET",
+        path: req.path,
+        cookies: req.cookies
+    });
 
     checkHash(req.cookies.name, req.cookies.hash).then((result)=> {// TODO: This may not be needed bc scriptAdmin?
         if (!result) {
@@ -419,11 +452,15 @@ app.post("/admin", (req, res)=> {
     });
 });
 app.post("/getBlogPosts", (req, res)=> {//TODO:error handling
-    //console.log("req.body.lastBlogPost: " +req.body.lastBlogPost + "  req.body.queryBlogNum: "+ req.body.queryBlogNum)
-    queryBlogPosts(+req.body.lastBlogPost, +req.body.queryBlogNum).then((data)=> {
+    console.log({
+        lastBlogPost: req.body.lastBlogPost,
+        queryBlogNum: req.body.queryBlogNum,
+        activeTags: req.body.activeTags
+    })
+    queryBlogPosts(+req.body.lastBlogPost, +req.body.queryBlogNum, req.body.activeTags).then((data)=> {
         res.send(data)
     })
-})
+});
 //*******************************END OF POST REQUESTS
 /*https.createServer(credentials,app).listen(process.env.PORT || 3000, function () {
  console.log("Development server is listening on port: 3000");

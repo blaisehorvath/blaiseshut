@@ -2,10 +2,10 @@ import React from "react"
 import {connect} from "react-redux"
 import BlogPosts from "../components/BlogPosts"
 import {addBlogPosts} from "../reducers/StoreAndReducers"
-const mapStateToPropsBlogPosts = (state)=> {
+const mapStateToPropsBlogPosts = (state,ownProps)=> {
     return {
         posts: state.BlogPosts.posts,
-        lastBlogPost: state.BlogPosts.lastBlogPost,
+        lastBlogPost: state.BlogPosts.lastBlogPost, // TODO: Get the last item in the continous list..
         activeBlogPosts: state.ActiveTags?
             //maybe the tags in posts should be a tag type with ref etc...
             state.BlogPosts.posts.filter(post=>
@@ -17,7 +17,7 @@ const mapStateToPropsBlogPosts = (state)=> {
         activeTags: state.ActiveTags
     }
 };
-const mapDispatchToPropsBlogPosts = (dispatch,ownProps)=> {
+const mapDispatchToPropsBlogPosts = (dispatch)=> {
     return {
         onAjaxFinish: (posts)=> {
             dispatch(addBlogPosts(posts))
