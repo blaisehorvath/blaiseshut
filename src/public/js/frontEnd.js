@@ -1,11 +1,11 @@
 console.log("Entry frontend script is running");
 
-// Freelancer Theme JavaScript
 
-// (function($) {
-//     "use strict";
-//     $('body').scrollspy({
-//         target: '.scrollNav',
-//         offset: 50
-//     });
-// })(jQuery); // End of use strict
+(function ($) {
+
+    // Closes the Responsive Menu on Menu Item Click
+    $('.navbar-collapse ul li a:not(.dropdown-toggle)').click(function () {
+        $('.navbar-toggle:visible').click();
+    });
+
+})(jQuery); // End of use strict

@@ -3,11 +3,11 @@ import {connect} from "react-redux";
 import {setActiveNavButton} from "../reducers/StoreAndReducers";
 
 const navButtons = [
-    {id: "aboutUs", caption: "About us"},
-    {id: "projects", caption: "Projects"},
-    {id: "team", caption: "Team"},
-    {id: "contactUs", caption: "Contact us"},
-    {id: "blog", caption: "Blog"}
+    {id: "aboutUs", caption: "About us", href: "/#aboutUs"},
+    {id: "projects", caption: "Projects", href: "/#project"},
+    {id: "team", caption: "Team", href: "#team"},
+    {id: "contactUs", caption: "Contact us", href: "/#contactUs"},
+    {id: "blog", caption: "Blog", href: "/blog"}
 ];
 
 const NavButtons = (props) => {

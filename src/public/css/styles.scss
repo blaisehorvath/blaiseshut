@@ -8,12 +8,22 @@ $media-bootstrap-md-min: 992px;
 $media-bootstrap-md-max: 1199px;
 $media-bootstrap-lg-min: 1200px;
 
-$col_blue: rgb(14, 201, 190);
-$col_lightred: rgb(242, 78, 78);
-$col_purple: rgb(228, 46, 139);
-$col_gray: rgb(189, 189, 189);
+$col_nav_background: rgb(14, 201, 190);
+$col_nav_active: rgb(242, 78, 78);
+$col_nav_hover: rgb(228, 46, 139);
+$col_header_background: white;
+$col_footer_background: rgb(189, 189, 189);
 $col_ligth_blue: rgba(14, 201, 190, 0.14);
-$col_complementer_orange: #FF7912;
+$col_complementer_orange: rgb(228, 46, 139); //#FF7912;
+
+
+/* Mixins */
+
+@mixin default-box ($bgcolour) {
+  background: $bgcolour;
+  padding: 0 10px;
+}
+
 
 /*-------------------------------------
       The body in every page
@@ -25,6 +35,9 @@ body {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizelegibility;
   -moz-osx-font-smoothing: grayscale;
+  position: relative;
+  height: 100%; /* !!!!! ScrollSpy needs this!!! */
+  margin: 0;
 
   button.btn.btn-default {
     height: 34px; /* Something messes up bootstrap buttons. I don't know what or why, but it only works this way*/
@@ -44,7 +57,7 @@ body {
 ---------------------------------*/
 
 nav.navbar {
-  background: $col_blue;
+  background: $col_nav_background;
   margin: 0;
   padding: 0;
   border: 0;
@@ -58,15 +71,15 @@ nav.navbar {
       }
       &.active a {
         color: white;
-        background: $col_lightred;
+        background: $col_nav_active;
         &:hover {
           color: white;
-          background: $col_complementer_orange;
+          background: $col_nav_hover;
         }
       }
       &:hover {
         color: white;
-        background: $col_complementer_orange;
+        background: $col_nav_hover;
       }
     }
   }
@@ -76,16 +89,16 @@ nav.navbar {
   button.navbar-toggle {
 
     &:hover {
-      background: $col_purple;
+      background: $col_nav_hover;
     }
     &:focus {
-      background: $col_lightred;
+      background: $col_nav_active;
     }
     &[aria-expanded=true] {
-      background: $col_lightred;
+      background: $col_nav_active;
     }
 
-    .icon-bar{
+    .icon-bar {
       background-color: white;
     }
   }
@@ -114,84 +127,46 @@ li.dropdown ul.dropdown-menu li a {
  ---------------------------------*/
 
 div#app {
-  //margin-top: 60px;
-  margin-bottom: 130px;
 }
-
-/*---------------------------------
-            Footer
----------------------------------*/
-footer {
-  background: $col_gray;
-  ul {
-    list-style: none;
-    padding: 0;
-  }
-  a:hover {
-    text-decoration: none;
-    font-weight: bold;
-  }
-}
-
-/* ------------------------------------------------
-      Sticky footer styles
--------------------------------------------------- */
-html {
-  //position: relative;
-  //min-height: 100%;
-}
-
-body {
-  /* Margin bottom by footer height */
-  margin-bottom: 100px;
-  position: relative;
-  overflow-y: scroll;
-  height: 100%; /* !!!!! ScrollSpy needs this!!! */
-}
-
-.footer {
-  //position: absolute;
-  //bottom: 0;
-  //width: 100%;
-}
-
-/* ------------------------------------------------
-                        About
--------------------------------------------------- */
 
 /* About Us */
 
 header {
+
+  @include default-box($col_header_background);
+
   .container {
-    padding: 60px 0 50px 0;
 
-    .jumbotron {
-      background: #E9B995;//$col_complementer_orange ;//$col_ligth_blue;
+    padding: 100px 0 50px 0;
 
-      h1 {
-        margin-top: 0;
-        font-size: 24pt;
-      }
-      p {
-        font-size: 14pt;
-      }
-      .more {
-      }
+    h1 {
+      margin-top: 0;
+      font-size: 28pt;
+    }
+    p {
+      font-size: 14pt;
+      font-weight: 300;
+      text-align: justify;
+    }
+    .more {
+      font-size: 13px;
     }
 
     //on mobile
     @media screen and (max-width: $media-bootstrap-sm-min) {
-      .jumbotron {
-        h1 {
-          font-size: 16pt;
-        }
-        p {
-          font-size: 12pt;
-        }
-        .more {
-          font-size: 10pt;
-        }
+
+      padding: 60px 0 50px 0;
+
+      h1 {
+        font-size: 16pt;
       }
+      p {
+        font-size: 12pt;
+      }
+      .more {
+        font-size: 10pt;
+      }
+
     }
   }
 }
@@ -217,84 +192,19 @@ section#contactUs {
   background: #a9ff4f;
 }
 
-/* ============================ end =============================*/
-/*
-.projectImageSelector {
-  background: yellow;
-  padding: 0;
-  margin: 0;
-  min-width: 240px;
 
-  .projectImageDescriptionList {
-    background: royalblue;
+
+/*---------------------------------
+            Footer
+---------------------------------*/
+footer {
+  background: $col_footer_background;
+  ul {
+    list-style: none;
     padding: 0;
-
-    .list-group-item {
-      height: 83px;
-    }
-
-    .active {
-      height: 83px;
-      background: yellowgreen;
-    }
-
   }
-
-  .projectImage {
-    background: deeppink;
-    height: 250px;
-    padding: 0;
-    min-width: 0;
-
-    .projectImageHolder {
-      display: block;
-      width: auto;
-      margin-left: auto;
-      margin-right: auto;
-      max-height: 100%;
-    }
-
+  a:hover {
+    text-decoration: none;
+    font-weight: bold;
   }
 }
-
-!* Members *!
-.memberName {
-  text-align: center;
-}
-
-.memberPicture{
-  margin: 0 auto;
-  padding: 5%;
-}
-
-.memberBox{
-  padding: 10px 0px 10px 0px;
-}
-
-.imageAndText {position: relative;}
-.imageAndText .col {position: absolute; z-index: 1; top: 0; left: 0;}
-
-.teamRow {
-  background: orangered;
-  height: 250px;
-  .list-group-item {
-    height: 85%;
-
-    img {
-      max-height: 75%;
-      width: auto;
-    }
-
-  }
-}
-
-.list-group-item{
-  margin-top: auto;
-  margin-bottom: auto;
-}*/
-
-//.img-responsive {
-//  display: block;
-//  width: auto;
-//  max-height: 100%;
-//}

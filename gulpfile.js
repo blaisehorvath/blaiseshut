@@ -101,7 +101,7 @@ gulp.task('move_creds', function () {
         .pipe(livereload());
 });
 
-gulp.task('reload_css', function () {
+gulp.task('reload_css', ['default'], function () {
     return gulp.src(sources.css)
         .pipe(sass.sync().on('error', sass.logError))
         .pipe(plumber())

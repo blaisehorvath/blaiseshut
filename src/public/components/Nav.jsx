@@ -21,7 +21,7 @@ export default class Nav extends React.Component {
                                 <span className="icon-bar"></span>
                             </div>
                         </button>
-                        <a className="navbar-brand" id="brandText" href="#">S.W.A.</a>
+                        <a className="navbar-brand" id="brandText" href="/">S.W.A.</a>
                     </div>
 
                     <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -32,7 +32,7 @@ export default class Nav extends React.Component {
                             <li><a href="#projects">Projects</a></li>
                             <li><a href="#team">Team</a></li>
                             <li><a href="#contactUs">Contact us</a></li>
-                            <li><a href="#blog">Blog</a></li>
+                            <li><a href="/blog">Blog</a></li>
                         </ul>
 
 
