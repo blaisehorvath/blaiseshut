@@ -2,23 +2,7 @@
  * Created by v on 2016.04.22..
  */
 import { combineReducers } from 'redux';
-const aboutImgSelectorState = (state = 0, action)=>{
-    switch (action.type){
-        case 'IMG_SELECT':
-            return action.imgNum;
-        default:
-            return state;
-    }
-};
-const AboutTeamNumber = (state = 0, action) =>
-{
-    switch (action.type){
-        case 'ABOUT_TEAM_NUMBER_CHANGE':
-            return action.teamNum;
-        default:
-            return state;
-    }
-}
+
 const Tags = (state = [], action) =>
 {
     switch (action.type){
@@ -61,15 +45,6 @@ const BlogPost =(state = {},action)=>{
     }
 };
 
-const ActiveNavButtonId = (state = "home", action) => {
-    switch (action.type) {
-        case 'SET_ACTIVE_NAVBUTTON':
-            console.log("recieved action", action);
-            return action.id;
-        default:
-            return state;
-    }
-};
 
 const ActiveTags = (state=[], action)=>{
     switch (action.type){
@@ -115,13 +90,6 @@ export const removeActiveTag = (tag)=>{
   }
 };
 
-export const setActiveNavButton = (id) => {
-  return {
-      type : "SET_ACTIVE_NAVBUTTON",
-      id : id
-  };
-};
-
 export const logout=()=>{
     return{
         type:'LOGOUT'
@@ -156,26 +124,12 @@ export const addTag=(tag)=>{
         tag
     }
 };
-export const addImgNum = (imgNum) => {
-    return {
-        type: "IMG_SELECT",
-        imgNum
-    }
-};
-export const changeAboutTeamNumber = (teamNum) =>{
-    return {
-        type: "ABOUT_TEAM_NUMBER_CHANGE",
-        teamNum
-    }
-}
+
 let AppReducer = combineReducers({
-    aboutImgSelectorState,
-    AboutTeamNumber,
     Tags,
     BlogPosts,
     LoggedIn,
     BlogPost,
-    ActiveNavButtonId,
     ActiveTags,
     ActiveBlogPosts
 });
