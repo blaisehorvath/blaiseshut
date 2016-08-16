@@ -15,8 +15,8 @@ class BlogPosts extends React.Component {
         //TODO:Maybe this could be a little bit earlier?
             let data = {
                 lastBlogPost: this.props.lastBlogPost,
-                queryBlogNum: numOfNewPosts
-            };
+                queryBlogNum: numOfNewPosts,
+                activeTags: this.props.activeTags            };
         $.ajax({
             type: 'POST',
             url: '/getBlogPosts',
@@ -28,7 +28,7 @@ class BlogPosts extends React.Component {
 
     render() {
         if(this.props.posts)
-            return (<div>{this.props.posts.map(
+            return (<div>{this.props.activeBlogPosts.map(
                 post=> {//TODO:This is not the BLOG! loggedIn is elsewhere
                     return <div key={post.id}>
                         <BlogPost post={post} loggedIn={this.props.loggedIn}/>
