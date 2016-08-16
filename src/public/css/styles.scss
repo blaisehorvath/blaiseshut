@@ -16,6 +16,10 @@ $col_footer_background: rgb(189, 189, 189);
 $col_ligth_blue: rgba(14, 201, 190, 0.14);
 $col_complementer_orange: rgb(228, 46, 139); //#FF7912;
 
+$col_projects_background: #A7FF97;
+$col_team_background: #baf8e7;
+$col_contactus_background: #a9ff4f;
+
 
 /* Mixins */
 
@@ -175,21 +179,21 @@ header {
 
 section#projects {
   height: 600px;
-  background: lightgoldenrodyellow;
+  background: $col_projects_background;
 }
 
 /* Team */
 
 section#team {
   height: 600px;
-  background: #baf8e7;
+  background: $col_team_background;
 }
 
 /* Contact Us */
 
 section#contactUs {
   height: 600px;
-  background: #a9ff4f;
+  background: $col_contactus_background;
 }
 
 
