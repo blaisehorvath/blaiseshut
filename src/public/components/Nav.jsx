@@ -6,7 +6,7 @@ const navButtons = [
     {id: "projects", caption: "Projects", href: "#projects"},
     {id: "team", caption: "Team", href: "#team"},
     {id: "contactUs", caption: "Contact us", href: "#contactUs"},
-    {id: "blog", caption: "Blog", href: "/blog"}
+    {id: "blog", caption: "Blog", href: "#blog"}
 ];
 
 const Nav = (props) => {

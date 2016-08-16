@@ -11,7 +11,8 @@ const NavButtonComponent = (props) => {
 };
 
 const mapStateToProps = (state, props) => {
-    return {}
+    return {
+    }
 };
 
 const mapDispatchToProps = (dispatch, props) => {

@@ -13,7 +13,7 @@ const Tags = (state = [], action) =>
         default:
             return state;
     }
-}
+};
 
 const BlogPosts = (state = {lastBlogPost:0,posts:[]}, action)=>{//TODO: Get all blogposts in the right order (time added)
     switch (action.type){
@@ -67,6 +67,22 @@ const ActiveBlogPosts = (state = [],action)=>{
     switch (action.type){
         default:
             return state;
+    }
+};
+
+const isMainPage = ( state = true, action) => {
+    switch(action){
+        case 'CHANGE_ACTIVE_PAGE':
+            return action.isMain;
+        default:
+            return state;
+    }
+}
+
+export const changeActivePage = (isMain) => {
+    return {
+        type: 'CHANGE_ACTIVE_PAGE',
+        isMain: isMain
     }
 };
 

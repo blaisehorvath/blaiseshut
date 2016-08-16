@@ -5,7 +5,9 @@
 import React from "react";
 import { render } from 'react-dom'
 import { Provider } from 'react-redux'
-import { combineReducers,createStore } from 'redux';
+import { applyMiddleware, createStore } from 'redux';
+import createLogger from 'redux-logger';
+
 import AppReducer from "../reducers/StoreAndReducers";
 import Page from  "page";
 
@@ -14,12 +16,16 @@ import AdminLoggedIn from"../pages/AdminLoggedIn";
 import About from "../pages/About"
 import Blog from "../pages/Blog"
 
-let store = createStore(AppReducer,window.__INITIAL_STATE__);
+const logger = createLogger();
+const store = createStore(AppReducer,window.__INITIAL_STATE__, applyMiddleware(logger));
+window.dispatcher = (action) => {
+    store.dispatch(action);
+};
 
 Page('/admin', ()=>{render(
     <Provider store={store}><ReactApp><AdminLoggedIn/></ReactApp></Provider>,
-    document.getElementById('app')
-);});
+    document.getElementById('app'));
+});
 Page('/about', ()=>{render(
     <Provider store={store}><ReactApp><About/></ReactApp></Provider>,
     document.getElementById('app')
