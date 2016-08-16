@@ -137,19 +137,22 @@ footer {
       Sticky footer styles
 -------------------------------------------------- */
 html {
-  position: relative;
-  min-height: 100%;
+  //position: relative;
+  //min-height: 100%;
 }
 
 body {
   /* Margin bottom by footer height */
   margin-bottom: 100px;
+  position: relative;
+  overflow-y: scroll;
+  height: 100%; /* !!!!! ScrollSpy needs this!!! */
 }
 
 .footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
+  //position: absolute;
+  //bottom: 0;
+  //width: 100%;
 }
 
 /* ------------------------------------------------

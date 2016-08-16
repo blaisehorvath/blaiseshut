@@ -77,7 +77,7 @@ gulp.task('copy_public_js', function () {//TODO: Why these files are even copied
 
 gulp.task('browserify', ['copy_public_js', 'copy_components', 'copy_containers', 'copy_reducers', "copy_pages"], function () {
     "use strict";
-    return gulp.src('build/public/js/{script.js,scriptAdmin.js}')
+    return gulp.src('build/public/js/{script.js,scriptAdmin.js,frontEnd.js}')
         .pipe(plumber())//TODO: Why double plumber?
         .pipe(browserify({
             insertGlobals: true

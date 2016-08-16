@@ -3,18 +3,20 @@ import {connect} from "react-redux";
 import {setActiveNavButton} from "../reducers/StoreAndReducers";
 
 const navButtons = [
-    {id: "home", caption : "About us"},
-    {id: "projects", caption : "Projects"},
-    {id: "team", caption : "Team"},
-    {id: "contactUs", caption : "Contact us"},
-    {id: "blog",  caption : "Blog"}
+    {id: "aboutUs", caption: "About us"},
+    {id: "projects", caption: "Projects"},
+    {id: "team", caption: "Team"},
+    {id: "contactUs", caption: "Contact us"},
+    {id: "blog", caption: "Blog"}
 ];
 
 const NavButtons = (props) => {
-    const listItems = navButtons.map((navButton)=>{
+    const listItems = navButtons.map((navButton)=> {
         return (
-            <li id={navButton.id} className={navButton.id == props.activeId ? "active" : ""}>
-                <a href={'#'+navButton.id.toLowerCase()} onClick={()=>{props.onNavButtonClick(navButton.id)}}>
+            <li key={navButton.id} className={navButton.id == props.activeId ? "active" : ""}>
+                <a href={'#' + navButton.id} className="page-scroll" onClick={(event)=> {
+                    props.onNavButtonClick(event, navButton.id)
+                }}>
                     {navButton.caption}
                 </a>
             </li>)
@@ -33,8 +35,13 @@ const mapStateToPropsActiveNavButtonId = (state)=> {
 };
 const mapDispatchToPropsActiveNavButtonId = (dispatch) => {
     return {
-        onNavButtonClick: (id) => {
-            dispatch(setActiveNavButton(id))
+        onNavButtonClick: (event, id) => {
+            dispatch(setActiveNavButton(id));
+            let $anchor = $(`[href='#${id}']`);
+            $('html, body').stop().animate({
+                scrollTop: $($anchor.attr('href')).offset().top - 50
+            }, 1250, 'easeInOutExpo');
+            event.preventDefault();
         }
     }
 };
