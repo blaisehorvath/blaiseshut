@@ -9,9 +9,13 @@ console.log("Entry frontend script is running");
     });
 
     $(window).scroll(function() {
-        if($(window).scrollTop() == $("#team").offset().top) {
-            alert("bottom!");
-        }
+        let team = $("#team");
+        let $window = $(window);
+        let $document = $(document);
+        console.log({
+            current : $window.scrollTop() + $window.height(),
+            offset : team.offset().top + 50
+        });
     });
 
 })(jQuery); // End of use strict
