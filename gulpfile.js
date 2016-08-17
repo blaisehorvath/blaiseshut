@@ -7,7 +7,9 @@ var gulp = require('gulp'),
     browserify = require('gulp-browserify'),
     plumber = require('gulp-plumber'),
     livereload = require('gulp-livereload'),
-    sass = require('gulp-sass');
+    sass = require('gulp-sass'),
+    clean = require('gulp-clean'),
+    runSeq = require('run-sequence');
 
 var sources = {
     server: "src/server/*",
@@ -28,7 +30,7 @@ gulp.task('compile_css', function () {
 });
 
 //copying reducer files
-gulp.task('copy_reducers', function () {
+gulp.task('copy_reducers',function () {
     return gulp.src(sources.reducers)
         .pipe(plumber())
         .pipe(babel())
@@ -66,13 +68,24 @@ gulp.task('copy_public_js', function () {//TODO: Why these files are even copied
 });
 
 gulp.task('browserify', ['copy_public_js', 'copy_components', 'copy_containers', 'copy_reducers', "copy_pages"], function () {
-    "use strict";
     return gulp.src('build/public/js/{script.js,scriptAdmin.js,frontEnd.js}')
-        .pipe(plumber())//TODO: Why double plumber?
+        .pipe(plumber())
         .pipe(browserify({
             insertGlobals: true
         }))
         .pipe(gulp.dest('build/private/js/'))
+        .pipe(livereload());
+});
+
+gulp.task('browserify-live', ['copy_public_js', 'copy_components', 'copy_containers', 'copy_reducers', "copy_pages"], function () {
+    return gulp.src('build/public/js/{script.js,scriptAdmin.js,frontEnd.js}')
+        .pipe(plumber())
+        .pipe(browserify({
+            insertGlobals: true
+        }))
+        .pipe(gulp.dest('build/private/js/'))
+        .pipe( server() )
+        .pipe(livereload());
 });
 
 //building the server
@@ -96,11 +109,24 @@ gulp.task('reload_css', function () {
         .pipe(livereload());
 });
 
-gulp.task( 'server:start',  ['compile_css', 'browserify', 'build_server', 'move_creds'] , function() {
+//cleaning the build
+gulp.task('clean', function () {
+    return gulp.src('./build', {read: false})
+        .pipe(clean());
+});
+
+//cleans beforethe irst build
+gulp.task ('build', function (cb) {
+    runSeq('clean', ['compile_css', 'browserify', 'build_server', 'move_creds'], cb)
+});
+
+gulp.task( 'server:start', ['build'] , function() {
     server.listen( {path: 'build/server/server.js'}, livereload.listen );
 });
 
 gulp.task('default', ['server:start'], function () {
+
+    livereload({ start: true });
 
     function restart( file ) {
         server.changed( function( error ) {
@@ -108,7 +134,13 @@ gulp.task('default', ['server:start'], function () {
         });
     }
 
-    gulp.watch( ['src/server/*' , 'src/public/?(actions|components|containers|js|pages|reducers)/!(___jb_tmp___)'] ).on( 'change', restart );
+    //gulp.watch( ['src/server/*' , 'src/public/?(actions|components|containers|js|pages|reducers)/!(___jb_tmp___)'] ).on( 'change', restart );
     gulp.watch([sources.css], ['reload_css']);
 
+    gulp.watch([sources.reducers], ['browserify-live']);
+    gulp.watch([sources.server], ['build_server']);
+    gulp.watch([sources.containers], ['browserify-live']);
+    gulp.watch([sources.components], ['browserify-live']);
+    gulp.watch([sources.pages],['browserify-live']);
+    gulp.watch([sources.publicScripts], ['browserify-live']);
 });
