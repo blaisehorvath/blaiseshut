@@ -11,12 +11,14 @@ class BlogPosts extends React.Component {
         this.getNewBlogPosts(2);
     }
 
-    getNewBlogPosts(numOfNewPosts) {
+    getNewBlogPosts(numberOfPostsToReturn) {
         //TODO:Maybe this could be a little bit earlier?
+
             let data = {
-                lastBlogPost: this.props.lastBlogPost,
-                queryBlogNum: numOfNewPosts,
-                activeTags: this.props.activeTags            };
+                currentBlogPostIds: this.props.posts.map(post=>post.id),
+                numberOfPostsToReturn,
+                activeTags: this.props.activeTags};
+            console.log(data)
         $.ajax({
             type: 'POST',
             url: '/getBlogPosts',
