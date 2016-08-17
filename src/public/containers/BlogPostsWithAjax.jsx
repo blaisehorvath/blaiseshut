@@ -8,13 +8,21 @@ const mapStateToPropsBlogPosts = (state, ownProps)=> {
         activeBlogPosts: state.ActiveTags
             //TODO: Filter differently when tags are not present. Ordering is ready in the store
             //maybe the tags in posts should be a tag type with ref etc...
-            ?state.BlogPosts.filter(post=>
-                state.ActiveTags
-                    .map(tag=>tag.name)
-                    .reduce((prev, curr)=>
-                    post.tags.split(" ").indexOf(curr) > -1 && prev, true))
-            : state.BlogPosts,
-        activeTags: state.ActiveTags
+            ? state.BlogPosts.filter(post=>
+            state.ActiveTags
+                .map(tag=>tag.name)
+                .reduce((prev, curr)=>
+                post.tags.split(" ").indexOf(curr) > -1 && prev, true))
+            : state.BlogPosts.filter((post, idx, arr)=>
+        arr.reduce((prev, curr, idx, arr)=> {// Get the last good index
+            if (prev.finished) return prev;
+            else if ("id" in arr[idx + 1]) {
+                return {lastRightIndex: idx, finished: (arr[idx + 1].id === curr.id - 1)}
+            } else return {lastRightIndex: idx, finished: true}
+        }, {lastRightIndex: 0, finished: false}).lastRightIndex
+        >= idx),
+        activeTags: state.ActiveTags,
+        loggedIn: true
     };
 };
 const mapDispatchToPropsBlogPosts = (dispatch)=> {
