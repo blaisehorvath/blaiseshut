@@ -1,5 +1,6 @@
 import React from "react"
 const BlogPost = ({post,loggedIn})=> {
+
     return <div className="panel panel-default">
         <div className="panel-heading">
             <div className="row">
@@ -8,7 +9,8 @@ const BlogPost = ({post,loggedIn})=> {
             </div>
         </div>
         <div className="panel-body">{post.text}</div>
-        <div className="panel-footer">{post.tags.toString() + "   " +
+        <div className="panel-footer"><p>{post.tags.toString()}</p>
+            {"   " +
         loggedIn?<a method="get" href={"/blog/"+encodeURIComponent(post.title)}>read more!</a>:""}</div>
     </div>
 };
