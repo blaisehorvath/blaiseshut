@@ -11,7 +11,6 @@ const NavButtonComponent = (props) => {
 };
 
 const mapStateToProps = (state, props) => {
-    console.log(state.isMainPage);
     return {
         isMainPage: state.isMainPage
     }

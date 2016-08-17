@@ -8,6 +8,8 @@ $media-bootstrap-md-min: 992px;
 $media-bootstrap-md-max: 1199px;
 $media-bootstrap-lg-min: 1200px;
 
+$footer_height: 100px;
+
 $col_nav_background: rgb(14, 201, 190);
 $col_nav_active: rgb(242, 78, 78);
 $col_nav_hover: rgb(228, 46, 139);
@@ -130,7 +132,11 @@ li.dropdown ul.dropdown-menu li a {
       Content
  ---------------------------------*/
 
-div#app {
+div#reactApp {
+  min-height: 100%;
+  position: relative;
+  background: yellow;
+  padding-bottom: $footer_height;
 }
 
 /* About Us */
@@ -202,13 +208,24 @@ section#contactUs {
             Footer
 ---------------------------------*/
 footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: $footer_height;
   background: $col_footer_background;
-  ul {
-    list-style: none;
-    padding: 0;
-  }
-  a:hover {
-    text-decoration: none;
-    font-weight: bold;
+  .container {
+    height: $footer_height;
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+    a:hover {
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    p {
+      margin-bottom: 0;
+    }
   }
 }
