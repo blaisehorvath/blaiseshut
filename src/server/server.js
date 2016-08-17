@@ -114,14 +114,11 @@ let params = {
     TableName: "SWAblog",
     Count: true
 };
-let querycache = undefined;
-//TODO:GET TAGS BEFORE SENDIND THE STORE TO ANYONE!!
-const queryBlogPosts = (fromId, numberOfQuery, activeTags)=> {//TODO: date is a reserved keyword
-    //console.log(typeof fromId + "   " + typeof numberOfQuery )
+let queryCache = undefined;
+(()=> {
     let queryparams = {
         TableName: "SWAblog",
         ProjectionExpression: "#id, #date, #text, #user, #tags, #precontent, #title",
-        //FilterExpression: "",//"#id between :start and :end",
         ExpressionAttributeNames: {
             "#id": "id",
             "#date": "date",
@@ -130,50 +127,34 @@ const queryBlogPosts = (fromId, numberOfQuery, activeTags)=> {//TODO: date is a 
             "#tags": "tags",
             "#precontent": "precontent",
             "#title": "title"
-        }//,
-        // ExpressionAttributeValues: {
-        //     ":start": fromId,
-        //     ":end": fromId + numberOfQuery - 1
-        // }
+        }
     };
+    doc.scan(queryparams, (err, data)=> {
+        if (err) console.log(err);
+        else queryCache = data;
+    });
+})();
+//TODO:GET TAGS BEFORE SENDIND THE STORE TO ANYONE!!
+const queryBlogPosts = (currentBlogPostIds, activeTags, numberOfPostsToReturn)=> {//
     return new Promise((resolve, reject)=> {
-        let numOfCurrentResults = 0;
-        let filterFunction = (items)=> {
-            let filteredItems = activeTags
-                ? items.filter(post=>
+        //Get all the remaining posts
+        let availableBlogPosts = queryCache.Items
+            .filter((post)=>currentBlogPostIds.indexOf(post.id.toString()) === -1)
+            .sort((a, b)=> { // descending order, TODO: maybe we could order things by date?
+                return a.id < b.id ? 1 : -1
+            });
+        console.log(availableBlogPosts.map(post=>post.id))
+        //Filter blogposts if active tag is set...
+        let tagFilteredBlogPosts =
+            activeTags
+                ? availableBlogPosts.filter(post=>
                 activeTags
                     .map(tag=>tag.name)
                     .reduce((prev, curr)=>
                     post.tags.split(" ").indexOf(curr) > -1 && prev, true))
-                : items;
-            console.log({filteredItems: filteredItems.map(it=>it.id)})
-            return filteredItems.sort((a, b)=> { // descending order
-                return a.id < b.id ? 1 : -1
-            })
-                .filter((elem, indx, arr)=> {
-                    console.log({
-                        arrlength: arr.length,
-                        elemid: elem.id,
-                        numberOfQuery,
-                        fromId,
-                        numOfCurrentResults
-                    });
-                    if ((arr.length - fromId) > elem.id && numOfCurrentResults < numberOfQuery) {
-                        numOfCurrentResults++;
-                        return true
-                    }
-                    else return false
-                })
-        };
-        if (!querycache)
-            doc.scan(queryparams, (err, data)=> {
-                if (err) console.log(err);
-                else querycache = data;
-                resolve(filterFunction(querycache.Items));
-            });
-        else {
-            resolve(filterFunction(querycache.Items));
-        }
+                : availableBlogPosts;
+        resolve(tagFilteredBlogPosts
+            .slice(0, numberOfPostsToReturn))
     })
 };
 const blogPostToDb = ({text, precontent, date, user, tags, title})=> {
@@ -314,7 +295,7 @@ app.get('/blog/:blogTitle', (req, res) => {//TODO:Better regex, only match /stri
         reuqestType: "GET",
         path: req.path
     });
-    queryBlogPosts(0, 50)
+    queryBlogPosts(0, 50)//TODO:
         .then(data=> {//TODO:This is really bad
             store.dispatch(loadBlogPost(data.Items.filter((blogpost)=> {
                 return blogpost.title === decodeURIComponent(req.params.blogTitle)
@@ -453,13 +434,15 @@ app.post("/admin", (req, res)=> {
 });
 app.post("/getBlogPosts", (req, res)=> {//TODO:error handling
     console.log({
-        lastBlogPost: req.body.lastBlogPost,
-        queryBlogNum: req.body.queryBlogNum,
-        activeTags: req.body.activeTags
-    })
-    queryBlogPosts(+req.body.lastBlogPost, +req.body.queryBlogNum, req.body.activeTags).then((data)=> {
-        res.send(data)
-    })
+        currentBlogPostIds: req.body.currentBlogPostIds,
+        activeTags: req.body.activeTags,
+        numberOfPostsToReturn: req.body.numberOfPostsToReturn
+    });
+    queryBlogPosts(req.body.currentBlogPostIds ? req.body.currentBlogPostIds : [],
+        req.body.activeTags ? req.body.activeTags : [], req.body.numberOfPostsToReturn)
+        .then((data)=> {
+            res.send(data)
+        })
 });
 //*******************************END OF POST REQUESTS
 /*https.createServer(credentials,app).listen(process.env.PORT || 3000, function () {

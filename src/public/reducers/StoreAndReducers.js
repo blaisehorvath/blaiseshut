@@ -15,13 +15,16 @@ const Tags = (state = [], action) =>
     }
 };
 
-const BlogPosts = (state = {lastBlogPost:0,posts:[]}, action)=>{//TODO: Get all blogposts in the right order (time added)
-    switch (action.type){
+const BlogPosts = (state = [], action)=>{//TODO: Get all blogposts in the right order (time added)
+    switch (action.type){// TODO: JS SET??
         case 'NEW_BLOG_POSTS':
-            let returnState = Object.assign({},state)
-            returnState.lastBlogPost += action.posts.length;
-            returnState.posts = returnState.posts.concat(action.posts);
-            return returnState;
+            return [...state].concat(action.posts)
+                // This part is to ensure that no post is duplicated, not tested
+                // .filter((post)=>
+                //     !state.filter((statePost)=>statePost ===post)));
+                .sort((a, b)=> { // descending order, TODO: maybe we could order things by date?
+                    return a.id < b.id ? 1 : -1
+                });
         default:
             return state;
     }

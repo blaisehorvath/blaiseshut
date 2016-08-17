@@ -2,20 +2,20 @@ import React from "react"
 import {connect} from "react-redux"
 import BlogPosts from "../components/BlogPosts"
 import {addBlogPosts} from "../reducers/StoreAndReducers"
-const mapStateToPropsBlogPosts = (state,ownProps)=> {
+const mapStateToPropsBlogPosts = (state, ownProps)=> {
     return {
-        posts: state.BlogPosts.posts,
-        lastBlogPost: state.BlogPosts.lastBlogPost, // TODO: Get the last item in the continous list..
-        activeBlogPosts: state.ActiveTags?
+        posts: state.BlogPosts,
+        activeBlogPosts: state.ActiveTags
+            //TODO: Filter differently when tags are not present. Ordering is ready in the store
             //maybe the tags in posts should be a tag type with ref etc...
-            state.BlogPosts.posts.filter(post=>
-            state.ActiveTags
-                .map(tag=>tag.name)
-                .reduce((prev,curr)=>
-                post.tags.split(" ").indexOf(curr)>-1 && prev,true))
-                :state.BlogPosts.posts, // TODO:Filter here to show only in descending ID!!!!
+            ?state.BlogPosts.filter(post=>
+                state.ActiveTags
+                    .map(tag=>tag.name)
+                    .reduce((prev, curr)=>
+                    post.tags.split(" ").indexOf(curr) > -1 && prev, true))
+            : state.BlogPosts,
         activeTags: state.ActiveTags
-    }
+    };
 };
 const mapDispatchToPropsBlogPosts = (dispatch)=> {
     return {
@@ -26,14 +26,3 @@ const mapDispatchToPropsBlogPosts = (dispatch)=> {
 };
 const BlogPostsWithAjax = connect(mapStateToPropsBlogPosts, mapDispatchToPropsBlogPosts)(BlogPosts);
 export default BlogPostsWithAjax
-
-/*
-* state.BlogPosts.posts.filter(
- (post)=>{state.ActiveTags.map(tag=>tag.name).reduce((previousBool,activeTag)=>{post.tags.split(" ").
- indexOf(activeTag)>-1 && previousBool},true)
- })
-
-
- this is good:
- state.BlogPosts.posts.filter(             (post)=>state.ActiveTags.map(tag=>tag.name).reduce((prev,curr)=>post.tags.split(" ").indexOf(curr)>-1 && prev,true))
-* */
