@@ -5,13 +5,15 @@ import {connect} from "react-redux";
 const NavButtonComponent = (props) => {
     return (
         <li key={props.key}>
-            <a href={props.href} onClick={props.navButtonClick}>{props.caption}</a>
+            <a href={props.isMainPage ? props.href[0] : props.href[1]} onClick={props.navButtonClick}>{props.caption}</a>
         </li>
     );
 };
 
 const mapStateToProps = (state, props) => {
+    console.log(state.isMainPage);
     return {
+        isMainPage: state.isMainPage
     }
 };
 

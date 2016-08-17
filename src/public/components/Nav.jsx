@@ -2,11 +2,11 @@ import React from "react";
 import NabButtonBar from "./NavButtonBar";
 
 const navButtons = [
-    {id: "aboutUs", caption: "About us", href: "#aboutUs"},
-    {id: "projects", caption: "Projects", href: "#projects"},
-    {id: "team", caption: "Team", href: "#team"},
-    {id: "contactUs", caption: "Contact us", href: "#contactUs"},
-    {id: "blog", caption: "Blog", href: "#blog"}
+    {id: "aboutUs", caption: "About us", href: ["#aboutUs", "/#aboutUs"]},
+    {id: "projects", caption: "Projects", href: ["#projects", "/#projects"]},
+    {id: "team", caption: "Team", href: ["#team", "/#team"]},
+    {id: "contactUs", caption: "Contact us", href: ["#contactUs", "/#contactUs"]},
+    {id: "blog", caption: "Blog", href: ["/blog", "#blog"]}
 ];
 
 const Nav = (props) => {

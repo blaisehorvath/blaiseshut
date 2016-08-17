@@ -70,19 +70,19 @@ const ActiveBlogPosts = (state = [],action)=>{
     }
 };
 
-const isMainPage = ( state = true, action) => {
-    switch(action){
+const isMainPage = (state = false, action) => {
+    switch(action.type){
         case 'CHANGE_ACTIVE_PAGE':
-            return action.isMain;
+            return action.isMainPage ? true : false;
         default:
             return state;
     }
-}
+};
 
 export const changeActivePage = (isMain) => {
     return {
         type: 'CHANGE_ACTIVE_PAGE',
-        isMain: isMain
+        isMainPage: isMain
     }
 };
 
@@ -91,7 +91,7 @@ export const switchActiveTag =(tag) =>{
         type: 'SWITCH_ACTIVE_TAG',
         tag
     }
-}
+};
 
 export const addActiveTag = (tag) => {
   return {
@@ -147,6 +147,7 @@ let AppReducer = combineReducers({
     LoggedIn,
     BlogPost,
     ActiveTags,
-    ActiveBlogPosts
+    ActiveBlogPosts,
+    isMainPage
 });
 export default AppReducer;

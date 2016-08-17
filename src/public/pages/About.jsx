@@ -1,6 +1,23 @@
 import React from "react";
-const About = ()=> {
-    return (
+
+import {connect} from "react-redux"
+import {changeActivePage} from "../reducers/StoreAndReducers";
+
+class About extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
+    componentDidMount() {
+        this.props.dispatch(changeActivePage(true));
+    }
+
+    componentWillUnmount() {
+        this.props.dispatch(changeActivePage(false));
+    }
+
+
+    render() {return (
         <div>
             <header id="aboutUs">
                 <div className="container">
@@ -33,6 +50,7 @@ const About = ()=> {
                 </div>
             </section>
         </div>
-    )
+    )};
 };
-export default About
+
+export default connect()(About)
