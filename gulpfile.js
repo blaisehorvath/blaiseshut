@@ -14,20 +14,10 @@ var sources = {
     css: "src/public/css/styles.scss",
     components: "src/public/components/*",
     publicScripts: "src/public/js/*",
-    mainView: "src/server/view/*",
     reducers: "src/public/reducers/*",
     containers: "src/public/containers/*",
     pages: "src/public/pages/*"
 };
-
-//live reloading the page in the browser is anything changed in the code, this needs the chrome addon LiveReload
-gulp.task('copy_index', function () {
-    "use strict";
-    return gulp.src(sources.mainView)
-        .pipe(plumber())
-        .pipe(gulp.dest('build/server/view/'))
-        .pipe(livereload());
-});
 
 //copying css files
 gulp.task('compile_css', function () {
@@ -83,7 +73,6 @@ gulp.task('browserify', ['copy_public_js', 'copy_components', 'copy_containers',
             insertGlobals: true
         }))
         .pipe(gulp.dest('build/private/js/'))
-        .pipe(livereload());
 });
 
 //building the server
@@ -92,13 +81,11 @@ gulp.task('build_server', function () {
         .pipe(plumber())
         .pipe(babel())
         .pipe(gulp.dest('build/server/'))
-        .pipe(livereload());
 });
 //Moving the credentials
 gulp.task('move_creds', function () {
     return gulp.src('src/server/*.{key,pem}')
         .pipe(gulp.dest('build/server/'))
-        .pipe(livereload());
 });
 
 gulp.task('reload_css', function () {
@@ -109,25 +96,19 @@ gulp.task('reload_css', function () {
         .pipe(livereload());
 });
 
-gulp.task('default', ['copy_index', 'compile_css', 'browserify', 'build_server', 'move_creds'], function () {
-    "use strict";
-    livereload({start: true});
-
-    // starting the server when everything is done
-    server.listen({path: 'build/server/server.js'});
-
-    // watching files for changes
-    gulp.watch([sources.reducers], ['copy_reducers', server.restart]);
-    gulp.watch([sources.server], ['build_server', server.restart]);
-    gulp.watch([sources.css], ['reload_css']);
-    gulp.watch([sources.containers], ['browserify', server.restart]);
-    gulp.watch([sources.components], ['browserify', server.restart]);
-    gulp.watch([sources.pages],['browserify', server.restart]);
-    gulp.watch([sources.publicScripts], ['browserify', server.restart]);
-    gulp.watch([sources.mainView], ['copy_index', server.restart]);
+gulp.task( 'server:start',  ['compile_css', 'browserify', 'build_server', 'move_creds'] , function() {
+    server.listen( {path: 'build/server/server.js'}, livereload.listen );
 });
 
-gulp.task('watch_css', ['default'], function () {
-    livereload({start: true});
+gulp.task('default', ['server:start'], function () {
+
+    function restart( file ) {
+        server.changed( function( error ) {
+            if( ! error ) livereload.changed( file.path );
+        });
+    }
+
+    gulp.watch( ['src/server/*' , 'src/public/?(actions|components|containers|js|pages|reducers)/!(___jb_tmp___)'] ).on( 'change', restart );
     gulp.watch([sources.css], ['reload_css']);
+
 });

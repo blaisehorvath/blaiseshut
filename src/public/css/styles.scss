@@ -22,14 +22,12 @@ $col_projects_background: #A7FF97;
 $col_team_background: #baf8e7;
 $col_contactus_background: #a9ff4f;
 
-
 /* Mixins */
 
-@mixin default-box ($bgcolour) {
+@mixin default-box($bgcolour) {
   background: $bgcolour;
   padding: 0 10px;
 }
-
 
 /*-------------------------------------
       The body in every page
@@ -207,15 +205,33 @@ section#blog {
   .container {
     padding: 100px 0 50px 0;
 
-    .panel-body {
-      font-size: 14pt;
-      font-weight: 300;
-      text-align: justify;
+    .blogpost {
+
+      .panel-heading {
+        .postAuthor {
+
+        }
+
+        .postDate{
+
+        }
+
+      }
+
+      .panel-body {
+        font-size: 14pt;
+        font-weight: 300;
+        text-align: justify;
+      }
+
+      .panel-footer {
+
+      }
+
     }
 
   }
 }
-
 
 /*---------------------------------
             Footer

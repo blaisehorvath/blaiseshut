@@ -1,10 +1,13 @@
 import React from "react"
 const BlogPost = ({post, loggedIn})=> {
-    return <div className="panel panel-default">
+    return <div className="blogPost panel panel-default">
         <div className="panel-heading">
             <div className="row">
-                <div className="col-xs-8">Post by {post.user} <br/>{post.title}</div>
-                <div className="col-xs-4">Creted at {post.date}</div>
+                <div className="postAuthor col-xs-8">
+                    <div>Post by {post.user}</div>
+                    <h2>{post.title}</h2>
+                </div>
+                <div className="postDate col-xs-4 pull-right">Created on {post.date}</div>
             </div>
         </div>
         <div className="panel-body">{post.text}</div>
