@@ -18,7 +18,6 @@ class BlogPosts extends React.Component {
                 currentBlogPostIds: this.props.posts.map(post=>post.id),
                 numberOfPostsToReturn,
                 activeTags: this.props.activeTags};
-            console.log(data)
         $.ajax({
             type: 'POST',
             url: '/getBlogPosts',
