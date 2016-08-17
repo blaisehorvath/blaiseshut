@@ -14,7 +14,7 @@ import ReactApp from "../components/ReactApp";
 import Admin from "../pages/Admin";
 import About from "../pages/About"
 import Blog from "../pages/Blog"
-import SinglePost from "../pages/BlogPost"
+import BlogPost from "../pages/BlogPost"
 
 const logger = createLogger();
 const store = createStore(AppReducer,window.__INITIAL_STATE__, applyMiddleware(logger));
@@ -38,8 +38,8 @@ Page('/blog', ()=>{render(
     <Provider store={store}><ReactApp><Blog/></ReactApp></Provider>,
     document.getElementById('app')
 );});
-Page('/blog/:blogTitle', (blogTitle)=>{render(//TODO: Get path on front end when routing on front-end???
-    <Provider store={store}><ReactApp><SinglePost blogTitle={blogTitle}/></ReactApp></Provider>,
+Page('/blog/:blogTitle/', ()=>{render(
+    <Provider store={store}><ReactApp><BlogPost/></ReactApp></Provider>,
     document.getElementById('app')
 );});
 Page();
