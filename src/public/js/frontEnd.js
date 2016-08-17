@@ -8,4 +8,10 @@ console.log("Entry frontend script is running");
         $('.navbar-toggle:visible').click();
     });
 
+    $(window).scroll(function() {
+        if($(window).scrollTop() == $("#team").offset().top) {
+            alert("bottom!");
+        }
+    });
+
 })(jQuery); // End of use strict

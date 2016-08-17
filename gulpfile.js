@@ -95,6 +95,16 @@ gulp.task('build_server', function () {
         .pipe(babel())
         .pipe(gulp.dest('build/server/'))
 });
+
+gulp.task('rebuild_server', function () {
+    return gulp.src('src/server/*.{js,jsx}')
+        .pipe(plumber())
+        .pipe(babel())
+        .pipe(gulp.dest('build/server/'))
+        .pipe(server() )
+        .pipe(livereload());
+});
+
 //Moving the credentials
 gulp.task('move_creds', function () {
     return gulp.src('src/server/*.{key,pem}')
@@ -128,17 +138,11 @@ gulp.task('default', ['server:start'], function () {
 
     livereload({ start: true });
 
-    function restart( file ) {
-        server.changed( function( error ) {
-            if( ! error ) livereload.changed( file.path );
-        });
-    }
-
     //gulp.watch( ['src/server/*' , 'src/public/?(actions|components|containers|js|pages|reducers)/!(___jb_tmp___)'] ).on( 'change', restart );
     gulp.watch([sources.css], ['reload_css']);
 
     gulp.watch([sources.reducers], ['browserify-live']);
-    gulp.watch([sources.server], ['build_server']);
+    gulp.watch([sources.server], ['rebuild_server']);
     gulp.watch([sources.containers], ['browserify-live']);
     gulp.watch([sources.components], ['browserify-live']);
     gulp.watch([sources.pages],['browserify-live']);
