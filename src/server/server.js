@@ -143,7 +143,6 @@ const queryBlogPosts = (currentBlogPostIds, activeTags, numberOfPostsToReturn)=>
             .sort((a, b)=> { // descending order, TODO: maybe we could order things by date?
                 return a.id < b.id ? 1 : -1
             });
-        console.log(availableBlogPosts.map(post=>post.id))
         //Filter blogposts if active tag is set...
         let tagFilteredBlogPosts =
             activeTags
@@ -433,11 +432,6 @@ app.post("/admin", (req, res)=> {
     });
 });
 app.post("/getBlogPosts", (req, res)=> {//TODO:error handling
-    console.log({
-        currentBlogPostIds: req.body.currentBlogPostIds,
-        activeTags: req.body.activeTags,
-        numberOfPostsToReturn: req.body.numberOfPostsToReturn
-    });
     queryBlogPosts(req.body.currentBlogPostIds ? req.body.currentBlogPostIds : [],
         req.body.activeTags ? req.body.activeTags : [], req.body.numberOfPostsToReturn)
         .then((data)=> {
