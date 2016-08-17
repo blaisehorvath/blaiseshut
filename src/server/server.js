@@ -135,6 +135,7 @@ let queryCache = undefined;
     });
 })();
 //TODO:GET TAGS BEFORE SENDIND THE STORE TO ANYONE!!
+const getBlogPostByTitle=(title)=>queryCache.Items.filter(post=>post.title===title)[0]
 const queryBlogPosts = (currentBlogPostIds, activeTags, numberOfPostsToReturn)=> {//
     return new Promise((resolve, reject)=> {
         //Get all the remaining posts
@@ -294,19 +295,9 @@ app.get('/blog/:blogTitle', (req, res) => {//TODO:Better regex, only match /stri
         reuqestType: "GET",
         path: req.path
     });
-    queryBlogPosts(0, 50)//TODO:
-        .then(data=> {//TODO:This is really bad
-            store.dispatch(loadBlogPost(data.Items.filter((blogpost)=> {
-                return blogpost.title === decodeURIComponent(req.params.blogTitle)
-            })[0]))
-        })
-        .then(()=> {
             let content = ReactDOM.renderToString(<Provider store={store}><ReactApp><BlogPost/></ReactApp></Provider>);
-            let response = renderHTML(content, store.getState());
+            let response = renderHTML(content, Object.assign({},initialState,{BlogPost:getBlogPostByTitle(decodeURIComponent(req.params.blogTitle))}));
             res.send(response);
-        });
-    //TODO:Write query function which gets the right blogpost!
-
 });
 app.post('/blog/:blogTitle', (req, res) => {//TODO:Better regex, only match /string_like_this
     "use strict";
@@ -314,18 +305,7 @@ app.post('/blog/:blogTitle', (req, res) => {//TODO:Better regex, only match /str
         reuqestType: "POST",
         path: req.path
     });
-    queryBlogPosts(0, 50)
-        .then(data=> {//TODO:This is really bad
-            req.path.split("/")
-            return data.Items.filter((blogpost)=> {
-                return blogpost.title === decodeURIComponent(req.params.blogTitle)
-            })[0]
-        })
-        .then((blogPost)=> {
-            res.send(blogPost);
-        });
-    //TODO:Write query function which gets the right blogpost!
-
+    res.send(getBlogPostByTitle(decodeURIComponent(req.params.blogTitle)));
 });
 
 
