@@ -101,7 +101,7 @@ gulp.task('move_creds', function () {
         .pipe(livereload());
 });
 
-gulp.task('reload_css', ['default'], function () {
+gulp.task('reload_css', function () {
     return gulp.src(sources.css)
         .pipe(sass.sync().on('error', sass.logError))
         .pipe(plumber())
@@ -125,4 +125,9 @@ gulp.task('default', ['copy_index', 'compile_css', 'browserify', 'build_server',
     gulp.watch([sources.pages],['browserify', server.restart]);
     gulp.watch([sources.publicScripts], ['browserify', server.restart]);
     gulp.watch([sources.mainView], ['copy_index', server.restart]);
+});
+
+gulp.task('watch_css', ['default'], function () {
+    livereload({start: true});
+    gulp.watch([sources.css], ['reload_css']);
 });

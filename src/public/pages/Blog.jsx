@@ -22,11 +22,9 @@ export default class Blog extends React.Component {
             <section id="blog">
                 <div className="container">
                     <div className="col-xs-8">
-                        <br/><br/><br/><br/><br/><br/><br/><br/><br/>
                         <BlogPostsWithAjax/>
                     </div>
                     <div className="col-xs-4">
-                        <br/><br/><br/><br/><br/><br/><br/><br/><br/>
                         <TagListWithStore/>
                     </div>
                 </div>
