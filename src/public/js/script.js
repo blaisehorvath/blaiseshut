@@ -38,7 +38,7 @@ Page('/blog', ()=>{render(
     <Provider store={store}><ReactApp><Blog/></ReactApp></Provider>,
     document.getElementById('app')
 );});
-Page('/blog/:blogTitle/', ()=>{render(
+Page('/blog/:blogTitle', ()=>{render(
     <Provider store={store}><ReactApp><BlogPost/></ReactApp></Provider>,
     document.getElementById('app')
 );});

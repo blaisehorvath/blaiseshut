@@ -17,7 +17,7 @@ const BlogPost = ({post, loggedIn,dispatch})=> {
         <div className="panel-footer">
             {post.tags.toString()+"          "}
             <a onClick={()=>{dispatch(loadBlogPost(post));page.redirect("/blog/" + encodeURIComponent(post.title))}}>Read more!</a>
-            {loggedIn?<a method="get" href={"/admin/" + encodeURIComponent(post.title)}>          Edit!</a>:""}
+            {loggedIn?<a onClick={()=>{dispatch(loadBlogPost(post));page.redirect("/admin/" + encodeURIComponent(post.title))}}>          Edit!</a>:""}
         </div>
     </div>
 };

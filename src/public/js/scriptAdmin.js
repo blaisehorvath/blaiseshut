@@ -23,7 +23,7 @@ window.dispatcher = (action) => {
 };
 
 Page('/admin', ()=>{render(
-    <Provider store={store}><ReactApp><AdminLoggedIn/></ReactApp></Provider>,
+    <Provider store={store}><ReactApp><AdminLoggedIn></AdminLoggedIn></ReactApp></Provider>,
     document.getElementById('app'));
 });
 Page('/about', ()=>{render(
@@ -38,4 +38,8 @@ Page('/blog', ()=>{render(
     <Provider store={store}><ReactApp><Blog loggedIn={true}/></ReactApp></Provider>,
     document.getElementById('app')
 );});
+Page('/admin/:blogTitle', ()=>{render(
+    <Provider store={store}><ReactApp><AdminLoggedIn></AdminLoggedIn></ReactApp></Provider>,
+    document.getElementById('app'));
+});
 Page();

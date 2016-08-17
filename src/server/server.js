@@ -260,14 +260,28 @@ app.get('/admin', (req, res) => {//TODO:HTTPS
     let content = "";
     checkHash(req.cookies.name, req.cookies.hash).then((result)=> {
         if (result)
-            content = ReactDOM.renderToString(<Provider
-                store={store}><ReactApp><AdminLoggedIn></AdminLoggedIn></ReactApp></Provider>);
+            content = ReactDOM.renderToString(<Provider store={store}><ReactApp><AdminLoggedIn></AdminLoggedIn></ReactApp></Provider>);
         else
             content = ReactDOM.renderToString(<Provider store={store}><ReactApp><Admin/></ReactApp></Provider>);
         return;
     }).then(()=> {
         let response = renderHTML(content, initialState);
         res.send(response);
+    })
+});
+app.get('/admin/:blogTitle', (req, res) => {//TODO:Better regex, only match /string_like_this
+    "use strict";
+    console.log({
+        reuqestType: "GET",
+        path: req.path
+    });
+    checkHash(req.cookies.name, req.cookies.hash).then((result)=> {
+        if (result) {
+            //store.dispatch(loadBlogPost(getBlogPostByTitle(decodeURIComponent(req.params.blogTitle)))); //TODO:better way
+            let content = ReactDOM.renderToString(<Provider store={store}><ReactApp><AdminLoggedIn></AdminLoggedIn></ReactApp></Provider>);
+            let response = renderHTML(content, initialState);
+            res.send(response);
+        }
     })
 });
 app.get('/about', (req, res) => {
