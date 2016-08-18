@@ -30,15 +30,6 @@ const Nav = (props) => {
 
                     <NabButtonBar buttons={navButtons}/>
 
-                    {/*<ul className="nav navbar-nav">*/}
-                    {/*<li><a href="#aboutUs">About us</a></li>*/}
-                    {/*<li><a href="#projects">Projects</a></li>*/}
-                    {/*<li><a href="#team">Team</a></li>*/}
-                    {/*<li><a href="#contactUs">Contact us</a></li>*/}
-                    {/*<li><a href="/blog">Blog</a></li>*/}
-                    {/*</ul>*/}
-
-
                     <div className="pull-right">
                         <form className="navbar-form" role="search">
                             <div className="input-group">

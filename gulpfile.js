@@ -54,7 +54,12 @@ gulp.task('copy_containers', function () {
 //copying pages
 gulp.task('copy_pages', function () {
     return gulp.src(sources.pages)
-        .pipe(plumber())
+        .pipe(plumber({
+            errorHandler: function (err) {
+                console.log(err);
+                this.emit('end');
+            }
+        }))
         .pipe(babel())
         .pipe(gulp.dest('build/public/pages'));
 });
