@@ -1,8 +1,9 @@
 import React from "react"
 import SinglePost from "../containers/SinglePost"
-const BlogPost =({blogTitle})=>{
-    return (<div>
-        <SinglePost blogTitle={blogTitle}/>
-    </div>)
+const BlogPost =()=>{
+        return (
+            <div>
+                <SinglePost/>
+            </div>);
 };
 export default BlogPost

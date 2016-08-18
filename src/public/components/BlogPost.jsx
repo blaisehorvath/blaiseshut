@@ -1,5 +1,8 @@
 import React from "react"
-const BlogPost = ({post, loggedIn})=> {
+import {loadBlogPost} from '../reducers/StoreAndReducers'
+import {connect} from 'react-redux'
+import page from 'page'
+const BlogPost = ({post, loggedIn,dispatch})=> {
     return <div className="blogPost panel panel-default">
         <div className="panel-heading">
             <div className="row">
@@ -13,9 +16,9 @@ const BlogPost = ({post, loggedIn})=> {
         <div className="panel-body">{post.text}</div>
         <div className="panel-footer">
             {post.tags.toString()+"          "}
-            <a method="get" href={"/blog/" + encodeURIComponent(post.title)}>Read more!</a>
-            {loggedIn?<a method="get" href={"/admin/" + encodeURIComponent(post.title)}>          Edit!</a>:""}
+            <a onClick={()=>{dispatch(loadBlogPost(post));page.redirect("/blog/" + encodeURIComponent(post.title))}}>Read more!</a>
+            {loggedIn?<a onClick={()=>{dispatch(loadBlogPost(post));page.redirect("/admin/" + encodeURIComponent(post.title))}}>          Edit!</a>:""}
         </div>
     </div>
 };
-export default BlogPost
+export default connect()(BlogPost)

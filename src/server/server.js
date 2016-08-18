@@ -32,6 +32,7 @@ import Admin from "../public/pages/Admin"
 import AdminLoggedIn from "../public/pages/AdminLoggedIn"
 import Blog from "../public/pages/Blog"
 import BlogPost from "../public/pages/BlogPost"
+import SinglePost from "../public/containers/SinglePost"//TODO:move to pages...
 
 import {setInitialTags, addTag, loadBlogPost} from "../public/reducers/StoreAndReducers"
 
@@ -135,6 +136,7 @@ let queryCache = undefined;
     });
 })();
 //TODO:GET TAGS BEFORE SENDIND THE STORE TO ANYONE!!
+const getBlogPostByTitle = (title)=>queryCache.Items.filter(post=>post.title === title)[0]
 const queryBlogPosts = (currentBlogPostIds, activeTags, numberOfPostsToReturn)=> {//
     return new Promise((resolve, reject)=> {
         //Get all the remaining posts
@@ -258,14 +260,28 @@ app.get('/admin', (req, res) => {//TODO:HTTPS
     let content = "";
     checkHash(req.cookies.name, req.cookies.hash).then((result)=> {
         if (result)
-            content = ReactDOM.renderToString(<Provider
-                store={store}><ReactApp><AdminLoggedIn></AdminLoggedIn></ReactApp></Provider>);
+            content = ReactDOM.renderToString(<Provider store={store}><ReactApp><AdminLoggedIn></AdminLoggedIn></ReactApp></Provider>);
         else
             content = ReactDOM.renderToString(<Provider store={store}><ReactApp><Admin/></ReactApp></Provider>);
         return;
     }).then(()=> {
         let response = renderHTML(content, initialState);
         res.send(response);
+    })
+});
+app.get('/admin/:blogTitle', (req, res) => {//TODO:Better regex, only match /string_like_this
+    "use strict";
+    console.log({
+        reuqestType: "GET",
+        path: req.path
+    });
+    checkHash(req.cookies.name, req.cookies.hash).then((result)=> {
+        if (result) {
+            //store.dispatch(loadBlogPost(getBlogPostByTitle(decodeURIComponent(req.params.blogTitle)))); //TODO:better way
+            let content = ReactDOM.renderToString(<Provider store={store}><ReactApp><AdminLoggedIn></AdminLoggedIn></ReactApp></Provider>);
+            let response = renderHTML(content, initialState);
+            res.send(response);
+        }
     })
 });
 app.get('/about', (req, res) => {
@@ -294,39 +310,19 @@ app.get('/blog/:blogTitle', (req, res) => {//TODO:Better regex, only match /stri
         reuqestType: "GET",
         path: req.path
     });
-    queryBlogPosts(0, 50)//TODO:
-        .then(data=> {//TODO:This is really bad
-            store.dispatch(loadBlogPost(data.Items.filter((blogpost)=> {
-                return blogpost.title === decodeURIComponent(req.params.blogTitle)
-            })[0]))
-        })
-        .then(()=> {
-            let content = ReactDOM.renderToString(<Provider store={store}><ReactApp><BlogPost/></ReactApp></Provider>);
-            let response = renderHTML(content, store.getState());
-            res.send(response);
-        });
-    //TODO:Write query function which gets the right blogpost!
-
+    store.dispatch(loadBlogPost(getBlogPostByTitle(decodeURIComponent(req.params.blogTitle))));
+    let content = ReactDOM.renderToString(<Provider store={store}><ReactApp><BlogPost/></ReactApp></Provider>);
+    let response = renderHTML(content, store.getState());
+    res.send(response);
 });
-app.post('/blog/:blogTitle', (req, res) => {//TODO:Better regex, only match /string_like_this
-    "use strict";
-    console.log({
-        reuqestType: "POST",
-        path: req.path
-    });
-    queryBlogPosts(0, 50)
-        .then(data=> {//TODO:This is really bad
-            req.path.split("/")
-            return data.Items.filter((blogpost)=> {
-                return blogpost.title === decodeURIComponent(req.params.blogTitle)
-            })[0]
-        })
-        .then((blogPost)=> {
-            res.send(blogPost);
-        });
-    //TODO:Write query function which gets the right blogpost!
-
-});
+// app.post('/blog/:blogTitle', (req, res) => {//TODO:Better regex, only match /string_like_this
+//     "use strict";
+//     console.log({
+//         reuqestType: "POST",
+//         path: req.path
+//     });
+//     res.send(getBlogPostByTitle(decodeURIComponent(req.params.blogTitle)));
+// });
 
 
 app.get('/blog', (req, res) => {//TODO:Better regex, only match /string_like_this

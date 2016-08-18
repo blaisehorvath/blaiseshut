@@ -10,14 +10,15 @@ export default class AdminLoggedIn extends React.Component {
     };
 
     addTagToField(tag) {
+        console.log(this)
         let currentTags = this.postEditor.tagEditor.value.split(" ");
         if (currentTags.indexOf(tag) === -1)//String not found in tags
-            this.postEditor.tagEditor.value += " " + tag;
+            this.postEditor.tagEditor.value += " " + tag;//TODO:Communicate in the store..
     }
-
     render() {//TODO:Use react components for everything!
-        return (
+        return (//TODO:Redo this, communicate in store...
             <div className="row">
+                <br/><br/><br/><br/><br/><br/>
                 <div className="col-xs-8">
                     <PostEditor ref={(ref)=>this.postEditor = ref}/>
                 </div>

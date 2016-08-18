@@ -53,6 +53,8 @@ const ActiveTags = (state = [], action)=> {
             return [action.tag, ...state];
         case 'REMOVE_ACTIVE_TAG':
             return [...state].filter((tag)=>tag !== action.tag);
+        case 'ADD_ACTIVE_TAGS':
+            return [...action.tags]
         case 'SWITCH_ACTIVE_TAG':
             if (state.indexOf(action.tag) > -1) {
                 return [...state].filter((tag)=> tag !== action.tag)
@@ -63,6 +65,7 @@ const ActiveTags = (state = [], action)=> {
             return state;
     }
 };
+
 
 const ActiveBlogPosts = (state = [], action)=> {
     switch (action.type) {
@@ -86,7 +89,12 @@ export const changeActivePage = (isMain) => {
         isMainPage: isMain
     }
 };
-
+export const addActiveTags =(tags)=>{
+    return{
+        type: 'ADD_ACTIVE_TAGS',
+        tags
+    }
+};
 export const switchActiveTag = (tag) => {
     return {
         type: 'SWITCH_ACTIVE_TAG',
