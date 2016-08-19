@@ -1,7 +1,8 @@
 /**
  * Created by v on 8/19/16.
  */
-import {queryBlogPosts,admins,checkHash,checkPassword,blogPostToDb} from './server'
+import {admins,checkHash,checkPassword} from './security'
+import {blogPostToDb, queryBlogPosts} from './db'
 import React from "react";
 import express from 'express'
 let router = express.Router();

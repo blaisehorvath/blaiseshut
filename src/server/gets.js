@@ -6,8 +6,9 @@ import React from "react";
 
 //TODO:Make this work on front end. The createStore in script.js should include our middleWares
 import {loadBlogPost} from "../public/reducers/StoreAndReducers"
+import {checkHash} from './security'
+import {store,initialState} from './server'
 
-import {checkHash,store,initialState} from './server'
 import express from 'express'
 import ReactDOM from "react-dom/server"
 import {Provider} from 'react-redux'
