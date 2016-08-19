@@ -1,19 +1,14 @@
 /*eslint-disable no-unused-vars, no-undef, no-console*/
 /*Modules*/
 import crypto from 'crypto';
-import https from 'https'
 import fs from 'fs'
 import  http from 'http';
 import AWS from "aws-sdk";
 import express from "express";
-import path from "path";
 import React from "react";
-import ReactDOM from "react-dom/server"
-import {Provider} from 'react-redux'
 /*App*/
 import hipsteripsom from 'hipsteripsum'
 import bodyParser from 'body-parser'
-import renderHTML from "./renderHTML"
 import AppReducer from "../public/reducers/StoreAndReducers"
 import cookieParser from "cookie-parser"
 import credential from "credential"
@@ -22,27 +17,19 @@ import credential from "credential"
 import createLogger from 'redux-logger'
 import {createStore, applyMiddleware} from 'redux';
 const logger = createLogger();
+import getRoutes from './gets'
+import postRoutes from './posts'
+import BlogPost from "../public/pages/BlogPost"
+
+import {setInitialTags} from "../public/reducers/StoreAndReducers"
+
 let store = createStore(AppReducer/*,applyMiddleware(logger)*/);
 
-let app = express();
-
-import ReactApp from "../public/components/ReactApp";
-import About from "../public/pages/About"
-import Admin from "../public/pages/Admin"
-import AdminLoggedIn from "../public/pages/AdminLoggedIn"
-import Blog from "../public/pages/Blog"
-import BlogPost from "../public/pages/BlogPost"
-import SinglePost from "../public/containers/SinglePost"//TODO:move to pages...
-
-import {setInitialTags, addTag, loadBlogPost} from "../public/reducers/StoreAndReducers"
-
-/*Constants*/
-const appDirName = path.dirname(require.main.filename);
 //************************************************SETTING UP SECURITY, COOKIES******************************************
 let privateKey = fs.readFileSync('build/server/server.key');
 let certificate = fs.readFileSync('build/server/server.pem');
 let credentials = crypto.createCredentials({key: privateKey, cert: certificate, passphrase: 'w0balubadubdub'});
-let pw = credential()
+let pw = credential();
 let admins = {
     Viktor: {
         hash: ""
@@ -52,19 +39,16 @@ let admins = {
     }
 };
 
-app.use(bodyParser.urlencoded({extended: true}));
-app.use(bodyParser.json());
-app.use(cookieParser());
 const saltRounds = 10;
 /*TODO: Make sure theres no ";" in the hash, to make it work in any browser....*/
 pw.hash("qwertz", (err, hash)=> {
-    if (err) throw err
+    if (err) throw err;
     admins.Viktor.hash = hash
-})
+});
 pw.hash("Seabythelive", (err, hash)=> {
-    if (err) throw err
+    if (err) throw err;
     admins.Blaise.hash = hash
-})
+});
 const checkHash = (name, hash)=> {
     return new Promise((resolve, reject)=> { //TODO: make a result variable and resolve that...
         if (name in admins) {
@@ -80,7 +64,7 @@ const checkPassword = (name, password)=> {
     return new Promise((resolve, reject)=> {
         if (name in admins) {
             pw.verify(admins[name].hash, password, (err, isValid)=> {
-                if (err) throw err
+                if (err) throw err;
                 resolve(isValid)
             })
         }
@@ -136,7 +120,7 @@ let queryCache = undefined;
     });
 })();
 //TODO:GET TAGS BEFORE SENDIND THE STORE TO ANYONE!!
-const getBlogPostByTitle = (title)=>queryCache.Items.filter(post=>post.title === title)[0]
+const getBlogPostByTitle = (title)=>queryCache.Items.filter(post=>post.title === title)[0];
 const queryBlogPosts = (currentBlogPostIds, activeTags, numberOfPostsToReturn)=> {//
     return new Promise((resolve, reject)=> {
         //Get all the remaining posts
@@ -232,208 +216,17 @@ getTags();
 
 //*******************************************************END OF DB SETUP************************************************
 /*Setting the static directory*/
+let app = express();
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
+app.use(cookieParser());
 app.use(express.static(__dirname + '/../public'));
+//Setting up app
+app.use('/', getRoutes)
+app.use('/', postRoutes)
 
-
-// store.dispatch(setInitialTags(Tags));
-// store.dispatch(addTag({id: 2, str: "tagthree"}));
-// console.log(store.getState());
 let initialState;
 
-app.get('/', (req, res) => {
-    "use strict";
-    console.log({
-        reuqestType: "GET",
-        path: req.path
-    });
-    let content = ReactDOM.renderToString(<Provider store={store}><ReactApp><About/></ReactApp></Provider>);
-    let response = renderHTML(content, initialState);
-    res.send(response);
-});
-app.get('/admin', (req, res) => {//TODO:HTTPS
-    "use strict";
-
-    console.log({
-        reuqestType: "GET",
-        path: req.path
-    });
-    let content = "";
-    checkHash(req.cookies.name, req.cookies.hash).then((result)=> {
-        if (result)
-            content = ReactDOM.renderToString(<Provider store={store}><ReactApp><AdminLoggedIn></AdminLoggedIn></ReactApp></Provider>);
-        else
-            content = ReactDOM.renderToString(<Provider store={store}><ReactApp><Admin/></ReactApp></Provider>);
-        return;
-    }).then(()=> {
-        let response = renderHTML(content, initialState);
-        res.send(response);
-    })
-});
-app.get('/admin/:blogTitle', (req, res) => {//TODO:Better regex, only match /string_like_this
-    "use strict";
-    console.log({
-        reuqestType: "GET",
-        path: req.path
-    });
-    checkHash(req.cookies.name, req.cookies.hash).then((result)=> {
-        if (result) {
-            //store.dispatch(loadBlogPost(getBlogPostByTitle(decodeURIComponent(req.params.blogTitle)))); //TODO:better way
-            let content = ReactDOM.renderToString(<Provider store={store}><ReactApp><AdminLoggedIn></AdminLoggedIn></ReactApp></Provider>);
-            let response = renderHTML(content, initialState);
-            res.send(response);
-        }
-    })
-});
-app.get('/about', (req, res) => {
-    "use strict";
-    console.log({
-        reuqestType: "GET",
-        path: req.path
-    });
-    let content = ReactDOM.renderToString(<Provider store={store}><ReactApp/></Provider>);
-    let response = renderHTML(content, initialState);
-    res.send(response);
-});
-
-app.get('/contact', (req, res) => {
-    "use strict";
-    console.log({
-        reuqestType: "GET",
-        path: req.path
-    });
-    let appContent = ReactDOM.renderToString(React.createElement(ReactApp));
-    res.render('cv', {content: appContent});
-});
-app.get('/blog/:blogTitle', (req, res) => {//TODO:Better regex, only match /string_like_this
-    "use strict";
-    console.log({
-        reuqestType: "GET",
-        path: req.path
-    });
-    store.dispatch(loadBlogPost(getBlogPostByTitle(decodeURIComponent(req.params.blogTitle))));
-    let content = ReactDOM.renderToString(<Provider store={store}><ReactApp><BlogPost/></ReactApp></Provider>);
-    let response = renderHTML(content, store.getState());
-    res.send(response);
-});
-// app.post('/blog/:blogTitle', (req, res) => {//TODO:Better regex, only match /string_like_this
-//     "use strict";
-//     console.log({
-//         reuqestType: "POST",
-//         path: req.path
-//     });
-//     res.send(getBlogPostByTitle(decodeURIComponent(req.params.blogTitle)));
-// });
-
-
-app.get('/blog', (req, res) => {//TODO:Better regex, only match /string_like_this
-    "use strict";
-    console.log({
-        reuqestType: "GET",
-        path: req.path
-    });
-    checkHash(req.cookies.name, req.cookies.hash).then((result)=> {
-        if (!result) {
-            let content = ReactDOM.renderToString(<Provider store={store}><ReactApp><Blog loggedIn={false}/></ReactApp></Provider>);
-            let response = renderHTML(content, initialState);
-            res.send(response);
-        }
-        else {
-            console.log("okkke")
-            let content = <Provider store={store}><ReactApp><Blog loggedIn={true}/></ReactApp></Provider>;
-            let response = renderHTML(content, initialState);
-            res.send(response);
-        }
-    })
-
-});
-
-app.get('/projects', (req, res) => {
-    "use strict";
-    console.log({
-        reuqestType: "GET",
-        path: req.path
-    });
-    let appContent = ReactDOM.renderToString(React.createElement(ReactApp));
-    res.render('cv', {content: appContent});
-});
-/* This is the handler for hiding admin side scripts from client*/
-app.get('/private/script.js', (req, res) => {
-
-    console.log({
-        reuqestType: "GET",
-        path: req.path,
-        cookies: req.cookies
-    });
-
-    checkHash(req.cookies.name, req.cookies.hash).then((result)=> {// TODO: This may not be needed bc scriptAdmin?
-        if (!result) {
-            res.sendfile("build/private/js/script.js");
-        } //ha nincs login akkor az alap js-t kuldjuk TODO: NE A PUBLICBAN LEGYEN
-        else {
-            res.sendfile("build/private/js/scriptAdmin.js");
-        }//TODO: NE A PUBLICBAN LEGYEN
-        return;
-    });
-});
-//*******************************POST REQUESTS
-app.post("/getTags", (req, res)=> {
-    checkHash(req.cookies.name, req.cookies.hash).then((result)=> {
-        if (result) {
-            res.send({tags: ["tagone", "tagtwo..."]});
-        }
-        else {
-            res.send({errormsg: "wrong pw user"});
-        }
-    });
-});
-app.post("/adminlogged", (req, res)=> {
-    checkPassword(req.body.user, req.body.password).then((result)=> {
-        if (result) {
-            console.log("goodpw")
-            res.send({name: req.body.user, hash: admins[req.body.user].hash});
-        }
-        else {
-            res.send({errormsg: "wrong pw user"});
-        }
-    });
-});
-app.post("/logout", (req, res)=> {
-    res.cookie('name', '', {Expires: new Date().toISOString(), path: '/'});
-    res.cookie('hash', '', {Expires: new Date().toISOString(), path: '/'});
-    res.redirect('/admin');
-});
-app.post("/newblogpost", (req, res)=> {//TODO: Auth...
-    console.log(req.body)
-    if (req.body.text != "") {
-        blogPostToDb({
-            text: req.body.text,
-            date: (new Date).toISOString(),
-            user: req.cookies.name,
-            tags: req.body.tags,
-            title: req.body.title
-        });
-    }
-    res.redirect('/admin')
-});
-app.post("/admin", (req, res)=> {
-    checkPassword(req.body.user, req.body.password).then((result)=> {
-        if (result) {
-            res.cookie('name', req.body.user, {});
-            res.cookie('hash', admins[req.body.user].hash, {});
-            res.redirect('/admin');
-        }
-        else {
-            res.redirect('/admin');//TODO: Wrong user warning back to front with AJAX
-        }
-    });
-});
-app.post("/getBlogPosts", (req, res)=> {//TODO:error handling
-    queryBlogPosts(req.body.currentBlogPostIds ? req.body.currentBlogPostIds : [],
-        req.body.activeTags ? req.body.activeTags : [], req.body.numberOfPostsToReturn)
-        .then((data)=> {
-            res.send(data)
-        })
-});
 //*******************************END OF POST REQUESTS
 /*https.createServer(credentials,app).listen(process.env.PORT || 3000, function () {
  console.log("Development server is listening on port: 3000");
@@ -441,3 +234,4 @@ app.post("/getBlogPosts", (req, res)=> {//TODO:error handling
 http.createServer(app).listen(process.env.PORT || 3000, function () {
     console.log("Development server is listening on port: 3000");
 });
+export {app, store, initialState, checkHash, checkPassword, admins, queryBlogPosts, blogPostToDb}

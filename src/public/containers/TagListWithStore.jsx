@@ -3,6 +3,7 @@ import React from 'react'
 import SingleTag from "../containers/SingleTag"
 //TODO: This code didnt worked well when imported!!!???
 const mapStateToPropsTagList = (state, ownProps) => {
+    console.log()
     return {
         Tags: state.Tags
     }
@@ -10,13 +11,6 @@ const mapStateToPropsTagList = (state, ownProps) => {
 const mapDispatchToPropsTagList = (dispatch, ownProps) => {
     return {}
 };
-// const Tag = ({tag, addTagToField})=> {
-//     return (
-//         <a onClick={()=> {
-//             addTagToField(tag.name)
-//         }}>{tag.name + " "}</a>
-//     )
-// };
 const TagList = ({Tags, addTagToField})=> {
     return (
         <div>

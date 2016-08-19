@@ -8,7 +8,7 @@ const Tags = (state = [], action) => {
         case 'ADD_ALL_TAGS':
             return [...action.tags]//TOOD:Rewrite all exsisting tags
         case 'ADD_TAG':
-            return [action.tag, ...state]
+            return [...state,action.tag]
         default:
             return state;
     }

@@ -1,24 +1,24 @@
 import React from "react"
 import {connect} from 'react-redux'
-import {addActiveTags} from '../reducers/StoreAndReducers'
+import {addActiveTags,addTag} from '../reducers/StoreAndReducers'
 const mapStateToProps = (state)=> {
     return {
-        blogPost: state.BlogPost
+        blogPost: state.BlogPost,
+        tags:state.Tags,
+        activeTags: state.ActiveTags.map(tag=>tag.name).reduce((prev,curr)=>prev+" "+curr,"")
     }
 };
 class PostEditor extends React.Component {
     componentDidMount() {
         console.log(this)
         if (!$.isEmptyObject(this.props.blogPost)) {
-            this.props.dispatch(addActiveTags(this.props.blogPost.tags.split(" ")));
-
             this.title.defaultValue = this.props.blogPost.title;
             this.precontent.defaultValue = this.props.blogPost.precontent;
             this.text.defaultValue = this.props.blogPost.text;
             this.id.value = this.props.blogPost.id;
             this.date.value = this.props.blogPost.date;
             this.user.value = this.props.blogPost.user;
-            this.tagEditor.defaultValue = this.props.blogPost.tags;
+            //this.tagEditor.defaultValue = this.props.blogPost.tags;
         }
     }
 
@@ -35,12 +35,16 @@ class PostEditor extends React.Component {
                     <textarea ref={(ref)=>this.text = ref} className="form-control" name="text" rows="15"
                               placeholder="blogpost"></textarea>
                     <br/><br/>
-                    <textarea ref={ref=>this.tagEditor = ref} className="form-control" name="tags" rows="3"
+                    <input type="button" value="Add tag" onClick={()=>
+                    {this.props.dispatch(addTag({id:this.props.tags.reduce((prev,curr)=>curr.id>prev?curr.id:prev,0)+1,name:this.newtag.value, relevance:0}))}}/>
+                    <textarea className="form-control" rows="1" ref={(ref)=>this.newtag = ref} placeholder="Add new tag here"></textarea>
+                    <br/>
+                    <textarea ref={ref=>this.tagList = ref} value={this.props.activeTags} className="form-control" name="tags" rows="3"
                               placeholder="tags"></textarea>
                     <br/>
-                    <textarea className="form-control" rows="1" ref={(ref)=>this.id = ref}></textarea>
-                    <textarea className="form-control" rows="1" ref={(ref)=>this.date = ref}></textarea>
-                    <textarea className="form-control" rows="1" ref={(ref)=>this.user = ref}></textarea>
+                    <textarea name="id" disabled className="form-control" rows="1" ref={(ref)=>this.id = ref}></textarea>
+                    <textarea name="date" disabled className="form-control" rows="1" ref={(ref)=>this.date = ref}></textarea>
+                    <textarea name='user' className="form-control" rows="1" ref={(ref)=>this.user = ref}></textarea>
                     <br/>
                     <input type="submit" value="Post"/>
                 </form>
