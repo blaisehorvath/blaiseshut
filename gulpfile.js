@@ -18,7 +18,7 @@ var sources = {
     publicScripts: "src/public/js/*",
     reducers: "src/public/reducers/*",
     containers: "src/public/containers/*",
-    pages: "src/public/pages/!(*__tmp__*)" //matches anything but temporary files
+    pages: "src/public/pages/!(*_tmp_*)" //matches anything but temporary files
 };
 
 //copying css files
