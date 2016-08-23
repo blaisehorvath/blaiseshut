@@ -83,6 +83,15 @@ const isMainPage = (state = false, action) => {
     }
 };
 
+const activeMenuButton = (state = "aboutUs", action) =>{
+    switch (action.type) {
+        case 'SET_ACTIVE_MENU_BUTTON':
+            return action.location;
+        default:
+            return state;
+    }
+};
+
 export const changeActivePage = (isMain) => {
     return {
         type: 'CHANGE_ACTIVE_PAGE',
@@ -167,6 +176,7 @@ let AppReducer = combineReducers({
     ActiveTags,
     ActiveBlogPosts,
     isMainPage,
-    LoggedIn
+    LoggedIn,
+    activeMenuButton
 });
 export default AppReducer;

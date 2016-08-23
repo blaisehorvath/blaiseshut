@@ -12,12 +12,12 @@ var gulp = require('gulp'),
     runSeq = require('run-sequence');
 
 var sources = {
-    server: "src/server/*",
+    server: "src/server/!(*_tmp_*)",
     css: "src/public/css/styles.scss",
-    components: "src/public/components/*",
-    publicScripts: "src/public/js/*",
-    reducers: "src/public/reducers/*",
-    containers: "src/public/containers/*",
+    components: "src/public/components/!(*_tmp_*)",
+    publicScripts: "src/public/js/!(*_tmp_*)",
+    reducers: "src/public/reducers/!(*_tmp_*)",
+    containers: "src/public/containers/!(*_tmp_*)",
     pages: "src/public/pages/!(*_tmp_*)" //matches anything but temporary files
 };
 

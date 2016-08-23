@@ -16,11 +16,13 @@ import About from "../pages/About"
 import Blog from "../pages/Blog"
 import BlogPost from "../pages/BlogPost"
 
-const logger = createLogger();
-const store = createStore(AppReducer,window.__INITIAL_STATE__, applyMiddleware(logger));
+// const logger = createLogger();
+const store = createStore(AppReducer,window.__INITIAL_STATE__/*, applyMiddleware(logger)*/);
 window.dispatcher = (action) => {
     store.dispatch(action);
 };
+window.getState = () => store.getState();
+
 
 Page('/admin', ()=>{render(
     <Provider store={store}><ReactApp><Admin/></ReactApp></Provider>,

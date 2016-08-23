@@ -4,7 +4,7 @@ import {connect} from "react-redux";
 
 const NavButtonComponent = (props) => {
     return (
-        <li key={props.key}>
+        <li className={props.active} >
             <a href={props.isMainPage ? props.href[0] : props.href[1]} onClick={props.navButtonClick}>{props.caption}</a>
         </li>
     );
@@ -12,7 +12,8 @@ const NavButtonComponent = (props) => {
 
 const mapStateToProps = (state, props) => {
     return {
-        isMainPage: state.isMainPage
+        isMainPage: state.isMainPage,
+        active: props.id === state.activeMenuButton ? "active" : ""
     }
 };
 
