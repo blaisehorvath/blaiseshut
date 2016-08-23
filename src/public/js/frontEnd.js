@@ -34,12 +34,12 @@ const navHeight = 50; //the height of the navigation bar
         let $document = $(document);
         let currentScrollPos = $window.scrollTop(); //$window.height();
 
-        /*console.log({
+        console.log({
             scrollPos: $window.scrollTop(),
             documentHeight: $document.height(),
             places: $places,
             places2: $places2
-        });*/
+        });
 
         // if the current position is the bottom of the window highlight the first navbar item
         if (currentScrollPos >= 0 && currentScrollPos <= navHeight) {
@@ -50,7 +50,7 @@ const navHeight = 50; //the height of the navigation bar
             console.log("Scroll is at TOP");
         }
         // if the current position is the bottom of the window highlight the last navbar item
-        else if (currentScrollPos + $(window).height() == $(document).height()) {
+        else if (currentScrollPos + $(window).height() >= $(document).height()) {
             window.dispatcher({
                 type: "SET_ACTIVE_MENU_BUTTON",
                 location: ids[ids.length - 1]
