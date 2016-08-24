@@ -8,6 +8,8 @@ $media-bootstrap-md-min: 992px;
 $media-bootstrap-md-max: 1199px;
 $media-bootstrap-lg-min: 1200px;
 
+$media-owncss-widedisplay: 1500px;
+
 $footer_height: 100px;
 
 $col_nav_background: rgb(14, 201, 190);
@@ -27,6 +29,12 @@ $col_contactus_background: #a9ff4f;
 @mixin default-box($bgcolour) {
   background: $bgcolour;
   padding: 0 10px;
+}
+
+@mixin paragraphFont {
+  font-size: 14pt;
+  font-weight: 300;
+  text-align: justify;
 }
 
 /*-------------------------------------
@@ -180,10 +188,104 @@ header {
 }
 
 /* Projects */
+$projectImageWidth: 200px;
 
 section#projects {
-  height: 600px;
+  //height: 600px;
+  .projectList {
+    padding: 20px 0 50px 0;
+    div.projectCol {
+      a {
+        text-decoration: none;
+        color: black;
+
+        margin-right: auto;
+        margin-left: auto;
+
+        // images are positiond to the middle of their containers
+        img.projectImage {
+          margin-right: auto;
+          margin-left: auto;
+        }
+
+        // images for mobile and small screens
+        #embeddedListImg {
+          content: url("https://placehold.it/200x200");
+        }
+        #iotListImg {
+          content: url("https://placehold.it/200x200");
+        }
+        #webAppListImg {
+          content: url("https://placehold.it/200x200");
+        }
+
+        // different image sizes for different media
+        @media screen and (min-width: $media-bootstrap-md-min) {
+          #embeddedListImg {
+            content: url("https://placehold.it/325x325");
+          }
+          #iotListImg {
+            content: url("https://placehold.it/325x325");
+          }
+          #webAppListImg {
+            content: url("https://placehold.it/325x325");
+          }
+        }
+
+        div.caption {
+          .caption-content {
+            padding-top: 20px;
+            font-size: 14pt;
+            text-align: center;
+            text-decoration: none;
+          }
+        }
+      }
+    }
+  }
   background: $col_projects_background;
+}
+
+//Project Modals:
+.modal-dialog {
+  //on mobiles and very small screens the modal takes up all the space
+
+  //ob laptop screens and smaller displays
+  @media (min-width: $media-bootstrap-sm-min) {
+    width: 80%;
+  }
+  // on big displays
+  @media (min-width: $media-bootstrap-lg-min) {
+    width: 70%;
+  }
+  // for very wide displays
+  @media (min-width: $media-owncss-widedisplay) {
+    width: 55%;
+  }
+
+  .modal-content {
+    .modal-header {
+      .modal-title {
+        font-size: 20pt;
+        font-weight: 600;
+        text-align: center;
+      }
+    }
+    .modal-body {
+      @include paragraphFont;
+      position: relative;
+      img {
+        display: block;
+        max-width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+        padding: 15px 0;
+      }
+    }
+    .modal-footer {
+
+    }
+  }
 }
 
 /* Team */
@@ -212,7 +314,7 @@ section#blog {
 
         }
 
-        .postDate{
+        .postDate {
 
         }
 
