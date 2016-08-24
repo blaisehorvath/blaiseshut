@@ -5,7 +5,7 @@ import {changeActiveMenuButton} from "../reducers/StoreAndReducers";
 const NavButtonComponent = (props) => {
     return (
         <li className={props.active} >
-            <a href={props.isMainPage ? props.href[0] : props.href[1]} onClick={props.navButtonClick}>{props.caption}</a>
+            <a href={props.isMainPage ? props.href[0] : props.href[1]} onClick={(event) => props.navButtonClick(event)}>{props.caption}</a>
         </li>
     );
 };
@@ -19,7 +19,7 @@ const mapStateToProps = (state, props) => {
 
 const mapDispatchToProps = (dispatch, props) => {
     return {
-        navButtonClick: () => {
+        navButtonClick: (event) => {
             let $anchor = $(`[href='#${props.id}']`);
             $('html, body').stop().animate({
                 scrollTop: $($anchor.attr('href')).offset().top - 50
