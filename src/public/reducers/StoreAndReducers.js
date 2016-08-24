@@ -8,7 +8,7 @@ const Tags = (state = [], action) => {
         case 'ADD_ALL_TAGS':
             return [...action.tags]//TOOD:Rewrite all exsisting tags
         case 'ADD_TAG':
-            return [...state,action.tag]
+            return [...state, action.tag]
         default:
             return state;
     }
@@ -78,12 +78,14 @@ const isMainPage = (state = false, action) => {
     switch (action.type) {
         case 'CHANGE_ACTIVE_PAGE':
             return action.isMainPage ? true : false;
+        case 'SET_ACTIVE_MENU_BUTTON':
+            return action.location != 'blog';
         default:
             return state;
     }
 };
 
-const activeMenuButton = (state = "aboutUs", action) =>{
+const activeMenuButton = (state = "aboutUs", action) => {
     switch (action.type) {
         case 'SET_ACTIVE_MENU_BUTTON':
             return action.location;
@@ -98,8 +100,15 @@ export const changeActivePage = (isMain) => {
         isMainPage: isMain
     }
 };
-export const addActiveTags =(tags)=>{
-    return{
+export const changeActiveMenuButton = (buttonId) => {
+    return {
+        type: "SET_ACTIVE_MENU_BUTTON",
+        location: buttonId
+    }
+};
+
+export const addActiveTags = (tags)=> {
+    return {
         type: 'ADD_ACTIVE_TAGS',
         tags
     }

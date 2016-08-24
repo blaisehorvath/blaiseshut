@@ -1,7 +1,9 @@
 import React from "react";
+import { connect } from "react-redux";
 
 import TagListWithStore from "../containers/TagListWithStore"
 import BlogPostsWithAjax from "../containers/BlogPostsWithAjax"
+import { changeActiveMenuButton } from "../reducers/StoreAndReducers";
 //TODO:
 /*
 * 1: The blogPosts in the store should use immutable
@@ -12,10 +14,15 @@ import BlogPostsWithAjax from "../containers/BlogPostsWithAjax"
 * filtered blogposts if their id is not continous.....
 * Maybe you don't need immutable yet, just order blogpost until the next element is empty when you change back? This should be ok...
 * */
-export default class Blog extends React.Component {
+class Blog extends React.Component {
     constructor(props) {
         super(props);
     };
+
+    componentDidMount() {
+        //this.props.dispatch(changeActiveMenuButton('blog'))
+    };
+
 
     render() {// TODO: Better styling
         return (
@@ -33,4 +40,4 @@ export default class Blog extends React.Component {
     }
 };
 
-export default Blog
+export default connect()(Blog);

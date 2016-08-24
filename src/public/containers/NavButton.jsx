@@ -1,6 +1,6 @@
 import React from "react";
 import {connect} from "react-redux";
-
+import {changeActiveMenuButton} from "../reducers/StoreAndReducers";
 
 const NavButtonComponent = (props) => {
     return (
@@ -23,7 +23,7 @@ const mapDispatchToProps = (dispatch, props) => {
             let $anchor = $(`[href='#${props.id}']`);
             $('html, body').stop().animate({
                 scrollTop: $($anchor.attr('href')).offset().top - 50
-            }, 1250, 'easeInOutExpo');
+            }, 1250, 'easeInOutExpo', ()=>{dispatch(changeActiveMenuButton(props.id));});
             event.preventDefault();
         }
     }
