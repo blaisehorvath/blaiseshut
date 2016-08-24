@@ -3,6 +3,8 @@ import React from "react";
 import {connect} from "react-redux"
 import {changeActivePage} from "../reducers/StoreAndReducers";
 
+import Projects from "../components/Projects";
+
 class About extends React.Component {
     constructor(props) {
         super(props);
@@ -34,11 +36,9 @@ class About extends React.Component {
                     <p><a className="btn btn-primary btn-lg more">Learn more »</a></p>
                 </div>
             </header>
-            <section id="projects">
-                <div className="container">
-                    <h1>Projects</h1>
-                </div>
-            </section>
+
+            <Projects/>
+
             <section id="team">
                 <div className="container">
                     <h1>Team</h1>
