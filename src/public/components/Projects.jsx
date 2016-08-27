@@ -34,7 +34,7 @@ const Projects = (props) => {
                 </div>
             </div>
             <EmbeddedModal/>
-           <IOTModal/>
+            <IOTModal/>
         </section>
     )
 };

@@ -12,17 +12,30 @@ $media-owncss-widedisplay: 1500px;
 
 $footer_height: 100px;
 
-$col_nav_background: rgb(14, 201, 190);
-$col_nav_active: rgb(242, 78, 78);
-$col_nav_hover: rgb(228, 46, 139);
-$col_header_background: white;
-$col_footer_background: rgb(189, 189, 189);
-$col_ligth_blue: rgba(14, 201, 190, 0.14);
-$col_complementer_orange: rgb(228, 46, 139); //#FF7912;
+/* Colours */
+//current palette is based on http://paletton.com/#uid=33i0O0kN4DeozLQvOMhNHr-OSln
+//body
+$col_body_background: white;
+$col_body_text: black;
 
-$col_projects_background: #A7FF97;
-$col_team_background: #baf8e7;
-$col_contactus_background: #a9ff4f;
+//nav
+$col_nav_background: rgba(1, 208, 208, 57);
+$col_nav_active: rgba(238, 55, 129, 46);
+$col_nav_hover: rgba(255, 199, 0, 75);
+$col_nav_text: white;
+$col_nav_text_active: white;
+$col_nav_text_hover: white;
+
+$col_ligth_blue: rgba(14, 201, 190, 0.14);
+
+//sections
+$col_header_background: white;
+$col_projects_background: white;
+$col_team_background: white;
+$col_contactus_background: white;
+
+//footer
+$col_footer_background: rgb(189, 189, 189);
 
 /* Mixins */
 
@@ -37,12 +50,22 @@ $col_contactus_background: #a9ff4f;
   text-align: justify;
 }
 
+@mixin noTextSelect {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none;   /* Chrome/Safari/Opera */
+  -khtml-user-select: none;    /* Konqueror */
+  -moz-user-select: none;      /* Firefox */
+  -ms-user-select: none;       /* Internet Explorer/Edge */
+  user-select: none;           /* Non-prefixed version, currently*/
+}
+
 /*-------------------------------------
       The body in every page
 --------------------------------------*/
 
 body {
-  background-color: rgb(255, 255, 255);
+  background-color: $col_body_background;
+  color: $col_body_text;
   font-family: 'Fira Sans', sans-serif;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizelegibility;
@@ -79,18 +102,20 @@ nav.navbar {
   ul.nav.navbar-nav {
     li {
       a {
-        color: white;
+        color: $col_nav_text;
+        font-weight: 500;
+        //text-shadow: 0.7px 0.7px black, -0.7px -0.7px black, -0.7px 0.7px black, 0.7px -0.7px black;
       }
       &.active a {
-        color: white;
+        color: $col_nav_text_active;
         background: $col_nav_active;
         &:hover {
-          color: white;
+          color: $col_nav_text_hover;
           background: $col_nav_hover;
         }
       }
       &:hover {
-        color: white;
+        color: $col_nav_text_hover;
         background: $col_nav_hover;
       }
     }
@@ -141,7 +166,6 @@ li.dropdown ul.dropdown-menu li a {
 div#reactApp {
   min-height: 100%;
   position: relative;
-  background: yellow;
   padding-bottom: $footer_height;
 }
 
@@ -192,6 +216,7 @@ $projectImageWidth: 200px;
 
 section#projects {
   //height: 600px;
+  background: $col_projects_background;
   .projectList {
     padding: 20px 0 50px 0;
     div.projectCol {
@@ -243,7 +268,6 @@ section#projects {
       }
     }
   }
-  background: $col_projects_background;
 }
 
 //Project Modals:
@@ -291,7 +315,7 @@ section#projects {
 /* Team */
 
 section#team {
-  height: 600px;
+  min-height: 600px; //TODO: remove when finished
   background: $col_team_background;
 }
 
