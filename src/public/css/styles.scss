@@ -52,11 +52,11 @@ $col_footer_background: rgb(189, 189, 189);
 
 @mixin noTextSelect {
   -webkit-touch-callout: none; /* iOS Safari */
-  -webkit-user-select: none;   /* Chrome/Safari/Opera */
-  -khtml-user-select: none;    /* Konqueror */
-  -moz-user-select: none;      /* Firefox */
-  -ms-user-select: none;       /* Internet Explorer/Edge */
-  user-select: none;           /* Non-prefixed version, currently*/
+  -webkit-user-select: none; /* Chrome/Safari/Opera */
+  -khtml-user-select: none; /* Konqueror */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently*/
 }
 
 /*-------------------------------------
@@ -315,8 +315,62 @@ section#projects {
 /* Team */
 
 section#team {
+  .teamButtons {
+    margin-bottom: 25px;
+  }
+  .collapse {
+  }
   min-height: 600px; //TODO: remove when finished
   background: $col_team_background;
+
+  div.projectCol {
+    a {
+      text-decoration: none;
+      color: black;
+
+      margin-right: auto;
+      margin-left: auto;
+
+      // images are positiond to the middle of their containers
+      img.teamPi {
+        margin-right: auto;
+        margin-left: auto;
+      }
+
+      // images for mobile and small screens
+      .teamPicture {
+        margin-right: auto;
+        margin-left: auto;
+        content: url("https://placehold.it/200x200");
+      }
+      @media screen and (min-width: $media-bootstrap-md-min) {
+        .teamPicture {
+          content: url("https://placehold.it/325x325");
+        }
+      }
+
+      div.caption {
+        .caption-content {
+          padding-top: 20px;
+          font-size: 14pt;
+          text-align: center;
+          text-decoration: none;
+        }
+      }
+    }
+  }
+}
+
+//collapses for the team members
+.teamCollapse {
+  .well {
+    h1 {
+      font-weight: 500;
+    }
+    p:nth-child(2) {
+      @include paragraphFont;
+    }
+  }
 }
 
 /* Contact Us */

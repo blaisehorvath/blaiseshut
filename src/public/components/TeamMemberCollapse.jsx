@@ -3,15 +3,49 @@ import React from 'react';
 //TODO: 1) separate the controller and the view to different components
 //TODO: 2) one should be active based on the state
 //TODO: 3) style with css
-
+const teamMembers = [
+    {
+        targetCollapse: "teamCollapse",
+        isExpanded: false,
+        caption: "Team"
+    },
+    {
+        targetCollapse: "member1",
+        isExpanded: false,
+        caption: "member1"
+    },
+    {
+        targetCollapse: "member2",
+        isExpanded: false,
+        caption: "member2"
+    }
+];
 const TeamMemberCollapse = (props) => {
+    let memberAnchors = teamMembers.map(member => <TeamMember key={member.targetCollapse} {...member}/>);
     return (
         <div>
-            <a className="btn btn-primary" role="button" data-toggle="collapse" href="#member1" aria-expanded="false"
-               aria-controls="member1">Member 1</a>
-            <button className="btn btn-primary" type="button" data-toggle="collapse" data-target="#member2"
-                    aria-expanded="false" aria-controls="member2">Member 2</button>
-            <div className="collapse" id="member1">
+            <div className="teamButtons row">
+                {memberAnchors}
+            </div>
+            <div className="collapse teamCollapse" id="teamCollapse">
+                <div className="well">
+                    <h1>Team</h1>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium alias blanditiis cum error
+                        fugiat iusto nostrum perspiciatis quaerat temporibus vero. Aperiam dicta doloribus ipsam neque
+                        odit,
+                        officiis placeat totam vel vitae voluptas. Adipisci asperiores beatae consequatur dicta facilis
+                        iste
+                        porro provident sapiente tempora voluptate. A aliquid dignissimos dolor dolore, dolorum, ex
+                        facere
+                        illo natus nostrum quia ratione sed voluptates, voluptatum. Adipisci consectetur consequuntur
+                        deserunt dolores dolorum ea est fuga incidunt iste labore nemo neque nisi nobis numquam, porro,
+                        quo
+                        reiciendis tempora tenetur, velit vero voluptate!
+                    </p>
+                </div>
+            </div>
+            <div className="collapse teamCollapse" id="member1">
                 <div className="well">
                     <h1>Member 1</h1>
                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam asperiores autem blanditiis
@@ -28,7 +62,7 @@ const TeamMemberCollapse = (props) => {
                         nostrum omnis, praesentium quisquam quos rerum sed!</p>
                 </div>
             </div>
-            <div className="collapse" id="member2">
+            <div className="collapse teamCollapse" id="member2">
                 <div className="well">
                     <h1>Member 2</h1>
                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam dolor dolorum inventore nemo
@@ -47,3 +81,21 @@ const TeamMemberCollapse = (props) => {
 };
 
 export default TeamMemberCollapse;
+
+const TeamMember = (props) => {
+    return (
+        <div className="col-sm-4 projectCol">
+            <a href={"#" + props.targetCollapse} data-toggle="collapse" role="button" aria-expanded="false"
+               aria-controls={props.targetCollapse}>
+                <div className="projectThumbnail">
+                    <img className="img-responsive teamPicture" alt=""/>
+                    <div className="caption">
+                        <div className="caption-content">
+                            {props.caption}
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    )
+};
