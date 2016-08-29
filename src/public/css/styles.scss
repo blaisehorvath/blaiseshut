@@ -320,7 +320,6 @@ section#team {
   }
   .collapse {
   }
-  min-height: 600px; //TODO: remove when finished
   background: $col_team_background;
 
   div.projectCol {
@@ -367,7 +366,7 @@ section#team {
     h1 {
       font-weight: 500;
     }
-    p:nth-child(2) {
+    .teamCollapseChildren {
       @include paragraphFont;
     }
   }

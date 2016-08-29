@@ -4,7 +4,7 @@ import {connect} from "react-redux"
 import {changeActivePage} from "../reducers/StoreAndReducers";
 
 import Projects from "../components/Projects";
-import TeamMemberCollapse from "../components/TeamMemberCollapse";
+import Team from "../components/Team";
 
 class About extends React.Component {
     constructor(props) {
@@ -27,17 +27,7 @@ class About extends React.Component {
                     <div className="container">
                         <h1>Welcome to S.W.A.</h1>
                         <p>
-                            This is a template for a simple marketing or informational website. It includes a large
-                            callout
-                            called the hero unit and three supporting pieces of content. Use it as a starting point to
-                            create something more unique. Heat thin meatloafs in a sauté pan with milk for about an hour
-                            to
-                            cut their mossiness.Grey tofu can be made aged by tossing with adobo sauce.Tuna tastes best
-                            with
-                            ice water and lots of woodruff.Instead of seasoning warm gold tequila with raspberries, use
-                            seven tablespoons ricotta and twelve teaspoons woodruff wok.What’s the secret to hardened
-                            and
-                            cold turkey? Always use al dente vegemite.
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab atque consectetur dicta dolor dolorum earum eius est fugit maxime odit perspiciatis quae quo, rerum similique, sit sunt ut. Aliquid at blanditiis corporis dolorem excepturi facilis harum nemo, numquam odit pariatur provident quia quis, recusandae unde velit. Deleniti earum eius et officia soluta. Ad adipisci dicta dolorem fuga hic illum libero magnam modi nesciunt numquam odit quam qui quis recusandae sapiente sit tenetur ullam vel voluptates, voluptatibus. At commodi cumque eligendi, eos esse excepturi fugit harum illum minus mollitia, nihil nostrum qui quod rerum soluta tempora voluptates. Deleniti doloremque eaque esse expedita hic illo labore laboriosam magni nihil non omnis quis, quos soluta ullam unde veniam voluptatibus voluptatum. Atque blanditiis consectetur deserunt eaque et, eum ipsum laboriosam natus odio optio pariatur perferendis quia quisquam ratione sit suscipit voluptas? Corporis fugiat perspiciatis reiciendis repellendus sequi. Debitis officia placeat quasi, totam veritatis voluptates?
                         </p>
                         <p><a className="btn btn-primary btn-lg more">Learn more »</a></p>
                     </div>
@@ -45,12 +35,8 @@ class About extends React.Component {
 
                 <Projects/>
 
-                <section id="team">
-                    <div className="container">
-                        <h1>Team</h1>
-                        <TeamMemberCollapse/>
-                    </div>
-                </section>
+                <Team/>
+
                 <section id="contactUs">
                     <div className="container">
                         <h1>Contact Us</h1>
