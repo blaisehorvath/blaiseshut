@@ -94,6 +94,15 @@ const activeMenuButton = (state = "aboutUs", action) => {
     }
 };
 
+const activeMember = (state = "", action) => {
+    switch (action.type) {
+        case "SET_ACTIVE_MEMBER":
+            return action.activeMember;
+        default:
+            return state;
+    }
+};
+
 export const changeActivePage = (isMain) => {
     return {
         type: 'CHANGE_ACTIVE_PAGE',
@@ -178,6 +187,13 @@ export const loggedInFalse = ()=> {
     }
 };
 
+export const setActiveMember = (member) => {
+    return {
+        type: "SET_ACTIVE_MEMBER",
+        activeMember : member
+    }
+};
+
 let AppReducer = combineReducers({
     Tags,
     BlogPosts,
@@ -186,6 +202,7 @@ let AppReducer = combineReducers({
     ActiveBlogPosts,
     isMainPage,
     LoggedIn,
-    activeMenuButton
+    activeMenuButton,
+    activeMember
 });
 export default AppReducer;
