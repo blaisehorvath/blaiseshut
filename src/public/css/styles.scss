@@ -418,7 +418,7 @@ footer {
   position: absolute;
   bottom: 0;
   width: 100%;
-  height: $footer_height;
+  //height: $footer_height; //this can't be set because the page breaks
   background: $col_footer_background;
   .container {
     height: $footer_height;
