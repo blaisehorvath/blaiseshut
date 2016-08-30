@@ -1,9 +1,15 @@
 import React from "react";
-import EmbeddedModal from "./EmbeddedModal"
-import IOTModal from "./IOTModal"
+import EmbeddedModal from "./EmbeddedModal";
+import IOTModal from "./IOTModal";
+import WebAppModal from "./WebAppModal";
 
 //TODO: WHEN FINISHED MOVE THIS TO PROPS
 let projectList = [
+    {
+        targetID: "webAppModal",
+        caption: "WEB application development",
+        imgId: "webAppListImg",
+    },
     {
         targetID: "embeddedModal",
         caption: "Embedded systems design",
@@ -13,11 +19,6 @@ let projectList = [
         targetID: "iotModal",
         caption: "IOT engineering",
         imgId: "iotListImg",
-    },
-    {
-        targetID: "embeddedModal2",
-        caption: "WEB application development",
-        imgId: "webAppListImg",
     }
 ];
 
@@ -35,6 +36,7 @@ const Projects = (props) => {
             </div>
             <EmbeddedModal/>
             <IOTModal/>
+            <WebAppModal/>
         </section>
     )
 };
