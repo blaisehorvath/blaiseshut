@@ -1,4 +1,5 @@
 @import "normalize";
+@import "css3-mixins";
 
 /*Variables*/
 
@@ -59,6 +60,18 @@ $col_footer_background: rgb(189, 189, 189);
   user-select: none; /* Non-prefixed version, currently*/
 }
 
+@mixin textSelection {
+  &::selection {
+    background: $col_nav_active;
+    color: white;
+  }
+;
+  &::-moz-selection {
+    background: $col_nav_active;
+    color: white;
+  }
+}
+
 /*-------------------------------------
       The body in every page
 --------------------------------------*/
@@ -73,6 +86,10 @@ body {
   position: relative;
   height: 100%; /* !!!!! ScrollSpy needs this!!! */
   margin: 0;
+
+  * {
+        @include textSelection;
+  }
 
   button.btn.btn-default {
     height: 34px; /* Something messes up bootstrap buttons. I don't know what or why, but it only works this way*/
@@ -105,6 +122,11 @@ nav.navbar {
         color: $col_nav_text;
         font-weight: 500;
         //text-shadow: 0.7px 0.7px black, -0.7px -0.7px black, -0.7px 0.7px black, 0.7px -0.7px black;
+        -webkit-transition: background 0.5s;
+        -moz-transition: background 0.5s;
+        -ms-transition: background 0.5s;
+        -o-transition: background 0.5s;
+        transition: background 0.5s;
       }
       &.active a {
         color: $col_nav_text_active;
@@ -115,6 +137,11 @@ nav.navbar {
         }
       }
       &:hover {
+        -webkit-transition: background 0.5s;
+        -moz-transition: background 0.5s;
+        -ms-transition: background 0.5s;
+        -o-transition: background 0.5s;
+        transition: background 0.5s;
         color: $col_nav_text_hover;
         background: $col_nav_hover;
       }
