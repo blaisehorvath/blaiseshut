@@ -22,14 +22,11 @@ const TeamMember = (props) => {
 const teamMemberOnClick = (props) => {
     if (props.targetCollapse == props.activeMember) {
         $(`#${props.targetCollapse}`).hide({easing: "swing"});
-        console.log("if");
         props.dispatch(setActiveMember(null));
     } else if (props.activeMember == null) {
-        console.log("else if");
         $(`#${props.targetCollapse}`).show({easing: "swing"});
         props.dispatch(setActiveMember(props.targetCollapse));
     } else {
-        console.log("else");
         $(`#${props.activeMember}`).toggle({complete: ()=>{
             $(`#${props.targetCollapse}`).toggle({easing: "swing"});
         }});
