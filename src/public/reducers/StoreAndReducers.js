@@ -94,7 +94,7 @@ const activeMenuButton = (state = "aboutUs", action) => {
     }
 };
 
-const activeMember = (state = "", action) => {
+const activeMember = (state = null, action) => {
     switch (action.type) {
         case "SET_ACTIVE_MEMBER":
             return action.activeMember;

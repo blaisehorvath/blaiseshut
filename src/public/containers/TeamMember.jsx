@@ -5,13 +5,7 @@ import {setActiveMember} from "../reducers/StoreAndReducers";
 const TeamMember = (props) => {
     return (
         <div className="col-sm-4 projectCol">
-            <a onClick={() => teamMemberOnClick(props)}
-               href={"#" + props.targetCollapse}
-               data-toggle="collapse"
-               role="button"
-               aria-expanded="false"
-               aria-controls={props.targetCollapse}>
-
+            <a onClick={() => teamMemberOnClick(props)}>
                 <div className="projectThumbnail">
                     <img className="img-responsive teamPicture" alt=""/>
                     <div className="caption">
@@ -26,7 +20,21 @@ const TeamMember = (props) => {
 };
 
 const teamMemberOnClick = (props) => {
-    props.dispatch(setActiveMember(props.targetCollapse))
+    if (props.targetCollapse == props.activeMember) {
+        $(`#${props.targetCollapse}`).hide({easing: "swing"});
+        console.log("if");
+        props.dispatch(setActiveMember(null));
+    } else if (props.activeMember == null) {
+        console.log("else if");
+        $(`#${props.targetCollapse}`).show({easing: "swing"});
+        props.dispatch(setActiveMember(props.targetCollapse));
+    } else {
+        console.log("else");
+        $(`#${props.activeMember}`).toggle({complete: ()=>{
+            $(`#${props.targetCollapse}`).toggle({easing: "swing"});
+        }});
+        props.dispatch(setActiveMember(props.targetCollapse));
+    }
 };
 
 export default connect(state => ({activeMember: state.activeMember}))(TeamMember);
