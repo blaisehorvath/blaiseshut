@@ -4,9 +4,9 @@ import {setActiveMember} from "../reducers/StoreAndReducers";
 
 const TeamMember = (props) => {
     return (
-        <div className="col-sm-4 projectCol">
+        <div className="col-sm-4 memberCol">
             <a onClick={() => teamMemberOnClick(props)}>
-                <div className="projectThumbnail">
+                <div className="memberThumbnail">
                     <img className="img-responsive teamPicture" alt=""/>
                     <div className="caption">
                         <div className="caption-content">
