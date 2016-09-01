@@ -1,4 +1,10 @@
 /**
- * Created by v on 2016.04.11..
+ * @const {Object} A consant that holds every possible action that can be fired in the app
  */
-setActiveAboutOption
+const actions = {
+    CHANGE_ACTIVE_PAGE : "CHANGE_ACTIVE_PAGE",
+    SET_ACTIVE_MENU_BUTTON : "SET_ACTIVE_MENU_BUTTON",
+    SET_ACTIVE_MEMBER : "SET_ACTIVE_MEMBER",
+};
+
+export default actions;
