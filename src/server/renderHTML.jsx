@@ -22,7 +22,7 @@ export default function renderHTML(content, initialState) {
                 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
                 <![endif]-->
             </head>
-            <body <!--data-spy="scroll" data-target=".navbar-fixed-top" data-offset="50"-->>
+            <body>
             <div id="app">${content}</div>
             <script>
                 window.__INITIAL_STATE__ = ${JSON.stringify(initialState)}

@@ -4,6 +4,7 @@ import {changeActivePage} from "../reducers/StoreAndReducers";
 
 import Projects from "../components/Projects";
 import Team from "../components/Team";
+import SendMessage from "../components/SendMessage";
 
 class About extends React.Component {
     constructor(props) {
@@ -39,6 +40,7 @@ class About extends React.Component {
                 <section id="contactUs">
                     <div className="container">
                         <h1>Contact Us</h1>
+                        <SendMessage/>
                     </div>
                 </section>
             </div>

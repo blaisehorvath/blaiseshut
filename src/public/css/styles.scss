@@ -342,6 +342,7 @@ section#projects {
 /* Team */
 
 section#team {
+  margin: 50px 0px;
   .teamButtons {
     margin-bottom: 25px;
   }
@@ -402,8 +403,8 @@ section#team {
 /* Contact Us */
 
 section#contactUs {
-  height: 600px;
   background: $col_contactus_background;
+  padding-bottom: 50px;
 }
 
 section#blog {
