@@ -2,6 +2,15 @@ import React from "react";
 import {connect} from "react-redux";
 import {setActiveMember} from "../reducers/StoreAndReducers";
 
+/**
+ * This stateless functional React component is responsible for the team member items.
+ * @param props
+ * @param props.caption {string} The text displayed under the member menu item.
+ * @param props.activeMember {string} The id of the currently active member mapped from the state.
+ * @param props.targetCollapse {string} The id (without #) of the collapse that contains the team members CV.
+ * @returns {XML}
+ * @constructor
+ */
 const TeamMember = (props) => {
     return (
         <div className="col-sm-4 memberCol">
@@ -19,6 +28,14 @@ const TeamMember = (props) => {
     )
 };
 
+/**
+ * A function that is mapped to each Team Member. This function is responsible for the
+ * jQuery animations that display the CV of the clicked team member. This function also notices the store about
+ * which team member is active.
+ * @param props
+ * @param props.activeMember {string} The id of the currently active member mapped from the state.
+ * @param props.targetCollapse {string} The id (without #) of the collapse that contains the team members CV.
+ */
 const teamMemberOnClick = (props) => {
     if (props.targetCollapse == props.activeMember) {
         $(`#${props.targetCollapse}`).hide({easing: "swing"});

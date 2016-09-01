@@ -1,7 +1,10 @@
+/**
+ * @file A file that contains the default container for a Project Modal
+ */
 import React from 'react';
 
 /**
- * This stateless functional React component can be used as a Bootstrap modal.
+ * This stateless functional React component can be used to create a Bootstrap modal
  * @param props The props that the component receives
  * @param props.id The id for the component. Bootstrap targets modals via the id.
  * @param props.children The HTML content of the modal.

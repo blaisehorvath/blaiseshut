@@ -1,7 +1,14 @@
-/* This is the modal for the Internet of things engineering project */
+/**
+ * @file This is the modal for the Internet of things engineering project
+ */
 import React from 'react';
 import ProjectModal from './ProjectModal'
 
+/**
+ * This function returns an HTML that will be the content of the Embedded Modal
+ * @function modalContent
+ * @type {XML}
+ */
 const modalContent = (<div>
     <h3>Lorem ipsum dolor.</h3>
     <p>

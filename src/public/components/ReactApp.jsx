@@ -3,15 +3,11 @@ import Footer from "./Footer";
 
 import React from 'react'
 
-/*
- * This is only for testing purposes
- * */
-
+/**
+ * This is function is the <b>entry</b> point of the application. Each displayed page will be a child of the stateless functional component.
+ * @returns {XML}
+ */
 const ReactApp = (props) => {
-    /***
-     * This is function is the entry point of the react app. Each page will be a state of this React app.
-     * @returns {XML}
-     */
     return (
         <div id="reactApp">
             <Nav/>

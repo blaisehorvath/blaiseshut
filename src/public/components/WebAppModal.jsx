@@ -1,6 +1,15 @@
+/**
+ * @file This is the modal for the Web Application Project Modal
+ */
 import React from 'react';
 import ProjectModal from './ProjectModal';
 
+
+/**
+ * This function returns an HTML that will be the content of the Web Application Development modal
+ * @function modalContent
+ * @type {XML}
+ */
 const modalContent=(
     <div>
         <h3>Lorem ipsum dolor sit.</h3>

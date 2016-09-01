@@ -1,6 +1,11 @@
 import React from 'react';
 import TeamMemberCollapse from '../components/TeamMemberCollapse';
 
+/**
+ * This constant holds the configurations for Team section
+ * @const
+ * @type {Array}
+ */
 const teamMembers = [
     {
         targetCollapse: "teamCollapse",
@@ -25,7 +30,12 @@ const teamMembers = [
     }
 ];
 
-const Team = (props) => {
+/**
+ * This stateless functional React component returns the Team section of the About page.
+ * @returns {XML}
+ * @constructor
+ */
+const Team = () => {
     return (
         <section id="team">
             <div className="container">

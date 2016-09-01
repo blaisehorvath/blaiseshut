@@ -1,6 +1,11 @@
 import React from "react";
 import NabButtonBar from "./NavButtonBar";
 
+/**
+ * A constant that stores the possible values for different states for the navigation bar
+ * @constant
+ * @type {Array}
+ */
 const navButtons = [
     {id: "aboutUs", caption: "About us", href: ["#aboutUs", "/#aboutUs"]},
     {id: "projects", caption: "Projects", href: ["#projects", "/#projects"]},
@@ -9,7 +14,12 @@ const navButtons = [
     {id: "blog", caption: "Blog", href: ["/blog/#blog", "#blog"]}
 ];
 
-const Nav = (props) => {
+/**
+ * A stateless functional React component that returns the Navigation bar
+ * @returns {XML}
+ * @constructor
+ */
+const Nav = () => {
     return (
         <nav className="scrollNav navbar navbar-default navbar-fixed-top navbar-custom affix">
             <div className="container-fluid">

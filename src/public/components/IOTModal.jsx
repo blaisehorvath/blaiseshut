@@ -1,7 +1,14 @@
-/* This is the modal for the Embedded Systems Development Project */
+/**
+ * @file This is the modal for the Embedded Systems Development Project
+ */
 import React from 'react';
 import ProjectModal from './ProjectModal';
 
+/**
+ * This function returns an HTML that will be the content of the IOT Modal
+ * @function modalContent
+ * @type {XML}
+ */
 const modalContent = (
     <div><h3>Lorem ipsum dolor sit amet.</h3>
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab accusantium ad architecto
