@@ -1,8 +1,8 @@
 /**
  * Created by v on 8/19/16.
  */
-import {admins,checkHash,checkPassword} from './security'
-import {blogPostToDb, queryBlogPosts} from './db'
+import {admins,checkHash,checkPassword} from '../security'
+import {blogPostToDb, queryBlogPosts} from '../db'
 import React from "react";
 import express from 'express'
 let router = express.Router();
@@ -18,6 +18,7 @@ router.post("/getTags", (req, res)=> {
         }
     });
 });
+
 router.post("/adminlogged", (req, res)=> {
     checkPassword(req.body.user, req.body.password).then((result)=> {
         if (result) {
@@ -29,11 +30,13 @@ router.post("/adminlogged", (req, res)=> {
         }
     });
 });
+
 router.post("/logout", (req, res)=> {
     res.cookie('name', '', {Expires: new Date().toISOString(), path: '/'});
     res.cookie('hash', '', {Expires: new Date().toISOString(), path: '/'});
     res.redirect('/admin');
 });
+
 router.post("/newblogpost", (req, res)=> {//TODO: Auth...
     console.log(req.body)
     if (req.body.text != "") {
@@ -47,6 +50,7 @@ router.post("/newblogpost", (req, res)=> {//TODO: Auth...
     }
     res.redirect('/admin')
 });
+
 router.post("/admin", (req, res)=> {
     checkPassword(req.body.user, req.body.password).then((result)=> {
         if (result) {
@@ -59,6 +63,7 @@ router.post("/admin", (req, res)=> {
         }
     });
 });
+
 router.post("/getBlogPosts", (req, res)=> {//TODO:error handling
     queryBlogPosts(req.body.currentBlogPostIds ? req.body.currentBlogPostIds : [],
         req.body.activeTags ? req.body.activeTags : [], req.body.numberOfPostsToReturn)

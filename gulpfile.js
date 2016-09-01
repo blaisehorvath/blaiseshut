@@ -12,7 +12,7 @@ var gulp = require('gulp'),
     runSeq = require('run-sequence');
 
 var sources = {
-    server: "src/server/!(*_tmp_*)",
+    server: "src/server/**/!(*_tmp_*|*.key|*.pem)",
     css: "src/public/css/styles.scss",
     components: "src/public/components/!(*_tmp_*)",
     publicScripts: "src/public/js/!(*_tmp_*)",
@@ -95,7 +95,7 @@ gulp.task('browserify-live', ['copy_public_js', 'copy_components', 'copy_contain
 
 //building the server
 gulp.task('build_server', function () {
-    return gulp.src('src/server/*.{js,jsx}')
+    return gulp.src(sources.server)
         .pipe(plumber())
         .pipe(babel())
         .pipe(gulp.dest('build/server/'))

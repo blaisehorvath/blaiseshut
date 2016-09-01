@@ -5,21 +5,21 @@ import React from "react";
 /*App*/
 
 //TODO:Make this work on front end. The createStore in script.js should include our middleWares
-import {loadBlogPost} from "../public/reducers/StoreAndReducers"
-import {checkHash} from './security'
-import {store,initialState} from './server'
+import {loadBlogPost} from "../../public/reducers/StoreAndReducers"
+import {checkHash} from '../security'
+import {store,initialState} from '../server'
 
 import express from 'express'
 import ReactDOM from "react-dom/server"
 import {Provider} from 'react-redux'
-import renderHTML from "./renderHTML"
+import renderHTML from "../renderHTML"
 
-import ReactApp from "../public/components/ReactApp";
-import About from "../public/pages/About"
-import Admin from "../public/pages/Admin"
-import AdminLoggedIn from "../public/pages/AdminLoggedIn"
-import Blog from "../public/pages/Blog"
-import BlogPost from "../public/pages/BlogPost"
+import ReactApp from "../../public/components/ReactApp";
+import About from "../../public/pages/About"
+import Admin from "../../public/pages/Admin"
+import AdminLoggedIn from "../../public/pages/AdminLoggedIn"
+import Blog from "../../public/pages/Blog"
+import BlogPost from "../../public/pages/BlogPost"
 
 
 let router = express.Router();

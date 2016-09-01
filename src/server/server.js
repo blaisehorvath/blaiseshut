@@ -10,15 +10,13 @@ import bodyParser from 'body-parser'
 import AppReducer from "../public/reducers/StoreAndReducers"
 import cookieParser from "cookie-parser"
 
-import getRoutes from './gets'
-import postRoutes from './posts'
+import getRoutes from './routes/gets'
+import postRoutes from './routes/posts'
 
-import {createStore, applyMiddleware} from 'redux';
-import createLogger from 'redux-logger'
-const logger = createLogger();
-let store = createStore(AppReducer/*,applyMiddleware(logger)*/);
+import {createStore} from 'redux';
+let store = createStore(AppReducer);
 
-//This is for https setup
+/*Https setup*/
 let privateKey = fs.readFileSync('build/server/server.key');
 let certificate = fs.readFileSync('build/server/server.pem');
 let credentials = crypto.createCredentials({key: privateKey, cert: certificate, passphrase: 'w0balubadubdub'});
@@ -27,9 +25,11 @@ let app = express();
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(cookieParser());
+
 /*Setting the static directory*/
 app.use(express.static(__dirname + '/../public'));
-//Setting up app
+
+/*Setting up routing*/
 app.use('/', getRoutes);
 app.use('/', postRoutes);
 
