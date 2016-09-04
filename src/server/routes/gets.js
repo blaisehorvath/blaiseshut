@@ -20,8 +20,30 @@ import Admin from "../../public/pages/Admin"
 import AdminLoggedIn from "../../public/pages/AdminLoggedIn"
 import Blog from "../../public/pages/Blog"
 import BlogPost from "../../public/pages/BlogPost"
+import AppReducer from "../../public/reducers/StoreAndReducers"
 
-
+import {Tags} from '../db'
+import {createStore} from 'redux';
+let pathsAndStoresNotLoggedIn = {
+    '/': {
+        store: createStore(AppReducer,{Tags}),
+        get content() {return ReactDOM.renderToString(
+            <Provider store={this.store}><ReactApp><About/></ReactApp></Provider>)},
+        get response() {return renderHTML(this.content, this.store.getState())}
+        },
+    '/admin:':{},
+    '/admin/:blogTitle':{},
+    '/about':{},
+    '/contact':{},
+    '/blog':{
+        store: createStore(AppReducer,{Tags}),
+        get content() {return ReactDOM.renderToString(
+            <Provider store={this.store}><ReactApp><Blog/></ReactApp></Provider>)},
+        get response() {return renderHTML(this.content, this.store.getState())}
+    },
+    '/blog/:blogTitle':{},
+    '/projects':{}
+};
 let router = express.Router();
 router.get('/', (req, res) => {
     "use strict";
@@ -29,9 +51,7 @@ router.get('/', (req, res) => {
         reuqestType: "GET",
         path: req.path
     });
-    let content = ReactDOM.renderToString(<Provider store={store}><ReactApp><About/></ReactApp></Provider>);
-    let response = renderHTML(content, initialState);
-    res.send(response);
+    res.send(pathsAndStoresNotLoggedIn['/'].response);
 });
 router.get('/admin', (req, res) => {//TODO:HTTPS
     "use strict";
@@ -74,7 +94,7 @@ router.get('/about', (req, res) => {
         path: req.path
     });
     let content = ReactDOM.renderToString(<Provider store={store}><ReactApp/></Provider>);
-    let response = renderHTML(content, initialState);
+    let response = renderHTML(  content, initialState);
     res.send(response);
 });
 
@@ -107,9 +127,7 @@ router.get('/blog', (req, res) => {//TODO:Better regex, only match /string_like_
     });
     checkHash(req.cookies.name, req.cookies.hash).then((result)=> {
         if (!result) {
-            let content = ReactDOM.renderToString(<Provider store={store}><ReactApp><Blog loggedIn={false}/></ReactApp></Provider>);
-            let response = renderHTML(content, initialState);
-            res.send(response);
+            res.send(pathsAndStoresNotLoggedIn['/blog'].response);
         }
         else {
             let content = <Provider store={store}><ReactApp><Blog loggedIn={true}/></ReactApp></Provider>;

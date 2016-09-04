@@ -142,12 +142,10 @@ const getTags = ()=> {
         return Tags
     })
         .then((tags)=> {
-            store.dispatch(setInitialTags(tags));
-            initialState = store.getState();// TODO:Maybe this should be a little bit more logical??
-            // console.log(initialState)
+            Tags = tags;
         })
 };
 getTags();
 
 //*******************************************************END OF DB SETUP************************************************
-export {queryBlogPosts, blogPostToDb}
+export {queryBlogPosts, blogPostToDb, Tags}
