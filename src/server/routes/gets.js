@@ -7,7 +7,7 @@ import React from "react";
 //TODO:Make this work on front end. The createStore in script.js should include our middleWares
 import {loadBlogPost} from "../../public/reducers/StoreAndReducers"
 import {checkHash} from '../security'
-import {store,initialState} from '../server'
+import {store, initialState} from '../server'
 
 import express from 'express'
 import ReactDOM from "react-dom/server"
@@ -22,28 +22,57 @@ import Blog from "../../public/pages/Blog"
 import BlogPost from "../../public/pages/BlogPost"
 import AppReducer from "../../public/reducers/StoreAndReducers"
 
-import {Tags} from '../db'
+import {Tags, getTags} from '../db'
 import {createStore} from 'redux';
-let pathsAndStoresNotLoggedIn = {
+let pathsAndStores = {
     '/': {
-        store: createStore(AppReducer,{Tags}),
-        get content() {return ReactDOM.renderToString(
-            <Provider store={this.store}><ReactApp><About/></ReactApp></Provider>)},
-        get response() {return renderHTML(this.content, this.store.getState())}
+        init: function () {
+            this.store = createStore(AppReducer, {Tags, LoggedIn: false});
+            this.storeLogged = createStore(AppReducer, {Tags, LoggedIn: true});
+            this.content = ReactDOM.renderToString(
+                <Provider store={this.store}><ReactApp><About/></ReactApp></Provider>);
+            this.contentLogged = ReactDOM.renderToString(
+                <Provider store={this.storeLogged}><ReactApp><Blog/></ReactApp></Provider>);
+            this.response = renderHTML(this.content, this.store.getState());
+            this.responseLogged = renderHTML(this.contentLogged, this.storeLogged.getState());
+            this.getResponse = function (loggedIn) {
+                return loggedIn ? this.responseLogged : this.response;
+            };
+            return this;
         },
-    '/admin:':{},
-    '/admin/:blogTitle':{},
-    '/about':{},
-    '/contact':{},
-    '/blog':{
-        store: createStore(AppReducer,{Tags}),
-        get content() {return ReactDOM.renderToString(
-            <Provider store={this.store}><ReactApp><Blog/></ReactApp></Provider>)},
-        get response() {return renderHTML(this.content, this.store.getState())}
     },
-    '/blog/:blogTitle':{},
-    '/projects':{}
+    '/admin:': {},
+    '/admin/:blogTitle': {},
+    '/about': {},
+    '/contact': {},
+    '/blog': {
+        init: function () {
+            this.store = createStore(AppReducer, {Tags,});
+            this.storeLogged = createStore(AppReducer, {Tags});
+            this.content = ReactDOM.renderToString(
+                <Provider store={this.store}><ReactApp><Blog/></ReactApp></Provider>);
+            this.contentLogged = ReactDOM.renderToString(
+                <Provider store={this.storeLogged}><ReactApp><Blog/></ReactApp></Provider>);
+            this.response = renderHTML(this.content, this.store.getState());
+            this.responseLogged = renderHTML(this.contentLogged, this.storeLogged.getState());
+            this.getResponse = function (loggedIn) {
+                return loggedIn ? this.responseLogged : this.response;
+            };
+            return this;
+        },
+    },
+    '/blog/:blogTitle': {},
+    '/projects': {}
 };
+getTags().then((tags)=> {
+    Object.keys(pathsAndStores).forEach((key, index)=> {
+        if (pathsAndStores[key].hasOwnProperty('init')) {
+            pathsAndStores[key].init();
+        }
+    });
+});
+
+
 let router = express.Router();
 router.get('/', (req, res) => {
     "use strict";
@@ -51,7 +80,7 @@ router.get('/', (req, res) => {
         reuqestType: "GET",
         path: req.path
     });
-    res.send(pathsAndStoresNotLoggedIn['/'].response);
+    res.send(pathsAndStores['/'].response);
 });
 router.get('/admin', (req, res) => {//TODO:HTTPS
     "use strict";
@@ -63,7 +92,8 @@ router.get('/admin', (req, res) => {//TODO:HTTPS
     let content = "";
     checkHash(req.cookies.name, req.cookies.hash).then((result)=> {
         if (result)
-            content = ReactDOM.renderToString(<Provider store={store}><ReactApp><AdminLoggedIn></AdminLoggedIn></ReactApp></Provider>);
+            content = ReactDOM.renderToString(<Provider
+                store={store}><ReactApp><AdminLoggedIn></AdminLoggedIn></ReactApp></Provider>);
         else
             content = ReactDOM.renderToString(<Provider store={store}><ReactApp><Admin/></ReactApp></Provider>);
         return;
@@ -81,7 +111,8 @@ router.get('/admin/:blogTitle', (req, res) => {//TODO:Better regex, only match /
     checkHash(req.cookies.name, req.cookies.hash).then((result)=> {
         if (result) {
             //store.dispatch(loadBlogPost(getBlogPostByTitle(decodeURIComponent(req.params.blogTitle)))); //TODO:better way
-            let content = ReactDOM.renderToString(<Provider store={store}><ReactApp><AdminLoggedIn></AdminLoggedIn></ReactApp></Provider>);
+            let content = ReactDOM.renderToString(<Provider
+                store={store}><ReactApp><AdminLoggedIn></AdminLoggedIn></ReactApp></Provider>);
             let response = renderHTML(content, initialState);
             res.send(response);
         }
@@ -94,7 +125,7 @@ router.get('/about', (req, res) => {
         path: req.path
     });
     let content = ReactDOM.renderToString(<Provider store={store}><ReactApp/></Provider>);
-    let response = renderHTML(  content, initialState);
+    let response = renderHTML(content, initialState);
     res.send(response);
 });
 
@@ -126,14 +157,7 @@ router.get('/blog', (req, res) => {//TODO:Better regex, only match /string_like_
         path: req.path
     });
     checkHash(req.cookies.name, req.cookies.hash).then((result)=> {
-        if (!result) {
-            res.send(pathsAndStoresNotLoggedIn['/blog'].response);
-        }
-        else {
-            let content = <Provider store={store}><ReactApp><Blog loggedIn={true}/></ReactApp></Provider>;
-            let response = renderHTML(content, initialState);
-            res.send(response);
-        }
+        res.send(pathsAndStores['/blog'].getResponse(result));
     })
 
 });

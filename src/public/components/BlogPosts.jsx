@@ -26,7 +26,6 @@ class BlogPosts extends React.Component {
             this.props.onAjaxFinish(data);// Comes from the connect..
         })
     }
-
     render() {
         if(this.props.posts)
             return (<div>{this.props.activeBlogPosts.map(

@@ -117,7 +117,7 @@ const fillBlogPostsDb = ()=> {
 let Tags = []; //Tags are in a format like{name,id,relevance} where relevance is the times it has been in any post
 //Tags should be a Set!!!!
 const getTags = ()=> {
-    new Promise((resolve, reject)=> {
+    return new Promise((resolve, reject)=> {
         doc.scan({TableName: "SWAblog"}, (err, data)=> {
             if (err) console.log(err);
             resolve(data)
@@ -143,9 +143,9 @@ const getTags = ()=> {
     })
         .then((tags)=> {
             Tags = tags;
+            return tags
         })
 };
-getTags();
 
 //*******************************************************END OF DB SETUP************************************************
-export {queryBlogPosts, blogPostToDb, Tags}
+export {queryBlogPosts, blogPostToDb, Tags, getTags}
