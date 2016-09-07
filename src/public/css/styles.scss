@@ -14,6 +14,7 @@ $media-bootstrap-lg-min: 1200px;
 $media-owncss-widedisplay: 1500px;
 
 $footer_height: 100px;
+$footer-mobile-height: 280px;
 
 /* Colours */
 //current palette is based on http://paletton.com/#uid=33i0O0kN4DeozLQvOMhNHr-OSln
@@ -462,6 +463,11 @@ section#blog {
         // when scrolling the Bootstrap affix adds the class affix to div.blogTags
         &.affix {
           width: $width_tags;
+
+          @media (max-width: $media-bootstrap-sm-min) {
+            visibility: hidden;
+          }
+
         }
 
         // the style of the tags
