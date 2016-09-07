@@ -19,7 +19,6 @@ $footer_height: 100px;
 //everywhere
 $col_nice_black: #dddddd;
 
-
 //body
 $col_body_background: white;
 $col_body_text: black;
@@ -225,7 +224,7 @@ header {
     }
 
     //on mobile
-    @media screen and (max-width: $media-bootstrap-sm-min) {
+    @media (max-width: $media-bootstrap-sm-min) {
 
       padding: 60px 0 50px 0;
 
@@ -417,7 +416,15 @@ section#blog {
   .container {
     padding: 100px 0 50px 0;
 
+    @media (max-width: $media-bootstrap-sm-min) {
+      padding: 60px 0 50px 0;
+    }
+
     .blogContent {
+
+      @media (max-width: $media-bootstrap-sm-min) {
+        width: 100%;
+      }
 
       .blogpost {
 
@@ -442,37 +449,54 @@ section#blog {
       }
     }
     /*-------Tags--------*/
-    .inputTag {
-      -webkit-transition: background 1.2s, color 0.2s, font-weight 0.2s, ease-in-out;
-      -moz-transition: background 1.2s, color 0.2s, font-weight 0.2s, ease-in-out;
-      -ms-transition: background 1.2s, color 0.2s, font-weight 0.2s, ease-in-out;
-      -o-transition: background 1.2s, color 0.2s, font-weight 0.2s, ease-in-out;
-      transition: background 1.2s, color 0.2, font-weight 0.2s, ease-in-out;
-      display: inline-block;
-      padding: 0px 3px;
-      margin: 2px;
-      cursor: pointer;
-      text-decoration: none;
-      font-weight: 300;
-      color: $col_body_text;
+    .blogTags {
       border-radius: 7px;
       border-color: $col_nice_black;
       border-width: 1px;
       border-style: solid;
-      background: white;
 
-      &:hover {
-        background: $col_nav_hover;
-        color: white;
-        font-weight: 500;
+      @media (max-width: $media-bootstrap-sm-min) {
+        width: 100%;
+        margin-bottom: 15px;
       }
-      &.active {
-        background: $col_nav_active;
-        color: white;
+
+      .inputTag {
+        -webkit-transition: background 1.2s, color 0.2s, font-weight 0.2s, padding 1.2s, border-color 4s, ease-in-out;
+        -moz-transition: background 1.2s, color 0.2s, font-weight 0.2s, padding 1.2s, border-color 4s, ease-in-out;
+        -ms-transition: background 1.2s, color 0.2s, font-weight 0.2s, padding 1.2s, border-color 4s, ease-in-out;
+        -o-transition: background 1.2s, color 0.2s, font-weight 0.2s, padding 1.2s, border-color 4s, ease-in-out;
+        transition: background 1.2s, color 0.2s, font-weight 0.2s, padding 1.2s, border-color 4s, ease-in-out;
+        display: inline-block;
+        padding: 0px 3px;
+        margin: 2px;
+        cursor: pointer;
+        text-decoration: none;
+        font-weight: 300;
+        color: $col_body_text;
+        border-radius: 7px;
+        border-color: $col_nice_black;
+        border-width: 1px;
+        border-style: solid;
+        background: white;
 
         &:hover {
+          background: $col_nav_hover;
+          color: white;
+          padding: 0px 5px;
+          font-weight: 500;
+          -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+          -moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+        }
+        &.active {
+          background: $col_nav_active;
+          color: white;
+          font-weight: 500;
+
+          &:hover {
             background: $col_nav_hover;
             color: white;
+          }
         }
       }
     }

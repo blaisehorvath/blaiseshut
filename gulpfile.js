@@ -10,6 +10,7 @@ var gulp = require('gulp'),
     sass = require('gulp-sass'),
     clean = require('gulp-clean'),
     runSeq = require('run-sequence');
+    notify = require("gulp-notify");
 
 var sources = {
     server: "src/server/**/!(*_tmp_*|*.key|*.pem)",
@@ -90,7 +91,8 @@ gulp.task('browserify-live', ['copy_public_js', 'copy_components', 'copy_contain
         }))
         .pipe(gulp.dest('build/private/js/'))
         .pipe( server() )
-        .pipe(livereload());
+        .pipe(livereload())
+        .pipe(notify("Server is reloaded. Live reloading page in the browser!"));
 });
 
 //building the server
@@ -121,7 +123,8 @@ gulp.task('reload_css', function () {
         .pipe(sass.sync().on('error', sass.logError))
         .pipe(plumber())
         .pipe(gulp.dest('build/public/css/'))
-        .pipe(livereload());
+        .pipe(livereload())
+        .pipe(notify("CSS is reloaded"));
 });
 
 //cleaning the build

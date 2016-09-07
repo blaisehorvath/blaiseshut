@@ -28,11 +28,11 @@ class Blog extends React.Component {
         return (
             <section id="blog">
                 <div className="container">
-                    <div className="col-xs-10 blogContent">
-                        <BlogPostsWithAjax/>
-                    </div>
-                    <div className="col-xs-2 blogTags">
+                    <div className="col-xs-4 col-md-2 pull-right blogTags">
                         <TagListWithStore/>
+                    </div>
+                    <div className="col-xs-8 col-md-10 blogContent">
+                        <BlogPostsWithAjax/>
                     </div>
                 </div>
             </section>
