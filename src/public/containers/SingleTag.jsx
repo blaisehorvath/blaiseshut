@@ -18,7 +18,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 
 const Tag = ({tag, addTagToField, active,dispatchToActiveTags})=> {
     return (
-        <a style={active?{color:'red'}:{color:'blue'}} onClick={()=> {
+        <a className={`inputTag ${active ? "active" : ""}`} onClick={()=> {
             dispatchToActiveTags();
             addTagToField(tag.name)
         }}>{tag.name + " "}</a>
