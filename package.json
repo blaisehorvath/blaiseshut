@@ -58,5 +58,8 @@
     "tern-node-express": "^0.3.0",
     "wysihtml": "^0.5.5",
     "wysiwyg-editor-react": "^0.1.6"
+  },
+  "devDependencies": {
+    "gulp-notify": "^2.2.0"
   }
 }

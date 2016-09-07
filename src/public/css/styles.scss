@@ -3,6 +3,8 @@
 
 /*Variables*/
 
+$width_tags: 95px;
+
 $media-bootstrap-sm-min: 768px;
 $media-bootstrap-sm-max: 991px;
 $media-bootstrap-md-min: 992px;
@@ -449,53 +451,57 @@ section#blog {
       }
     }
     /*-------Tags--------*/
-    .blogTags {
-      border-radius: 7px;
-      border-color: $col_nice_black;
-      border-width: 1px;
-      border-style: solid;
+    .affixContainer {
 
       @media (max-width: $media-bootstrap-sm-min) {
         width: 100%;
         margin-bottom: 15px;
       }
+      .blogTags {
 
-      .inputTag {
-        -webkit-transition: background 1.2s, color 0.2s, font-weight 0.2s, padding 1.2s, border-color 4s, ease-in-out;
-        -moz-transition: background 1.2s, color 0.2s, font-weight 0.2s, padding 1.2s, border-color 4s, ease-in-out;
-        -ms-transition: background 1.2s, color 0.2s, font-weight 0.2s, padding 1.2s, border-color 4s, ease-in-out;
-        -o-transition: background 1.2s, color 0.2s, font-weight 0.2s, padding 1.2s, border-color 4s, ease-in-out;
-        transition: background 1.2s, color 0.2s, font-weight 0.2s, padding 1.2s, border-color 4s, ease-in-out;
-        display: inline-block;
-        padding: 0px 3px;
-        margin: 2px;
-        cursor: pointer;
-        text-decoration: none;
-        font-weight: 300;
-        color: $col_body_text;
-        border-radius: 7px;
-        border-color: $col_nice_black;
-        border-width: 1px;
-        border-style: solid;
-        background: white;
-
-        &:hover {
-          background: $col_nav_hover;
-          color: white;
-          padding: 0px 5px;
-          font-weight: 500;
-          -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
-          -moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
-          box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+        // when scrolling the Bootstrap affix adds the class affix to div.blogTags
+        &.affix {
+          width: $width_tags;
         }
-        &.active {
-          background: $col_nav_active;
-          color: white;
-          font-weight: 500;
+
+        // the style of the tags
+        .inputTag {
+          -webkit-transition: background 1.2s, color 0.2s, font-weight 0.2s, padding 1.2s, border-color 4s, ease-in-out;
+          -moz-transition: background 1.2s, color 0.2s, font-weight 0.2s, padding 1.2s, border-color 4s, ease-in-out;
+          -ms-transition: background 1.2s, color 0.2s, font-weight 0.2s, padding 1.2s, border-color 4s, ease-in-out;
+          -o-transition: background 1.2s, color 0.2s, font-weight 0.2s, padding 1.2s, border-color 4s, ease-in-out;
+          transition: background 1.2s, color 0.2s, font-weight 0.2s, padding 1.2s, border-color 4s, ease-in-out;
+          display: inline-block;
+          padding: 0px 3px;
+          margin: 2px;
+          cursor: pointer;
+          text-decoration: none;
+          font-weight: 300;
+          color: $col_body_text;
+          border-radius: 7px;
+          border-color: $col_nice_black;
+          border-width: 1px;
+          border-style: solid;
+          background: white;
 
           &:hover {
             background: $col_nav_hover;
             color: white;
+            padding: 0px 5px;
+            font-weight: 500;
+            -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+            -moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+          }
+          &.active {
+            background: $col_nav_active;
+            color: white;
+            font-weight: 500;
+
+            &:hover {
+              background: $col_nav_hover;
+              color: white;
+            }
           }
         }
       }
