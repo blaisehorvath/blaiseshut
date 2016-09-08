@@ -20,7 +20,7 @@ class Blog extends React.Component {
     };
 
     componentDidMount() {
-        //this.props.dispatch(changeActiveMenuButton('blog'))
+        this.props.dispatch(changeActiveMenuButton('blog'));
 
         //attaching the bootstrap affix listener with jQuery
         $('.blogTags').affix({offset: {top:50}});

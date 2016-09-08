@@ -1,6 +1,6 @@
 import React from "react";
 import {connect} from "react-redux"
-import {changeActivePage} from "../reducers/StoreAndReducers";
+import {changeActivePage, changeActiveMenuButton} from "../reducers/StoreAndReducers";
 
 import Projects from "../components/Projects";
 import Team from "../components/Team";
@@ -13,6 +13,7 @@ class About extends React.Component {
 
     componentDidMount() {
         this.props.dispatch(changeActivePage(true));
+        this.props.dispatch(changeActiveMenuButton("aboutUs"));
     }
 
     componentWillUnmount() {
