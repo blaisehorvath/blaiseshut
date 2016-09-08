@@ -15,6 +15,6 @@ console.log("Frontend entry script is running");
     });
 
     // lockng the tags to 100px from the top
-    $('.blogTags').affix({offset: {top:50}});
+    // $('.blogTags').affix({offset: {top:50}});
 
 })(jQuery); // End of use strict

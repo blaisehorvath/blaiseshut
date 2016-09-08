@@ -3,7 +3,7 @@
 
 /*Variables*/
 
-$width_tags: 95px;
+$tags-affix-width: 180px;
 
 $media-bootstrap-sm-min: 768px;
 $media-bootstrap-sm-max: 991px;
@@ -527,10 +527,15 @@ section#blog {
         margin-bottom: 15px;
       }
       .blogTags {
+        padding: 7px;
+        border-style: solid;
+        border-width: 1px;
+        border-radius: 4%;
+        border-color: $col_nice_black;
 
         // when scrolling the Bootstrap affix adds the class affix to div.blogTags
         &.affix {
-          width: $width_tags;
+          width: $tags-affix-width;
 
           @media (max-width: $media-bootstrap-sm-min) {
             visibility: hidden;

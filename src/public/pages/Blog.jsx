@@ -21,6 +21,9 @@ class Blog extends React.Component {
 
     componentDidMount() {
         //this.props.dispatch(changeActiveMenuButton('blog'))
+
+        //attaching the bootstrap affix listener with jQuery
+        $('.blogTags').affix({offset: {top:50}});
     };
 
 
@@ -28,12 +31,13 @@ class Blog extends React.Component {
         return (
             <section id="blog">
                 <div className="container">
-                    <div className="affixContainer col-xs-2 pull-right">
-                        <div className="blogTags"  >
+                    <div className="affixContainer col-xs-4 pull-right">
+                        <div className="blogTags">
+                            <h4>Filter by tags</h4>
                             <TagListWithStore/>
                         </div>
                     </div>
-                    <div className="col-xs-10 blogContent">
+                    <div className="col-xs-8 blogContent">
                         <BlogPostsWithAjax/>
                     </div>
                 </div>
