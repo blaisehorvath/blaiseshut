@@ -1,6 +1,6 @@
 import React from "react"
 
-import BlogPost from "../components/BlogPost"
+import BlogPostPreview from "./BlogPostPreview"
 
 class BlogPosts extends React.Component {
     constructor(props) {
@@ -31,7 +31,7 @@ class BlogPosts extends React.Component {
             return (<div>{this.props.activeBlogPosts.map(
                 post=> {//TODO:This is not the BLOG! loggedIn is elsewhere
                     return <div key={post.id}>
-                        <BlogPost post={post} loggedIn={this.props.loggedIn}/>
+                        <BlogPostPreview post={post} loggedIn={this.props.loggedIn}/>
                     </div>
                 })}<div onClick={()=>{this.getNewBlogPosts(1)}} className="panel">Show me more!! <br/><br/></div></div>);//TODO: FRONT-END! Change this to scroll event
         else return <div></div>

@@ -2,7 +2,8 @@ import React from "react"
 import {loadBlogPost} from '../reducers/StoreAndReducers'
 import {connect} from 'react-redux'
 import page from 'page'
-const BlogPost = ({post, loggedIn, dispatch})=> {
+
+const BlogPostPreview = ({post, loggedIn, dispatch})=> {
     let date = new Date(post.date);
     return <div className="blogPost panel panel-default">
         <div className="panel-heading">
@@ -49,4 +50,4 @@ const goToBlogpost = (post, dispatch) => {
     page("/blog/" + encodeURIComponent(post.title));
 };
 
-export default connect()(BlogPost)
+export default connect()(BlogPostPreview)
