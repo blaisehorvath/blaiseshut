@@ -3,6 +3,7 @@ import {loadBlogPost} from '../reducers/StoreAndReducers'
 import {connect} from 'react-redux'
 import page from 'page'
 const BlogPost = ({post, loggedIn, dispatch})=> {
+    let date = new Date(post.date);
     return <div className="blogPost panel panel-default">
         <div className="panel-heading">
             <div className="row">
@@ -12,7 +13,7 @@ const BlogPost = ({post, loggedIn, dispatch})=> {
             </div>
             <div className="row">
                 <div className="postAuthor col-xs-6">Post by <i>{post.user}</i></div>
-                <div className="postDate col-xs-6">{post.date}</div>
+                <div className="postDate col-xs-6">{date.toDateString()}</div>
             </div>
         </div>
         <div className="panel-body">
