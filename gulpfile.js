@@ -15,11 +15,11 @@ var gulp = require('gulp'),
 var sources = {
     server: "src/server/**/!(*_tmp_*|*.key|*.pem)",
     css: "src/public/css/styles.scss",
-    components: "src/public/components/!(*_tmp_*)",
-    publicScripts: "src/public/js/!(*_tmp_*)",
-    reducers: "src/public/reducers/!(*_tmp_*)",
-    containers: "src/public/containers/!(*_tmp_*)",
-    pages: "src/public/pages/!(*_tmp_*)" //matches anything but temporary files
+    components: "src/public/components/!(*_tmp_*|*_jb_old_*)",
+    publicScripts: "src/public/js/!(*_tmp_*|*_jb_old_*)",
+    reducers: "src/public/reducers/!(*_tmp_*|*_jb_old_*)",
+    containers: "src/public/containers/!(*_tmp_*|*_jb_old_*)",
+    pages: "src/public/pages/!(*_tmp_*|*_jb_old_*)" //matches anything but temporary files
 };
 
 //copying css files
