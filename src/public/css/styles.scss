@@ -436,7 +436,7 @@ section#blog {
           }
 
           .postDate {
-
+            text-align: right;
           }
 
         }
@@ -445,9 +445,22 @@ section#blog {
           font-size: 14pt;
           font-weight: 300;
           text-align: justify;
+
+          .readMore {
+            display: inline-block;
+            padding-left: 7px;
+            cursor: pointer;
+            &:hover {
+              font-weight: 500;
+              text-decoration: none;
+            }
+          }
         }
 
         .panel-footer {
+          .glyphicon-tags {
+            padding-right: 10px;
+          }
         }
       }
     }
