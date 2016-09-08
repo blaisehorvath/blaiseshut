@@ -45,6 +45,9 @@ $col_contactus_background: white;
 //footer
 $col_footer_background: rgb(189, 189, 189);
 
+//blog
+$col_blog_header_background: rgba(255,255,205,1);
+
 /* Mixins */
 
 @mixin default-box($bgcolour) {
@@ -77,6 +80,26 @@ $col_footer_background: rgb(189, 189, 189);
     background: $col_nav_active;
     color: white;
   }
+}
+
+@mixin niceBoxShadow {
+  -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+@mixin niceTextShadow {
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+@mixin niceTextStroke($webkit_text_stroke, $text_shadow_width) {
+  -webkit-text-stroke: $webkit_text_stroke black;
+  color: white;
+  text-shadow: $text_shadow_width $text_shadow_width 0 #000,
+  -1px -1px 0 #000,
+  1px -1px 0 #000,
+  -1px 1px 0 #000,
+  1px 1px 0 #000;
 }
 
 /*-------------------------------------
@@ -125,6 +148,7 @@ nav.navbar {
 
   ul.nav.navbar-nav {
     li {
+      @include niceTextStroke(1px, 2px);
       a {
         color: $col_nav_text;
         font-weight: 500;
@@ -249,7 +273,6 @@ header {
 $projectImageWidth: 200px;
 
 section#projects {
-  //height: 600px;
   background: $col_projects_background;
   .projectList {
     padding: 20px 0 50px 0;
@@ -414,6 +437,10 @@ section#contactUs {
   padding-bottom: 50px;
 }
 
+/*------------------------------------
+          The blog
+-------------------------------------*/
+
 section#blog {
 
   .container {
@@ -432,11 +459,38 @@ section#blog {
       .blogpost {
 
         .panel-heading {
+
+          background: $col_nav_background;
+          color: white;
+
+          .postTitle {
+            @include niceTextStroke(1px, 2px);
+            cursor: pointer;
+            font-weight: 600;
+            -webkit-transition: all 0.8s;
+            -moz-transition: all 0.8s;
+            -ms-transition: all 0.8s;
+            -o-transition: all 0.8s;
+            transition: all 0.8s;
+
+            &:hover {
+              color: $col_nav_active;
+            }
+          }
+
           .postAuthor {
+            @include niceTextStroke(1px, 2px);
+            font-weight: bolder;
+            i {
+              font-size: 1.25em;
+            }
+            //@include niceTextStroke(1px,1px);
           }
 
           .postDate {
+            @include niceTextStroke(1px, 2px);
             text-align: right;
+            font-weight: bold;
           }
 
         }
@@ -458,6 +512,7 @@ section#blog {
         }
 
         .panel-footer {
+          background: white;
           .glyphicon-tags {
             padding-right: 10px;
           }
@@ -504,6 +559,7 @@ section#blog {
           background: white;
 
           &:hover {
+            @include niceTextStroke(0px, 1px);
             background: $col_nav_hover;
             color: white;
             padding: 0px 5px;
@@ -513,6 +569,7 @@ section#blog {
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
           }
           &.active {
+            @include niceTextStroke(0px, 1px);
             background: $col_nav_active;
             color: white;
             font-weight: 500;
