@@ -46,7 +46,7 @@ $col_contactus_background: white;
 $col_footer_background: rgb(189, 189, 189);
 
 //blog
-$col_blog_header_background: rgba(255,255,205,1);
+$col_blog_header_background: rgba(255, 255, 205, 1);
 
 /* Mixins */
 
@@ -149,15 +149,20 @@ nav.navbar {
   ul.nav.navbar-nav {
     li {
       @include niceTextStroke(1px, 2px);
+      -webkit-transition: background 0.5s, ease-in-out;
+      -moz-transition: background 0.5s, ease-in-out;
+      -ms-transition: background 0.5s, ease-in-out;
+      -o-transition: background 0.5s, ease-in-out;
+      transition: background 0.5s, ease-in-out;
       a {
         color: $col_nav_text;
         font-weight: 500;
         //text-shadow: 0.7px 0.7px black, -0.7px -0.7px black, -0.7px 0.7px black, 0.7px -0.7px black;
-        -webkit-transition: background 0.5s;
-        -moz-transition: background 0.5s;
-        -ms-transition: background 0.5s;
-        -o-transition: background 0.5s;
-        transition: background 0.5s;
+        -webkit-transition: background 0.5s, ease-in-out;
+        -moz-transition: background 0.5s, ease-in-out;
+        -ms-transition: background 0.5s, ease-in-out;
+        -o-transition: background 0.5s, ease-in-out;
+        transition: background 0.5s, ease-in-out;
       }
       &.active a {
         color: $col_nav_text_active;
@@ -168,11 +173,6 @@ nav.navbar {
         }
       }
       &:hover {
-        -webkit-transition: background 0.5s;
-        -moz-transition: background 0.5s;
-        -ms-transition: background 0.5s;
-        -o-transition: background 0.5s;
-        transition: background 0.5s;
         color: $col_nav_text_hover;
         background: $col_nav_hover;
       }
