@@ -39,7 +39,7 @@ const Team = () => {
     return (
         <section id="team">
             <div className="container">
-                <h1>Team</h1>
+                <h1 className="headerTitle">Team</h1>
                 <TeamMemberCollapse teamMembers={teamMembers}/>
             </div>
         </section>

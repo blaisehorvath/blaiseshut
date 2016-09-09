@@ -50,6 +50,14 @@ $col_blog_header_background: rgba(255, 255, 205, 1);
 
 /* Mixins */
 
+@mixin headerTitleStyle {
+  @include niceTextStroke(1px, 3px);
+  display: inline-block;
+  background: $col_nav_active;
+  @include niceBoxShadow(0, 0, 15px, $col_nav_active);
+  padding: 5px;
+}
+
 @mixin default-box($bgcolour) {
   background: $bgcolour;
   padding: 0 10px;
@@ -82,10 +90,10 @@ $col_blog_header_background: rgba(255, 255, 205, 1);
   }
 }
 
-@mixin niceBoxShadow {
-  -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+@mixin niceBoxShadow($x, $y, $blur-radius, $colour) {
+  -webkit-box-shadow: $x $y $blur-radius $colour;
+  -moz-box-shadow: $x $y $blur-radius $colour;
+  box-shadow: $x $y $blur-radius $colour;
 }
 
 @mixin niceTextShadow {
@@ -234,13 +242,14 @@ header {
   @include default-box($col_header_background);
 
   .container {
-
     padding: 100px 0 50px 0;
 
-    h1 {
+    h1.headerTitle {
+      @include headerTitleStyle;
       margin-top: 0;
       font-size: 28pt;
     }
+
     p {
       font-size: 14pt;
       font-weight: 300;
@@ -274,57 +283,66 @@ $projectImageWidth: 200px;
 
 section#projects {
   background: $col_projects_background;
-  .projectList {
-    padding: 20px 0 50px 0;
-    div.projectCol {
-      a {
-        text-decoration: none;
-        color: black;
 
-        margin-right: auto;
-        margin-left: auto;
+  .container {
 
-        // images are positiond to the middle of their containers
-        img.projectImage {
+    .headerTitle{
+      @include headerTitleStyle;
+    }
+
+    .projectList {
+      padding: 20px 0 50px 0;
+      div.projectCol {
+        a {
+          text-decoration: none;
+          color: black;
+
           margin-right: auto;
           margin-left: auto;
-        }
 
-        // images for mobile and small screens
-        #embeddedListImg {
-          content: url("https://placehold.it/200x200");
-        }
-        #iotListImg {
-          content: url("https://placehold.it/200x200");
-        }
-        #webAppListImg {
-          content: url("https://placehold.it/200x200");
-        }
+          // images are positiond to the middle of their containers
+          img.projectImage {
+            margin-right: auto;
+            margin-left: auto;
+          }
 
-        // different image sizes for different media
-        @media screen and (min-width: $media-bootstrap-md-min) {
+          // images for mobile and small screens
           #embeddedListImg {
-            content: url("https://placehold.it/325x325");
+            content: url("https://placehold.it/200x200");
           }
           #iotListImg {
-            content: url("https://placehold.it/325x325");
+            content: url("https://placehold.it/200x200");
           }
           #webAppListImg {
-            content: url("https://placehold.it/325x325");
+            content: url("https://placehold.it/200x200");
           }
-        }
 
-        div.caption {
-          .caption-content {
-            padding-top: 20px;
-            font-size: 14pt;
-            text-align: center;
-            text-decoration: none;
+          // different image sizes for different media
+          @media screen and (min-width: $media-bootstrap-md-min) {
+            #embeddedListImg {
+              content: url("https://placehold.it/325x325");
+            }
+            #iotListImg {
+              content: url("https://placehold.it/325x325");
+            }
+            #webAppListImg {
+              content: url("https://placehold.it/325x325");
+            }
+          }
+
+          div.caption {
+            .caption-content {
+              padding-top: 20px;
+              font-size: 14pt;
+              text-align: center;
+              text-decoration: none;
+            }
           }
         }
       }
     }
   }
+
 }
 
 //Project Modals:
@@ -372,46 +390,55 @@ section#projects {
 /* Team */
 
 section#team {
-  margin: 50px 0px;
-  .teamButtons {
-    margin-bottom: 25px;
-  }
-  .collapse {
-  }
-  background: $col_team_background;
+  .container{
+    margin: 50px auto;
 
-  div.memberCol {
-    a {
-      text-decoration: none;
-      color: black;
+    .headerTitle {
+      @include headerTitleStyle;
+    }
 
-      margin-right: auto;
-      margin-left: auto;
+    .teamButtons {
+      margin-bottom: 25px;
+    }
 
-      // images are positiond to the middle of their containers
-      img.teamPi {
+    .collapse {
+    }
+
+    background: $col_team_background;
+
+    div.memberCol {
+      a {
+        text-decoration: none;
+        color: black;
+
         margin-right: auto;
         margin-left: auto;
-      }
 
-      // images for mobile and small screens
-      .teamPicture {
-        margin-right: auto;
-        margin-left: auto;
-        content: url("https://placehold.it/200x200");
-      }
-      @media screen and (min-width: $media-bootstrap-md-min) {
-        .teamPicture {
-          content: url("https://placehold.it/325x325");
+        // images are positiond to the middle of their containers
+        img.teamPi {
+          margin-right: auto;
+          margin-left: auto;
         }
-      }
 
-      div.caption {
-        .caption-content {
-          padding-top: 20px;
-          font-size: 14pt;
-          text-align: center;
-          text-decoration: none;
+        // images for mobile and small screens
+        .teamPicture {
+          margin-right: auto;
+          margin-left: auto;
+          content: url("https://placehold.it/200x200");
+        }
+        @media screen and (min-width: $media-bootstrap-md-min) {
+          .teamPicture {
+            content: url("https://placehold.it/325x325");
+          }
+        }
+
+        div.caption {
+          .caption-content {
+            padding-top: 20px;
+            font-size: 14pt;
+            text-align: center;
+            text-decoration: none;
+          }
         }
       }
     }
@@ -433,6 +460,10 @@ section#team {
 /* Contact Us */
 
 section#contactUs {
+  .headerTitle {
+    @include headerTitleStyle;
+  }
+
   background: $col_contactus_background;
   padding-bottom: 50px;
 }
@@ -481,8 +512,7 @@ section#blog {
           .postAuthor {
             @include niceTextStroke(1px, 2px);
             font-weight: bolder;
-            a {
-              text-decoration: none;
+            i {
               @include niceTextStroke(1px, 2px);
               color: white;
               font-size: 1.25em;

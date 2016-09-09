@@ -33,7 +33,7 @@ const Projects = (props) => {
     return (
         <section id="projects">
             <div className="container">
-                <h1>Projects</h1>
+                <h1 className="headerTitle">Projects</h1>
                 <div className="projectList">
                     <div className="row projectContainer">
                         {projects}
