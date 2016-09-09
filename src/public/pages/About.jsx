@@ -4,7 +4,7 @@ import {changeActivePage, changeActiveMenuButton} from "../reducers/StoreAndRedu
 
 import Projects from "../components/Projects";
 import Team from "../components/Team";
-import SendMessage from "../components/SendMessage";
+import ContactUs from "../components/ContactUs";
 
 class About extends React.Component {
     constructor(props) {
@@ -38,12 +38,8 @@ class About extends React.Component {
 
                 <Team/>
 
-                <section id="contactUs">
-                    <div className="container">
-                        <h1 className="headerTitle">Contact Us</h1>
-                        <SendMessage/>
-                    </div>
-                </section>
+                <ContactUs/>
+
             </div>
         )
     };
