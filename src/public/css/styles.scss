@@ -466,6 +466,21 @@ section#contactUs {
 
   background: $col_contactus_background;
   padding-bottom: 50px;
+
+  .contactSubmit {
+    -webkit-transition: all 0.8s;
+    -moz-transition: all 0.8s;
+    -ms-transition: all 0.8s;
+    -o-transition: all 0.8s;
+    transition: all 0.8s;
+
+    &:hover {
+      color: white;
+      background: $col_nav_active;
+      font-weight: 500;
+    }
+  }
+
 }
 
 /*------------------------------------
