@@ -1,0 +1,82 @@
+/* Mixins */
+
+@mixin niceBoxShadow($x, $y, $blur-radius, $colour) {
+  -webkit-box-shadow: $x $y $blur-radius $colour;
+  -moz-box-shadow: $x $y $blur-radius $colour;
+  box-shadow: $x $y $blur-radius $colour;
+}
+
+@mixin niceTextShadow {
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+@mixin niceTextShadowConf ($x, $y, $radius, $colour) {
+  text-shadow: $x $y $radius $colour;
+}
+
+@mixin niceTextShadowColor ($colour) {
+  text-shadow: 0 0 10px $colour;
+}
+
+@mixin headerTitleStyle {
+  //@include niceTextStroke(1px, 3px);
+  display: inline-block;
+  color: white;
+  background: $col_nav_active;
+  padding: 7px;
+  @include niceTextShadowConf(0, 0, 15px, rgba(0,0,0,0.5));
+  @include niceBoxShadow(0, 0, 15px, $col_nav_active);
+}
+
+@mixin headerTitleStyleConf ($color, $textShadowColor) {
+  //@include niceTextStroke(1px, 3px);
+  @include niceTextShadowConf(0, 0, 15px, $textShadowColor);
+  display: inline-block;
+  background: $color;
+  @include niceBoxShadow(0, 0, 15px, $color);
+  padding: 7px;
+}
+
+@mixin default-box($bgcolour) {
+  background: $bgcolour;
+  padding: 0 10px;
+}
+
+@mixin paragraphFont {
+  font-size: 14pt;
+  font-weight: 300;
+  text-align: justify;
+}
+
+@mixin noTextSelect {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Chrome/Safari/Opera */
+  -khtml-user-select: none; /* Konqueror */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently*/
+}
+
+@mixin textSelection {
+  &::selection {
+    background: $col_nav_active;
+    color: white;
+  }
+;
+  &::-moz-selection {
+    background: $col_nav_active;
+    color: white;
+  }
+}
+
+
+
+@mixin niceTextStroke($webkit_text_stroke, $text_shadow_width) {
+  -webkit-text-stroke: $webkit_text_stroke black;
+  color: white;
+  text-shadow: $text_shadow_width $text_shadow_width 0 #000,
+  -1px -1px 0 #000,
+  1px -1px 0 #000,
+  -1px 1px 0 #000,
+  1px 1px 0 #000;
+}

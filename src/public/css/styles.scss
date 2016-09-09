@@ -1,114 +1,7 @@
 @import "normalize";
 @import "css3-mixins";
-
-/*Variables*/
-
-$tags-affix-width: 180px;
-
-$media-bootstrap-sm-min: 768px;
-$media-bootstrap-sm-max: 991px;
-$media-bootstrap-md-min: 992px;
-$media-bootstrap-md-max: 1199px;
-$media-bootstrap-lg-min: 1200px;
-
-$media-owncss-widedisplay: 1500px;
-
-$footer_height: 100px;
-$footer-mobile-height: 280px;
-
-/* Colours */
-//current palette is based on http://paletton.com/#uid=33i0O0kN4DeozLQvOMhNHr-OSln
-
-//everywhere
-$col_nice_black: #dddddd;
-
-//body
-$col_body_background: white;
-$col_body_text: black;
-
-//nav
-$col_nav_background: rgba(1, 208, 208, 57);
-$col_nav_active: rgba(238, 55, 129, 46);
-$col_nav_hover: rgba(255, 199, 0, 75);
-$col_nav_text: white;
-$col_nav_text_active: white;
-$col_nav_text_hover: white;
-
-$col_ligth_blue: rgba(14, 201, 190, 0.14);
-
-//sections
-$col_header_background: white;
-$col_projects_background: white;
-$col_team_background: white;
-$col_contactus_background: white;
-
-//footer
-$col_footer_background: rgb(189, 189, 189);
-
-//blog
-$col_blog_header_background: rgba(255, 255, 205, 1);
-
-/* Mixins */
-
-@mixin headerTitleStyle {
-  @include niceTextStroke(1px, 3px);
-  display: inline-block;
-  background: $col_nav_active;
-  @include niceBoxShadow(0, 0, 15px, $col_nav_active);
-  padding: 5px;
-}
-
-@mixin default-box($bgcolour) {
-  background: $bgcolour;
-  padding: 0 10px;
-}
-
-@mixin paragraphFont {
-  font-size: 14pt;
-  font-weight: 300;
-  text-align: justify;
-}
-
-@mixin noTextSelect {
-  -webkit-touch-callout: none; /* iOS Safari */
-  -webkit-user-select: none; /* Chrome/Safari/Opera */
-  -khtml-user-select: none; /* Konqueror */
-  -moz-user-select: none; /* Firefox */
-  -ms-user-select: none; /* Internet Explorer/Edge */
-  user-select: none; /* Non-prefixed version, currently*/
-}
-
-@mixin textSelection {
-  &::selection {
-    background: $col_nav_active;
-    color: white;
-  }
-;
-  &::-moz-selection {
-    background: $col_nav_active;
-    color: white;
-  }
-}
-
-@mixin niceBoxShadow($x, $y, $blur-radius, $colour) {
-  -webkit-box-shadow: $x $y $blur-radius $colour;
-  -moz-box-shadow: $x $y $blur-radius $colour;
-  box-shadow: $x $y $blur-radius $colour;
-}
-
-@mixin niceTextShadow {
-  text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-}
-
-@mixin niceTextStroke($webkit_text_stroke, $text_shadow_width) {
-  -webkit-text-stroke: $webkit_text_stroke black;
-  color: white;
-  text-shadow: $text_shadow_width $text_shadow_width 0 #000,
-  -1px -1px 0 #000,
-  1px -1px 0 #000,
-  -1px 1px 0 #000,
-  1px 1px 0 #000;
-}
+@import "own_mixins";
+@import "variables";
 
 /*-------------------------------------
       The body in every page
@@ -152,16 +45,33 @@ nav.navbar {
   padding: 0;
   border: 0;
   font-size: 1.1em;
-  //todo: increase the text size for nav
+  @include niceBoxShadow(0,0, 15px, $col_nav_background);
+
+  #brandText {
+    color: white;
+    font-family: 'Slabo 27px', serif;
+    font-weight: 700;
+  }
 
   ul.nav.navbar-nav {
     li {
-      @include niceTextStroke(1px, 2px);
+
+      //@include niceTextStroke(1px, 2px);
+      /* Border */
+      //border: solid;
+      //border-color: black;
+      //border-width: 0 1px 0 0;
+
+      /* Text */
+      text-shadow: 0 0 10px rgba(139,243,239,1);
+
+      /* Transition */
       -webkit-transition: background 0.5s, ease-in-out;
       -moz-transition: background 0.5s, ease-in-out;
       -ms-transition: background 0.5s, ease-in-out;
       -o-transition: background 0.5s, ease-in-out;
       transition: background 0.5s, ease-in-out;
+
       a {
         color: $col_nav_text;
         font-weight: 500;
@@ -172,6 +82,7 @@ nav.navbar {
         -o-transition: background 0.5s, ease-in-out;
         transition: background 0.5s, ease-in-out;
       }
+
       &.active a {
         color: $col_nav_text_active;
         background: $col_nav_active;
@@ -180,10 +91,12 @@ nav.navbar {
           background: $col_nav_hover;
         }
       }
+
       &:hover {
         color: $col_nav_text_hover;
         background: $col_nav_hover;
       }
+
     }
   }
 
@@ -207,10 +120,6 @@ nav.navbar {
   }
 }
 
-#brandText {
-  color: white;
-  font-family: 'Slabo 27px', serif;
-}
 
 /*#myDropDown[aria-expanded="true"] {
   background: $col_purple;
@@ -498,11 +407,16 @@ section#blog {
 
     .blogContent {
 
+
       @media (max-width: $media-bootstrap-sm-min) {
         width: 100%;
       }
 
       .blogpost {
+        //border: solid;
+        //border-width: 1px;
+        //border-color: yellow;
+        @include niceBoxShadow(0, 0, 10px, rgba(0,0,0,0.3));
 
         .panel-heading {
 
@@ -510,7 +424,8 @@ section#blog {
           color: white;
 
           .postTitle {
-            @include niceTextStroke(1px, 2px);
+            //@include niceTextStroke(1px, 2px);
+            @include niceTextShadow;
             cursor: pointer;
             font-weight: 600;
             -webkit-transition: all 0.8s;
@@ -520,15 +435,16 @@ section#blog {
             transition: all 0.8s;
 
             &:hover {
-              color: $col_nav_active;
+              color: $col_nav_hover;
+              @include niceTextShadowColor($col_nav_hover)
             }
           }
 
           .postAuthor {
-            @include niceTextStroke(1px, 2px);
+            @include niceTextShadow;
             font-weight: bolder;
             i {
-              @include niceTextStroke(1px, 2px);
+              @include niceTextShadow;
               color: white;
               font-size: 1.25em;
             }
@@ -536,7 +452,7 @@ section#blog {
           }
 
           .postDate {
-            @include niceTextStroke(1px, 2px);
+            @include niceTextShadow;
             text-align: right;
             font-weight: bold;
           }
@@ -643,9 +559,46 @@ section#blog {
 ---------------------------------*/
 
 section#singleBlogPost {
-  margin-top: 100px;
+
+  margin-top: 50px;
+  padding-bottom: 50px;
+
   div.container {
 
+    .postHeader {
+      margin-bottom: 20px;
+
+      .postTitle {
+        @include headerTitleStyle;
+        margin-bottom: 0;
+      }
+
+      .postAuthor {
+        font-weight: 500;
+        font-size: 1.45em;
+        div {
+          color: white;
+          @include headerTitleStyleConf($col_nav_hover, $col_nav_hover)
+        }
+      }
+
+      .postDate {
+        text-align: right;
+        font-size: 1.2em;
+        div {
+          color:white;
+         @include headerTitleStyleConf($col_nav_hover, $col_nav_hover)
+        }
+      }
+    }
+
+    .postBody {
+      @include paragraphFont;
+    }
+
+    .postFooter {
+
+    }
   }
 }
 

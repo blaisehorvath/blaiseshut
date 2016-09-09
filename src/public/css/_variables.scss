@@ -1,0 +1,46 @@
+/*Variables*/
+
+$tags-affix-width: 180px;
+
+$media-bootstrap-sm-min: 768px;
+$media-bootstrap-sm-max: 991px;
+$media-bootstrap-md-min: 992px;
+$media-bootstrap-md-max: 1199px;
+$media-bootstrap-lg-min: 1200px;
+
+$media-owncss-widedisplay: 1500px;
+
+$footer_height: 100px;
+$footer-mobile-height: 280px;
+
+/* Colours */
+//current palette is based on http://paletton.com/#uid=33i0O0kN4DeozLQvOMhNHr-OSln
+
+//everywhere
+$col_nice_black: #dddddd;
+
+//body
+$col_body_background: white;
+$col_body_text: black;
+
+//nav
+$col_nav_background: rgba(1, 208, 208, 57);
+$col_nav_active: rgba(238, 55, 129, 46);
+$col_nav_hover: rgba(255, 199, 0, 75);
+$col_nav_text: white;
+$col_nav_text_active: white;
+$col_nav_text_hover: white;
+
+$col_ligth_blue: rgba(14, 201, 190, 0.14);
+
+//sections
+$col_header_background: white;
+$col_projects_background: white;
+$col_team_background: white;
+$col_contactus_background: white;
+
+//footer
+$col_footer_background: rgb(189, 189, 189);
+
+//blog
+$col_blog_header_background: rgba(255, 255, 205, 1);
