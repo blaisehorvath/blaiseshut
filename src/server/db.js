@@ -22,6 +22,7 @@ import AppReducer from "../public/reducers/StoreAndReducers"
 import _ from "ramda"
 import {createStore} from 'redux';
 import ReactDOM from "react-dom/server"
+import fs from "fs"
 ///*Setting up amazon AWS connection.
 // Should have a credentials file in ~/.aws with the following content:
 /*[default]
@@ -376,14 +377,29 @@ const pathsAndStores = {
         }
     },//TODO: Cache as good as possible. response, store and content should be objects with blogpost name props, in which you could filter easily
 };
-fillQueryCache().then(getTags().then((tags)=> {
-    Object.keys(pathsAndStores).forEach((key, index)=> {
-        if (pathsAndStores[key].hasOwnProperty('init')) {
-            console.log("initializing " + key);
-            pathsAndStores[key].init();
-        }
-    });
-}))
+fillQueryCache()
+    .then(getTags()
+        .then((tags)=> {
+            Object.keys(pathsAndStores).forEach((key, index)=> {
+                if (pathsAndStores[key].hasOwnProperty('init')) {
+                    console.log("initializing " + key);
+                    pathsAndStores[key].init();
+                }
+            });
+        })
+        .then(()=> {//Write pathsAndStores to fs.
+            fs.writeFile("./pathsAndStores.js",
+                "const pathsAndStores = "
+                +JSON.stringify(pathsAndStores, null, 4)
+                +";\nexport default pathsAndStores"
+                , function(err) {
+                if(err) {
+                    console.log(err);
+                } else {
+                    console.log("JSON saved to " + "pathsAndStores");
+                }
+            });
 
+        }));
 //*******************************************************END OF DB SETUP************************************************
 export {queryBlogPosts, blogPostToDb, Tags, getTags, pathsAndStores}
