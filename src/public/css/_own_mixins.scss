@@ -10,11 +10,11 @@
   text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
-@mixin niceTextShadowConf ($x, $y, $radius, $colour) {
+@mixin niceTextShadowConf($x, $y, $radius, $colour) {
   text-shadow: $x $y $radius $colour;
 }
 
-@mixin niceTextShadowColor ($colour) {
+@mixin niceTextShadowColor($colour) {
   text-shadow: 0 0 10px $colour;
 }
 
@@ -24,11 +24,11 @@
   color: white;
   background: $col_nav_active;
   padding: 7px;
-  @include niceTextShadowConf(0, 0, 15px, rgba(0,0,0,0.5));
+  @include niceTextShadowConf(0, 0, 15px, rgba(0, 0, 0, 0.5));
   @include niceBoxShadow(0, 0, 15px, $col_nav_active);
 }
 
-@mixin headerTitleStyleConf ($color, $textShadowColor) {
+@mixin headerTitleStyleConf($color, $textShadowColor) {
   //@include niceTextStroke(1px, 3px);
   @include niceTextShadowConf(0, 0, 15px, $textShadowColor);
   display: inline-block;
@@ -69,8 +69,6 @@
   }
 }
 
-
-
 @mixin niceTextStroke($webkit_text_stroke, $text_shadow_width) {
   -webkit-text-stroke: $webkit_text_stroke black;
   color: white;
@@ -79,4 +77,11 @@
   1px -1px 0 #000,
   -1px 1px 0 #000,
   1px 1px 0 #000;
+}
+
+@mixin hrStyle {
+  border: 0;
+  height: 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
 }

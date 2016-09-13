@@ -12,20 +12,24 @@ const SinglePostWithoutStore = ({blogPost})=> {
                         </div>
                     </div>
                     <div className="row">
-                        <div className="col-sm-6 postAuthor">
-                            <div>Post by {blogPost.user}</div>
+                        <div className="col-sm-6 pull-left postAuthor">
+                            <div>Post by <a>{blogPost.user}</a></div>
                         </div>
-                        <div className="col-sm-6 pull-right postDate">
+                        <div className="col-sm-6 postDate">
                             <div>{date}</div>
                         </div>
                     </div>
                 </div>
+                <hr className="headerSep"/>
                 <div className="row postBody">
                     <div className="col-sm-12">{blogPost.precontent}</div>
                     <div className="col-sm-12">{blogPost.text}</div>
                 </div>
+                <hr className="footerSep"/>
                 <div className="postFooter row">
-                    <span className="postTagsIcon glyphicon glyphicon-tags"></span><span>{blogPost.tags}</span>
+                    <div className="col-sm-12">
+                        <span className="postTagsIcon glyphicon glyphicon-tags"/><span>{blogPost.tags}</span>
+                    </div>
                 </div>
             </div>
         </section>
