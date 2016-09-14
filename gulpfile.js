@@ -67,7 +67,7 @@ gulp.task('copy_pages', function () {
 
 //copying public js files
 gulp.task('copy_public_js', function () {//TODO: Why these files are even copied to public??
-    return gulp.src('./src/public/js/*')
+    return gulp.src(sources.publicScripts)
         .pipe(plumber())
         .pipe(babel())
         .pipe(gulp.dest('build/public/js/'));

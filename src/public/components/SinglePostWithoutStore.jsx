@@ -29,6 +29,7 @@ const SinglePostWithoutStore = ({blogPost})=> {
                 <div className="postFooter row">
                     <div className="col-sm-12">
                         <span className="postTagsIcon glyphicon glyphicon-tags"/><span>{blogPost.tags}</span>
+                        <div className="socialButtons"/>
                     </div>
                 </div>
             </div>

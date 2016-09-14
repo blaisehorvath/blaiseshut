@@ -11,9 +11,14 @@ export default function renderHTML(content, initialState) {
                 <link href="https://fonts.googleapis.com/css?family=Slabo+27px" rel="stylesheet" type="text/css"/>
                 <link href="https://fonts.googleapis.com/css?family=Fira+Sans:400,300,500" rel="stylesheet" type="text/css"/>
                 <title>Blaise's Hut</title>
-                <!-- Bootstrap -->
-                <!-- Latest compiled and minified CSS -->
+                <!-- Bootstrap CSS - Latest compiled and minified CSS CDN -->
                 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+                <!-- FontAwesome CDN -->
+                <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+                <!-- jsSocial Themes CDN -->
+                <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/jquery.jssocials/1.3.1/jssocials.css" />
+                <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/jquery.jssocials/1.3.1/jssocials-theme-minima.css" />
+                <!-- Own Styles -->
                 <link rel="stylesheet" type="text/css" href="/css/styles.css"/>
                 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
                 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -36,6 +41,9 @@ export default function renderHTML(content, initialState) {
             <!-- Include all compiled plugins (below), or include individual files as needed -->
             <!-- Latest compiled and minified JavaScript -->
             <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+            <!-- jsSocials -->
+            <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery.jssocials/1.3.1/jssocials.min.js"></script>
+            <!-- Own Css -->
             <script src="/private/script.js"></script>
             <script src="/js/frontEnd.js"></script>
             </body>

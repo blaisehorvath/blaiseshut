@@ -17,4 +17,13 @@ console.log("Frontend entry script is running");
     // lockng the tags to 100px from the top
     // $('.blogTags').affix({offset: {top:50}});
 
+    // social
+    $(window).on("navigate", (event, data)=> {
+        console.log("navigate");
+        $(".socialButtons").jsSocials({
+                shares: ["facebook", "twitter", "linkedin", "googleplus", "email"]
+            });
+        }
+    )
+
 })(jQuery); // End of use strict

@@ -3,9 +3,9 @@
  */
 
 import React from "react";
-import { render } from 'react-dom'
-import { Provider } from 'react-redux'
-import { applyMiddleware, createStore } from 'redux';
+import {render} from 'react-dom'
+import {Provider} from 'react-redux'
+import {applyMiddleware, createStore} from 'redux';
 import createLogger from 'redux-logger';
 import AppReducer from "../reducers/StoreAndReducers";
 import Page from  "page";
@@ -15,32 +15,52 @@ import Admin from "../pages/Admin";
 import About from "../pages/About"
 import Blog from "../pages/Blog"
 import BlogPost from "../pages/BlogPost"
+
 const logger = createLogger();
-const store = createStore(AppReducer,window.__INITIAL_STATE__, applyMiddleware(logger)); //applyMiddleware(logger));
+const store = createStore(AppReducer, window.__INITIAL_STATE__, /*applyMiddleware(logger)*/); //applyMiddleware(logger));
 window.dispatcher = (action) => {
     store.dispatch(action);
 };
 window.getState = () => store.getState();
 
 
-Page('/admin', ()=>{render(
-    <Provider store={store}><ReactApp><Admin/></ReactApp></Provider>,
-    document.getElementById('app')
-);});
-Page('/about', ()=>{render(
-    <Provider store={store}><ReactApp><About/></ReactApp></Provider>,
-    document.getElementById('app')
-);});
-Page('/', ()=>{render(
-    <Provider store={store}><ReactApp><About/></ReactApp></Provider>,
-    document.getElementById('app')
-);});
-Page('/blog', ()=>{render(
-    <Provider store={store}><ReactApp><Blog/></ReactApp></Provider>,
-    document.getElementById('app')
-);});
-Page('/blog/:blogTitle', ()=>{render(
-    <Provider store={store}><ReactApp><BlogPost/></ReactApp></Provider>,
-    document.getElementById('app')
-);});
+Page('/admin', ()=> {
+    render(
+        <Provider store={store}><ReactApp><Admin/></ReactApp></Provider>,
+        document.getElementById('app')
+    );
+});
+Page('/about', ()=> {
+    render(
+        <Provider store={store}><ReactApp><About/></ReactApp></Provider>,
+        document.getElementById('app')
+    );
+});
+Page('/', ()=> {
+    render(
+        <Provider store={store}><ReactApp><About/></ReactApp></Provider>,
+        document.getElementById('app')
+    );
+});
+Page('/blog', ()=> {
+    console.log("this");
+    render(
+        <Provider store={store}><ReactApp><Blog/></ReactApp></Provider>,
+        document.getElementById('app')
+    );
+});
+Page('/blog/:blogTitle', ()=> {
+    render(
+        <Provider store={store}><ReactApp><BlogPost/></ReactApp></Provider>,
+        document.getElementById('app')
+    );
+
+    console.log("render!!!!!");
+    setTimeout(()=>{
+        $(".socialButtons").jsSocials({
+
+            shares: ["facebook", "twitter", "linkedin", "email"]
+        });
+    },1500)
+});
 Page();
