@@ -281,8 +281,8 @@ const pathsAndStores = {
     },
     '/blog': {
         init: function () {
-            this.store = createStore(AppReducer, {Tags,});
-            this.storeLogged = createStore(AppReducer, {Tags});
+            this.store = createStore(AppReducer, {Tags,LoggedIn:false});
+            this.storeLogged = createStore(AppReducer, {Tags,LoggedIn:true});
             this.content = ReactDOM.renderToString(
                 <Provider store={this.store}><ReactApp><Blog/></ReactApp></Provider>);
             this.contentLogged = ReactDOM.renderToString(

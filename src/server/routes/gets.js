@@ -37,7 +37,6 @@ router.get('/', (req, res) => {
 });
 router.get('/admin', (req, res) => {//TODO:HTTPS
     "use strict";
-
     console.log({
         reuqestType: "GET",
         path: req.path
