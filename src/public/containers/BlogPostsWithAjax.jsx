@@ -26,7 +26,6 @@ const mapStateToPropsBlogPosts = (state, ownProps)=> {
                 >= idx)
         })(),
         activeTags: state.ActiveTags,
-        loggedIn: true
     };
 };
 const mapDispatchToPropsBlogPosts = (dispatch)=> {

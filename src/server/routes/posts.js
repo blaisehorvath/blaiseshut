@@ -18,11 +18,12 @@ router.post("/getTags", (req, res)=> {
         }
     });
 });
-
+router.post("/loggedIn", (req,res)=>{
+  checkHash((req.cookies.name,req.cookies.hash)).then(result=>res.send(result))
+});
 router.post("/adminlogged", (req, res)=> {
     checkPassword(req.body.user, req.body.password).then((result)=> {
         if (result) {
-            console.log("goodpw")
             res.send({name: req.body.user, hash: admins[req.body.user].hash});
         }
         else {
@@ -37,19 +38,25 @@ router.post("/logout", (req, res)=> {
     res.redirect('/admin');
 });
 
-router.post("/newblogpost", (req, res)=> {//TODO: Auth...
-    console.log(req.body)
-    if (req.body.text != "") {
-        blogPostToDb({
-            text: req.body.text,
-            date: (new Date).toISOString(),
-            user: req.cookies.name,
-            tags: req.body.tags,
-            title: req.body.title
-        });
-    }
+router.post("/newblogpost", (req, res)=> {
+    checkHash((req.cookies.name,req.cookies.hash)).then(result=>{
+        if(result){
+            if (req.body.text != "") {
+                blogPostToDb({
+                    id: req.body.id||undefined,
+                    text: req.body.text,
+                    date: (new Date).toISOString(),
+                    user: req.cookies.name,
+                    tags: req.body.tags,
+                    title: req.body.title
+                });
+            }
+        }
+    });
+
     res.redirect('/admin')
 });
+
 
 router.post("/admin", (req, res)=> {
     checkPassword(req.body.user, req.body.password).then((result)=> {
@@ -63,6 +70,7 @@ router.post("/admin", (req, res)=> {
         }
     });
 });
+
 
 router.post("/getBlogPosts", (req, res)=> {//TODO:error handling
     queryBlogPosts(req.body.currentBlogPostIds ? req.body.currentBlogPostIds : [],

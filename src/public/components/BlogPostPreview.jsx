@@ -14,7 +14,7 @@ import page from 'page'
  * @returns {XML} The HTML markup of the component
  * @constructor
  */
-const BlogPostPreview = ({post, loggedIn, dispatch})=> {
+const BlogPostPreview = ({post, dispatch,loggedIn})=> {
     //parsing the date to human readable format
     let date = new Date(post.date).toDateString();
 
@@ -64,5 +64,9 @@ const goToBlogpost = (post, dispatch) => {
     dispatch(loadBlogPost(post));
     page("/blog/" + encodeURIComponent(post.title));
 };
-
-export default connect()(BlogPostPreview)
+const mapStateToProps = (state,ownProps)=>{
+    return {
+        loggedIn: state.LoggedIn
+    }
+};
+export default connect(mapStateToProps)(BlogPostPreview)
