@@ -1,16 +1,31 @@
 import React from "react";
 
 import {connect} from "react-redux"
+import { changeActiveMenuButton } from "../reducers/StoreAndReducers";
 import {loadBlogPost} from "../reducers/StoreAndReducers"
 
+/***
+ * This react component class is responsible for rendering a whole single blog post.
+ * @class
+ */
 class BlogPost extends React.Component {
+    /**
+     * @param props.props.blogPost {Object} An object that holds information about the props.blogPost.
+     * @param props.blogPost.date {string} The date when the props.blogPost was published.
+     * @param props.blogPost.title {string} The title of the props.blogPost.
+     * @param props.blogPost.tags
+     * @returns {XML} The HTML markup of the component
+     * @constructor
+     */
     constructor(props) {
         super(props);
         //converting the blogpost's date to a human readable format
         this.date = new Date(props.blogPost.date).toDateString();
     }
 
+    //TODO: 1) create social information based on store 2) add documentations
     componentDidMount() {
+        this.props.setActiveMenuButton();
         $(".socialButtons").jsSocials({
             shares: ["facebook", "twitter", "linkedin", "email"],
             url: "http://hackaday.com/",
@@ -37,7 +52,8 @@ class BlogPost extends React.Component {
                                 <div>Post by <a>{this.props.blogPost.user}</a></div>
                             </div>
                             <div className="col-sm-6 postDate">
-                                <div>{this.date}</div> <div className="">Share on <span className="socialButtons"/></div>
+                                <div>{this.date}</div>
+                                <div className="">Share on <span className="socialButtons"/></div>
                             </div>
                         </div>
                     </div>
@@ -49,7 +65,8 @@ class BlogPost extends React.Component {
                     <hr className="footerSep"/>
                     <div className="postFooter row">
                         <div className="col-sm-12">
-                            <span className="postTagsIcon glyphicon glyphicon-tags"/><span>{this.props.blogPost.tags}</span>
+                            <span
+                                className="postTagsIcon glyphicon glyphicon-tags"/><span>{this.props.blogPost.tags}</span>
                         </div>
                     </div>
                 </div>
@@ -57,14 +74,19 @@ class BlogPost extends React.Component {
         )
     }
 }
-
-const mapStateToProps = (state, ownProps) => {
+// ingjecting the active blogpost from the state to the props
+const mapStateToProps = (state) => {
     return {
         blogPost: state.BlogPost
     };
 };
-const mapDispatchToProps = (dispatch, ownProps) => {
+
+// setting the activeMenuButton to blog
+const mapDispatchToProps = (dispatch) => {
     return {
+        setActiveMenuButton: () => {
+           dispatch(changeActiveMenuButton("blog"))
+        }
     };
 };
 

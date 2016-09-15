@@ -19,6 +19,8 @@ class Blog extends React.Component {
         super(props);
     };
 
+    /* When the blog is mounted this sets the active navbar menu button to blog
+        and activates the bootstrap affix plugin for the tags    */
     componentDidMount() {
         this.props.dispatch(changeActiveMenuButton('blog'));
 
@@ -27,7 +29,7 @@ class Blog extends React.Component {
     };
 
 
-    render() {// TODO: Better styling
+    render() {
         return (
             <section id="blog">
                 <div className="container">
