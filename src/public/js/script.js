@@ -5,7 +5,7 @@
 import React from "react";
 import {render} from 'react-dom'
 import {Provider} from 'react-redux'
-import {applyMiddleware, createStore} from 'redux';
+import {applyMiddleware, createStore, compose} from 'redux';
 import createLogger from 'redux-logger';
 import AppReducer from "../reducers/StoreAndReducers";
 import Page from  "page";
@@ -17,7 +17,7 @@ import Blog from "../pages/Blog"
 import BlogPost from "../pages/BlogPost"
 
 const logger = createLogger();
-const store = createStore(AppReducer, window.__INITIAL_STATE__, applyMiddleware(logger)); //applyMiddleware(logger));
+const store = createStore(AppReducer, window.__INITIAL_STATE__, compose(/*applyMiddleware(logger),*/ window.devToolsExtension && window.devToolsExtension())); //applyMiddleware(logger));
 window.dispatcher = (action) => {
     store.dispatch(action);
 };

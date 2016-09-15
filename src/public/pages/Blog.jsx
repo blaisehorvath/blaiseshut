@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import TagListWithStore from "../containers/TagListWithStore"
 import BlogPostsWithAjax from "../containers/BlogPostsWithAjax"
 import { changeActiveMenuButton } from "../reducers/StoreAndReducers";
+import {changeActivePage} from "../actions/actions";
 //TODO:
 /*
 * 1: The blogPosts in the store should use immutable
@@ -22,6 +23,7 @@ class Blog extends React.Component {
     /* When the blog is mounted this sets the active navbar menu button to blog
         and activates the bootstrap affix plugin for the tags    */
     componentDidMount() {
+        this.props.dispatch(changeActivePage('blog'));
         this.props.dispatch(changeActiveMenuButton('blog'));
 
         //attaching the bootstrap affix listener with jQuery

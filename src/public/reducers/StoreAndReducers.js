@@ -74,12 +74,10 @@ const ActiveBlogPosts = (state = [], action)=> {
     }
 };
 
-const isMainPage = (state = false, action) => {
+const activePage = (state = null, action) => {
     switch (action.type) {
         case 'CHANGE_ACTIVE_PAGE':
-            return action.isMainPage ? true : false;
-        case 'SET_ACTIVE_MENU_BUTTON':
-            return action.location != 'blog';
+            return action.page;
         default:
             return state;
     }
@@ -89,6 +87,8 @@ const activeMenuButton = (state = "aboutUs", action) => {
     switch (action.type) {
         case 'SET_ACTIVE_MENU_BUTTON':
             return action.location;
+        case 'CHANGE_ACTIVE_PAGE':
+            return action.page == "blogPost" ? null : state;
         default:
             return state;
     }
@@ -103,12 +103,6 @@ const activeMember = (state = null, action) => {
     }
 };
 
-export const changeActivePage = (isMain) => {
-    return {
-        type: 'CHANGE_ACTIVE_PAGE',
-        isMainPage: isMain
-    }
-};
 export const changeActiveMenuButton = (buttonId) => {
     return {
         type: "SET_ACTIVE_MENU_BUTTON",
@@ -200,7 +194,7 @@ let AppReducer = combineReducers({
     BlogPost,
     ActiveTags,
     ActiveBlogPosts,
-    isMainPage,
+    activePage,
     LoggedIn,
     activeMenuButton,
     activeMember

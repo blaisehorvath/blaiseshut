@@ -8,3 +8,11 @@ const actions = {
 };
 
 export default actions;
+
+//TODO: doc
+export const changeActivePage = (page) => {
+    return {
+        type: 'CHANGE_ACTIVE_PAGE',
+        page: page
+    }
+};

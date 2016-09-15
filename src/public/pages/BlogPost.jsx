@@ -1,7 +1,7 @@
 import React from "react";
 
 import {connect} from "react-redux"
-import { changeActiveMenuButton } from "../reducers/StoreAndReducers";
+import {changeActivePage} from "../actions/actions"
 import {loadBlogPost} from "../reducers/StoreAndReducers"
 
 /***
@@ -25,7 +25,9 @@ class BlogPost extends React.Component {
 
     //TODO: 1) create social information based on store 2) add documentations
     componentDidMount() {
+        //setting the active page
         this.props.setActiveMenuButton();
+
         $(".socialButtons").jsSocials({
             shares: ["facebook", "twitter", "linkedin", "email"],
             url: "http://hackaday.com/",
@@ -39,7 +41,7 @@ class BlogPost extends React.Component {
 
     render() {
         return (
-            <section id="singleBlogPost">
+            <section id="blogPost">
                 <div className="container">
                     <div className="postHeader">
                         <div className="row">
@@ -85,7 +87,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         setActiveMenuButton: () => {
-           dispatch(changeActiveMenuButton("blog"))
+           dispatch(changeActivePage("blogPost"))
         }
     };
 };

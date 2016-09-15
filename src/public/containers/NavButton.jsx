@@ -2,6 +2,8 @@ import React from "react";
 import {connect} from "react-redux";
 import {changeActiveMenuButton} from "../reducers/StoreAndReducers";
 
+//TODO: change everyting that is related to the isMainPage reducer to activePage
+
 /**
  * A stateless functional React component that is responsible for displaying a single Navigation Button
  * @param props
@@ -11,7 +13,7 @@ import {changeActiveMenuButton} from "../reducers/StoreAndReducers";
 const NavButtonComponent = (props) => {
     return (
         <li className={props.active} >
-            <a href={props.isMainPage ? props.href[0] : props.href[1]} onClick={(event) => props.navButtonClick(event)}>{props.caption}</a>
+            <a href={props.href[props.activePage]} onClick={(event) => props.navButtonClick(event)}>{props.caption}</a>
         </li>
     );
 };
@@ -24,7 +26,7 @@ const NavButtonComponent = (props) => {
  */
 const mapStateToProps = (state, props) => {
     return {
-        isMainPage: state.isMainPage,
+        activePage: state.activePage,
         active: props.id === state.activeMenuButton ? "active" : ""
     }
 };

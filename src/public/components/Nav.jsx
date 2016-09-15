@@ -7,11 +7,11 @@ import NabButtonBar from "./NavButtonBar";
  * @type {Array}
  */
 const navButtons = [
-    {id: "aboutUs", caption: "About us", href: ["#aboutUs", "/#aboutUs"]},
-    {id: "projects", caption: "Projects", href: ["#projects", "/#projects"]},
-    {id: "team", caption: "Team", href: ["#team", "/#team"]},
-    {id: "contactUs", caption: "Contact us", href: ["#contactUs", "/#contactUs"]},
-    {id: "blog", caption: "Blog", href: ["/blog/#blog", "#blog"]}
+    {id: "aboutUs", caption: "About us", href: {about: "#aboutUs", blog: "/#aboutUs", blogPost: "/#aboutUs"}},
+    {id: "projects", caption: "Projects", href: {about: "#projects", blog: "/#projects", blogPost: "/#projects" }},
+    {id: "team", caption: "Team", href: { about: "#team", blog: "/#team", blogPost: "/#team" }},
+    {id: "contactUs", caption: "Contact us", href: { about: "#contactUs", blog: "/#contactUs" , blogPost: "/#contactUs"}},
+    {id: "blog", caption: "Blog", href: { about:  "/blog/#blog", blog: "#blog", blogPost: "/blog/#blogPost"  }}
 ];
 
 /**
@@ -28,9 +28,9 @@ const Nav = () => {
                             data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
                         <span className="sr-only">Toggle navigation</span>
                         <div className="menuSign">
-                            <span className="icon-bar"></span>
-                            <span className="icon-bar"></span>
-                            <span className="icon-bar"></span>
+                            <span className="icon-bar"/>
+                            <span className="icon-bar"/>
+                            <span className="icon-bar"/>
                         </div>
                     </button>
                     <a className="navbar-brand" id="brandText" href="/">S.W.A.</a>
