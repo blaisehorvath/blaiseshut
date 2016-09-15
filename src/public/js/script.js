@@ -43,7 +43,6 @@ Page('/', ()=> {
     );
 });
 Page('/blog', ()=> {
-    console.log("this");
     render(
         <Provider store={store}><ReactApp><Blog/></ReactApp></Provider>,
         document.getElementById('app')
@@ -54,13 +53,5 @@ Page('/blog/:blogTitle', ()=> {
         <Provider store={store}><ReactApp><BlogPost/></ReactApp></Provider>,
         document.getElementById('app')
     );
-
-    console.log("render!!!!!");
-    setTimeout(()=>{
-        $(".socialButtons").jsSocials({
-
-            shares: ["facebook", "twitter", "linkedin", "email"]
-        });
-    },1500)
 });
 Page();

@@ -592,6 +592,14 @@ section#singleBlogPost {
         text-align: right;
         font-size: 1.15em;
       }
+
+      /* Social buttons */
+      .socialButtonBar {
+        .jssocials-shares {
+          display: inline-flex;
+          vertical-align: middle;
+        }
+      }
     }
 
     hr.headerSep {
