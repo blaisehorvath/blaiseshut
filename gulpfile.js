@@ -19,7 +19,8 @@ var sources = {
     publicScripts: "src/public/js/!(*_tmp_*|*_jb_old_*)",
     reducers: "src/public/reducers/!(*_tmp_*|*_jb_old_*)",
     containers: "src/public/containers/!(*_tmp_*|*_jb_old_*)",
-    pages: "src/public/pages/!(*_tmp_*|*_jb_old_*)" //matches anything but temporary files
+    pages: "src/public/pages/!(*_tmp_*|*_jb_old_*)", //matches anything but temporary files
+    actions: "src/public/actions/!(*_tmp_*|*_jb_old_*)"
 };
 
 //copying css files
@@ -73,7 +74,14 @@ gulp.task('copy_public_js', function () {//TODO: Why these files are even copied
         .pipe(gulp.dest('build/public/js/'));
 });
 
-gulp.task('browserify', ['copy_public_js', 'copy_components', 'copy_containers', 'copy_reducers', "copy_pages"], function () {
+gulp.task('copy_actions', ()=>{
+    return gulp.src(sources.actions)
+        .pipe(plumber())
+        .pipe(babel())
+        .pipe(gulp.dest('build/public/actions'))
+});
+
+gulp.task('browserify', ['copy_public_js', 'copy_components', 'copy_actions','copy_containers', 'copy_reducers', "copy_pages"], function () {
     return gulp.src('build/public/js/{script.js,scriptAdmin.js,frontEnd.js}')
         .pipe(plumber())
         .pipe(browserify({
@@ -83,7 +91,7 @@ gulp.task('browserify', ['copy_public_js', 'copy_components', 'copy_containers',
         .pipe(livereload());
 });
 
-gulp.task('browserify-live', ['copy_public_js', 'copy_components', 'copy_containers', 'copy_reducers', "copy_pages"], function () {
+gulp.task('browserify-live', ['copy_public_js', 'copy_components', 'copy_actions','copy_containers', 'copy_reducers', "copy_pages"], function () {
     return gulp.src('build/public/js/{script.js,scriptAdmin.js,frontEnd.js}')
         .pipe(plumber())
         .pipe(browserify({
