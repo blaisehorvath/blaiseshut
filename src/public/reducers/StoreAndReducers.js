@@ -74,6 +74,25 @@ const ActiveBlogPosts = (state = [], action)=> {
     }
 };
 
+/**
+ * This reducer stores the current display width in the store.
+ * It's first called with the width from the front-end script
+ * when the DOM is ready and sets the display to the measured width.
+ * @param state {string} ["sm"] The Bootstrap display width type name and an additional <i>mobile</i> or <i>wide</i>.
+ * @param action {Object}
+ * @param action.type {string} ["SET_DISPLAY_WIDTH"]
+ * @param action.displayWidth {string} The Bootstrap display width type name and an additional <i>mobile</i> or <i>wide</i>.
+ * @returns {string} The state of the displayWidth.
+ */
+const displayWidth = ( state = "sm", action) => {
+    switch (action.type) {
+        case 'SET_DISPLAY_WIDTH':
+            return action.displayWidth;
+        default:
+            return state;
+    }
+};
+
 const activePage = (state = null, action) => {
     switch (action.type) {
         case 'CHANGE_ACTIVE_PAGE':
@@ -197,6 +216,7 @@ let AppReducer = combineReducers({
     activePage,
     LoggedIn,
     activeMenuButton,
-    activeMember
+    activeMember,
+    displayWidth
 });
 export default AppReducer;
