@@ -2,14 +2,21 @@ console.log("Frontend entry script is running");
 
 const $window = $(window);
 
-const inRange = (min, max, val) =>  val > min && val < max;
+const inRange = (min, max, val) => val > min && val < max;
+
+const dispatchDisplaySize = (breakPoint) => {
+    window.dispatch({
+        type : "SET_DISPLAY_WIDTH",
+        breakPoint: breakPoint
+    })
+};
 
 const bsRanges = {
-    mobile : inRange.bind({}, 0, 767),
-    sm : inRange.bind({}, 768, 991),
-    md : inRange.bind({}, 992, 1199),
-    lg : inRange.bind({}, 1200, 1499),
-    wide : val => val >= 1500
+    mobile: inRange.bind({}, 0, 767),
+    sm: inRange.bind({}, 768, 991),
+    md: inRange.bind({}, 992, 1199),
+    lg: inRange.bind({}, 1200, 1499),
+    wide: val => val >= 1500
 };
 
 const debounce = (func, wait, immediate) => {
@@ -27,15 +34,16 @@ const debounce = (func, wait, immediate) => {
     };
 };
 
-const dispatchBootstrapBreakpoint = debounce(()=>{
+const dispatchBootstrapBreakpoint = () => {
     let displayWidth = $window.width();
-    if ( bsRanges.mobile(displayWidth)) return console.log("mobile");
-    if ( bsRanges.sm(displayWidth)) return console.log("sm");
-    if ( bsRanges.md(displayWidth)) return console.log("md");
-    if ( bsRanges.lg(displayWidth)) return console.log("lg");
-    if ( bsRanges.wide(displayWidth)) return console.log("wide");
-    window.dispatch({type: "SET_BOOTSTRAP_BREAKPOINT"})
-},250);
+    if (bsRanges.mobile(displayWidth)) return dispatchDisplaySize("mobile");
+    if (bsRanges.sm(displayWidth)) return dispatchDisplaySize("sm");
+    if (bsRanges.md(displayWidth)) return dispatchDisplaySize("md");
+    if (bsRanges.lg(displayWidth)) return dispatchDisplaySize("lg");
+    if (bsRanges.wide(displayWidth)) return dispatchDisplaySize("wide");
+};
+
+const dispatchBootstrapBreakpointDebounce = debounce(dispatchBootstrapBreakpoint, 250);
 
 /*This self invoking function runs the purely front-end scripts*/
 (function ($) {
@@ -53,7 +61,10 @@ const dispatchBootstrapBreakpoint = debounce(()=>{
     // locking the tags to 100px from the top
     // $('.blogTags').affix({offset: {top:50}});
 
-    //getting Bootstrap breakpoints
-    $window.resize(dispatchBootstrapBreakpoint);
+    // getting Bootstrap breakpoints
+    $window.resize(dispatchBootstrapBreakpointDebounce);
+
+    // set display width in the store when the DOM is ready
+    $window.ready(dispatchBootstrapBreakpoint);
 
 })(jQuery); // End of use strict
