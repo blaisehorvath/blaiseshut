@@ -18,7 +18,7 @@ import BlogPost from "../pages/BlogPost"
 
 const logger = createLogger();
 const store = createStore(AppReducer, window.__INITIAL_STATE__, compose(/*applyMiddleware(logger),*/ window.devToolsExtension && window.devToolsExtension())); //applyMiddleware(logger));
-window.dispatcher = (action) => {
+window.dispatch = (action) => {
     store.dispatch(action);
 };
 window.getState = () => store.getState();
