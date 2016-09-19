@@ -6,8 +6,6 @@ export default function renderHTML(content, initialState) {
                 <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
                 <meta name="viewport" content="width=device-width, initial-scale=1"/>
                 <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-                <script src="https://fb.me/react-15.2.1.min.js"></script>
-                <script src="https://fb.me/react-dom-15.2.1.min.js"></script>
                 <link href="https://fonts.googleapis.com/css?family=Slabo+27px" rel="stylesheet" type="text/css"/>
                 <link href="https://fonts.googleapis.com/css?family=Fira+Sans:400,300,500" rel="stylesheet" type="text/css"/>
                 <title>Blaise's Hut</title>
@@ -28,29 +26,25 @@ export default function renderHTML(content, initialState) {
                 <![endif]-->
             </head>
             <body>
-            <div id="app">${content}</div>
-            <script>
-                window.__INITIAL_STATE__ = ${JSON.stringify(initialState)}
-            </script>
-            <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-            <!-- jQueryUI -->
-            <!--<script src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/jquery-ui.min.js'></script>-->
-            <!-- jQuery Easing-->
-            <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
-            <!-- Include all compiled plugins (below), or include individual files as needed -->
-            <!-- Latest compiled and minified JavaScript -->
-            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-            <!-- jsSocials -->
-            <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery.jssocials/1.3.1/jssocials.min.js"></script>
-            <!-- Own Css -->
-            <script src="/private/script.js"></script>
-            <script src="/js/frontEnd.js"></script>
+                <div id="app">${content}</div>
+                <script>
+                    window.__INITIAL_STATE__ = ${JSON.stringify(initialState)}
+                </script>
+                <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+                <!-- jQueryUI -->
+                <!--<script src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/jquery-ui.min.js'></script>-->
+                <!-- jQuery Easing-->
+                <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+                <!-- Include all compiled plugins (below), or include individual files as needed -->
+                <!-- Latest compiled and minified JavaScript -->
+                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+                <!-- jsSocials -->
+                <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery.jssocials/1.3.1/jssocials.min.js"></script>
+                <!-- Own Javascript -->
+                <script src="/private/script.js"></script>
+                <script src="/js/frontEnd.js"></script>
             </body>
             </html>`
     )
 }
-/*
- <div id="app"> ${content} </div>
- <script src="js/script.js"></script>
- */
