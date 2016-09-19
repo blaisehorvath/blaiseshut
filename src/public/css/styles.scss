@@ -4,6 +4,16 @@
 @import "variables";
 
 /*-------------------------------------
+                Classes
+--------------------------------------*/
+// when applied to an img tag gets horizontally centered in the available space
+.centeredImg {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
+/*-------------------------------------
       The body in every page
 --------------------------------------*/
 
@@ -226,7 +236,6 @@ section#projects {
       }
     }
   }
-
 }
 
 //Project Modals:
@@ -292,29 +301,12 @@ section#team {
 
     div.memberCol {
       a {
+        cursor: pointer;
         text-decoration: none;
         color: black;
 
         margin-right: auto;
         margin-left: auto;
-
-        // images are positiond to the middle of their containers
-        img.teamPi {
-          margin-right: auto;
-          margin-left: auto;
-        }
-
-        // images for mobile and small screens
-        .teamPicture {
-          margin-right: auto;
-          margin-left: auto;
-          content: url("https://placehold.it/200x200");
-        }
-        @media screen and (min-width: $media-bootstrap-md-min) {
-          .teamPicture {
-            content: url("https://placehold.it/325x325");
-          }
-        }
 
         div.caption {
           .caption-content {
