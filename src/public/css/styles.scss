@@ -214,30 +214,6 @@ section#projects {
             margin-left: auto;
           }
 
-          // images for mobile and small screens
-          #embeddedListImg {
-            content: url("https://placehold.it/200x200");
-          }
-          #iotListImg {
-            content: url("https://placehold.it/200x200");
-          }
-          #webAppListImg {
-            content: url("https://placehold.it/200x200");
-          }
-
-          // different image sizes for different media
-          @media screen and (min-width: $media-bootstrap-md-min) {
-            #embeddedListImg {
-              content: url("https://placehold.it/325x325");
-            }
-            #iotListImg {
-              content: url("https://placehold.it/325x325");
-            }
-            #webAppListImg {
-              content: url("https://placehold.it/325x325");
-            }
-          }
-
           div.caption {
             .caption-content {
               padding-top: 20px;
