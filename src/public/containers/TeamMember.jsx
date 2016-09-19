@@ -1,6 +1,7 @@
 import React from "react";
 import {connect} from "react-redux";
 import {setActiveMember} from "../reducers/StoreAndReducers";
+import BiStateImg from "../containers/BiStateImg";
 
 /**
  * This stateless functional React component is responsible for the team member items.
@@ -16,6 +17,7 @@ const TeamMember = (props) => {
         <div className="col-sm-4 memberCol">
             <a onClick={() => teamMemberOnClick(props)}>
                 <div className="memberThumbnail">
+                    <BiStateImg smallImgSrc="https://placehold.it/200x200" bigImgSrc="https://placehold.it/325x325"/>
                     <img className="img-responsive teamPicture" alt=""/>
                     <div className="caption">
                         <div className="caption-content">

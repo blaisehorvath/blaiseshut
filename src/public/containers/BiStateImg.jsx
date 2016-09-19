@@ -19,7 +19,7 @@ const getSrcImg = (displayWidth, small, big) => ([ "mobile", "sm" ].indexOf(disp
  */
 const BiStateImg = ({displayWidth, smallImgSrc, bigImgSrc}) => {
     return (
-        <img className="img-responsive projectImage" src={getSrcImg(displayWidth, smallImgSrc, bigImgSrc)}/>
+        <img className="img-responsive centeredImg" src={getSrcImg(displayWidth, smallImgSrc, bigImgSrc)}/>
     );
 };
 
