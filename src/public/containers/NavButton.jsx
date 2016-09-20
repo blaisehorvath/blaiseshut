@@ -31,6 +31,7 @@ const mapStateToProps = (state, props) => {
     }
 };
 
+//TODO: the mapDispatchToProps function can be removed because it no longer sends data to the store, the navButtonClick function can be moved to props
 /**
  * This function connects the returned function to the store so it can dispatch actions.
  * @param dispatch
@@ -49,7 +50,7 @@ const mapDispatchToProps = (dispatch, props) => {
             let $anchor = $(`[href='#${props.id}']`);
             $('html, body').stop().animate({
                 scrollTop: $($anchor.attr('href')).offset().top - 50
-            }, 1250, 'easeInOutExpo', ()=>{dispatch(changeActiveMenuButton(props.id));});
+            }, 1250, 'easeInOutExpo');
             event.preventDefault();
         }
     }
