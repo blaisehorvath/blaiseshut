@@ -12,8 +12,8 @@ import {changeActiveMenuButton} from "../reducers/StoreAndReducers";
  */
 const NavButtonComponent = (props) => {
     return (
-        <li className={props.active} >
-            <a href={props.href[props.activePage]} onClick={(event) => props.navButtonClick(event)}>{props.caption}</a>
+        <li className={props.active}>
+            <a href={props.href[props.activePage]} onClick={(event) => navButtonClick(event, props)}>{props.caption}</a>
         </li>
     );
 };
@@ -22,7 +22,7 @@ const NavButtonComponent = (props) => {
  * A function that is called on every store update. If the either isMainPage or the activeMenuButton state changes in the application state, the button re-renders.
  * @param state {Object} The state of the application.
  * @param props {Object} The own props of the component.
- * @returns {{isMainPage: (*|isMainPage), active: string}}
+ * @returns {{activePage: string, active: string}}
  */
 const mapStateToProps = (state, props) => {
     return {
@@ -31,34 +31,24 @@ const mapStateToProps = (state, props) => {
     }
 };
 
-//TODO: the mapDispatchToProps function can be removed because it no longer sends data to the store, the navButtonClick function can be moved to props
 /**
- * This function connects the returned function to the store so it can dispatch actions.
- * @param dispatch
- * @param props
- * @returns {{navButtonClick: (function(*))}}
+ * Every Navigation button calls it's own navButtonClick function. The function starts a jQuery animation
+ * to the DOM element corresponding to the buttons target id.
+ * @param event
+ * @param props {Object} The props of the mother React component.
  */
-const mapDispatchToProps = (dispatch, props) => {
-    return {
-        /**
-         * Every Navigation button calls it's own navButtonClick function. The function starts a jQuery animation
-         * to the DOM element corresponding to the buttons target id. When the animation is finished the active the function
-         * sets the button as the active navigation button.
-         * @param event
-         */
-        navButtonClick: (event) => {
-            let $anchor = $(`[href='#${props.id}']`);
-            $('html, body').stop().animate({
-                scrollTop: $($anchor.attr('href')).offset().top - 50
-            }, 1250, 'easeInOutExpo');
-            event.preventDefault();
-        }
-    }
+const navButtonClick = (event, props) => {
+    let $anchor = $(`[href='#${props.id}']`);
+    $('html, body').stop().animate({
+        scrollTop: $($anchor.attr('href')).offset().top - 50
+    }, 1250, 'easeInOutExpo');
+    event.preventDefault();
 };
+
 
 /**
  * A React container component that displays a single Navigation Button
  * @const
  */
-const NavButton = connect(mapStateToProps, mapDispatchToProps)(NavButtonComponent);
+const NavButton = connect(mapStateToProps)(NavButtonComponent);
 export default NavButton;
