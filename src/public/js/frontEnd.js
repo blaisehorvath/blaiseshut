@@ -2,6 +2,9 @@ console.log("Frontend entry script is running");
 
 // Constants
 const $window = $(window);
+const $document = $(document);
+const scrollSpyLocations = ['aboutUs', 'projects', 'team', 'contactUs'];
+const navHeight = 150; //the height of the navigation bar
 
 /**
  * @function A function that returns true if the given value is in the range of the given min and max values.
@@ -81,13 +84,74 @@ const dispatchBootstrapBreakpoint = () => {
  */
 const dispatchBootstrapBreakpointDebounce = debounce(dispatchBootstrapBreakpoint, 250);
 
+
+const scrollSpy = () => {
+    if (window.getState().activePage === "about") {
+
+        let $places = scrollSpyLocations.map(
+            id => ({
+                id: id,
+                $id: $(`#${id}`)
+            }))
+            .map($node => ({
+                id: $node.id,
+                top: $node.$id.offset().top,
+                bottom: $node.$id.offset().top + $node.$id.outerHeight(true) - navHeight
+            }));
+
+        let currentScrollPos = $window.scrollTop();
+        let docHeight = $document.height();
+        let viewHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+
+        console.log({
+            current: currentScrollPos,
+            windowHeight: viewHeight,
+            documentHeight: docHeight,
+            topRange: $places[0].top + "-" + $places[0].bottom,
+            projectsRange: $places[1].top + "-" + $places[1].bottom,
+            teamRange: $places[2].top + "-" + $places[2].bottom,
+            contactUsRange: $places[3].top + "-" + $places[3].bottom
+        });
+
+        // if the current position is the bottom of the window highlight the first navbar item
+        if (currentScrollPos >= 0 && currentScrollPos <= navHeight) {
+            window.dispatch({
+                type: "SET_ACTIVE_MENU_BUTTON",
+                location: scrollSpyLocations[0]
+            });
+            console.log("Scroll is at TOP");
+        }
+        // if the current position is the bottom of the window highlight the last navbar item
+        else if (currentScrollPos + viewHeight >= docHeight) {
+            window.dispatch({
+                type: "SET_ACTIVE_MENU_BUTTON",
+                location: scrollSpyLocations[scrollSpyLocations.length - 1]
+            });
+            console.log("Scroll is at bottom!");
+        }
+        // if it's not the top or the bottom search linearly from the top which navbar menu should be active
+        else {
+            for (let $item of $places) {
+                if (currentScrollPos < $item.bottom && currentScrollPos + navHeight > $item.top) {
+                    if ($item.id == window.getState().activeMenuButton) break;
+                    if (window.dispatch) {
+                        window.dispatch({
+                            type: "SET_ACTIVE_MENU_BUTTON",
+                            location: $item.id
+                        })
+                    }
+                    console.log(`Scroll is at ${$item.id}`);
+                    break
+                }
+            }
+        }
+    }
+};
+
+const scrollSpyDebounce = debounce(scrollSpy, 10);
+
 /*This self invoking function runs the purely front-end scripts*/
 (function ($) {
-
-    const navHeight = 150; //the height of the navigation bar
-
-    // This starts the scrollspy
-    $('body').scrollspy({target: ".navbar", offset: navHeight});
 
     // This handles the mobile menu
     $('.navbar-collapse ul li a:not(.dropdown-toggle)').click(function () {
@@ -102,5 +166,9 @@ const dispatchBootstrapBreakpointDebounce = debounce(dispatchBootstrapBreakpoint
 
     // set display width in the store when the DOM is ready
     $window.ready(dispatchBootstrapBreakpoint);
+
+    $window.scroll(()=> {
+       scrollSpyDebounce();
+    })
 
 })(jQuery); // End of use strict
