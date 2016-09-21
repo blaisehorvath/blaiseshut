@@ -15,6 +15,7 @@ var gulp = require('gulp'),
 var sources = {
     server: "src/server/**/!(*_tmp_*|*.key|*.pem)",
     css: "src/public/css/styles.scss",
+    cssFolder: "src/public/css/*.scss",
     components: "src/public/components/!(*_tmp_*|*_jb_old_*)",
     publicScripts: "src/public/js/!(*_tmp_*|*_jb_old_*)",
     reducers: "src/public/reducers/!(*_tmp_*|*_jb_old_*)",
@@ -29,6 +30,7 @@ gulp.task('compile_css', function () {
         .pipe(sass.sync().on('error', sass.logError))
         .pipe(plumber())
         .pipe(gulp.dest('build/public/css/'))
+        .pipe(livereload())
 });
 
 //copying reducer files
@@ -163,4 +165,5 @@ gulp.task('default', ['server:start'], function () {
     gulp.watch([sources.components], ['browserify-live']);
     gulp.watch([sources.pages],['browserify-live']);
     gulp.watch([sources.publicScripts], ['browserify-live']);
+    gulp.watch([sources.cssFolder], ['compile_css']);
 });
