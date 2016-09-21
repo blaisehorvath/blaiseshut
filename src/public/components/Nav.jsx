@@ -1,5 +1,5 @@
 import React from "react";
-import NabButtonBar from "./NavButtonBar";
+import NavButtonBar from "./NavButtonBar";
 
 /**
  * A constant that stores the possible values for different states for the navigation bar
@@ -38,21 +38,8 @@ const Nav = () => {
 
                 <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 
-                    <NabButtonBar buttons={navButtons}/>
+                    <NavButtonBar buttons={navButtons}/>
 
-                    <div className="pull-right">
-                        <form className="navbar-form" role="search">
-                            <div className="input-group">
-                                <input className="form-control" placeholder="Search" type="text"/>
-                                <div className="input-group-btn">
-                                    <button className="btn btn-default" type="submit">
-                                        <span className="glyphicon glyphicon-search"/>
-                                    </button>
-                                </div>
-                            </div>
-
-                        </form>
-                    </div>
                 </div>
 
 
