@@ -379,16 +379,27 @@ section#blog {
       }
 
       .blogpost {
-        @include niceBoxShadow(0, 0, 10px, rgba(0, 0, 0, 0.3));
+        @include niceBoxShadow(0, 0, 5px, rgba(0, 0, 0, 0.3));
+        border-radius: $panel-border-radius;
 
-        .panel-heading {
+        .panel-heading.previewHeading {
+          border-top-left-radius: $panel-border-radius;
+          border-top-right-radius: $panel-border-radius;
+
+          $panel-border-radius: 8px;
 
           background: white;
           color: $col_text_black;
 
+          //removing padding from elements in the previewHeading
+          .col-xs-12, .postDate, .postAuthor {
+            padding-left: 0;
+            padding-right:0;
+          }
+
           .postTitle {
             display: inline-block;
-            padding: 15px 0px;
+            padding: 15px 0;
             text-decoration: none;
             color: $col_text_black;
             font-size: 2em;
@@ -436,7 +447,9 @@ section#blog {
           }
         }
 
-        .panel-footer {
+        .panel-footer.previewFooter {
+          border-bottom-left-radius: $panel-border-radius;
+          border-bottom-right-radius: $panel-border-radius;
           background: white;
           .glyphicon-tags {
             padding-right: 10px;
@@ -451,12 +464,17 @@ section#blog {
         width: 100%;
         margin-bottom: 15px;
       }
-      .blogTags {
+      div.blogTags {
         padding: 7px;
         border-style: solid;
         border-width: 1px;
         border-radius: 4%;
         border-color: $col_nice_black;
+        @include niceBoxShadow(0,0, 3px, rgba(0, 0, 0, 0.3));
+
+        h4 {
+          text-align: center;
+        }
 
         // when scrolling the Bootstrap affix adds the class affix to div.blogTags
         &.affix {
@@ -489,20 +507,12 @@ section#blog {
           background: white;
 
           &:hover {
-            @include niceTextStroke(0px, 1px);
-            background: $col_nav_hover;
             color: white;
-            padding: 0px 5px;
-            font-weight: 500;
-            -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
-            -moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+            background: $col_nav_hover;
           }
           &.active {
-            @include niceTextStroke(0px, 1px);
             background: $col_nav_active;
             color: white;
-            font-weight: 500;
 
             &:hover {
               background: $col_nav_hover;
@@ -529,7 +539,7 @@ section#blogPost {
     /* The border of the whole blogPost */
     //background: rgba($col_nav_background, 0.1);
     @include niceBoxShadow(0, 0, 10px, rgba(0, 0, 0, 0.3));
-    border-radius: 5px;
+    border-radius: $panel-border-radius;
     padding: 0;
 
     .postHeader {

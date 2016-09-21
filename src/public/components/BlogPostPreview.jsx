@@ -20,7 +20,7 @@ const BlogPostPreview = ({post, dispatch,loggedIn})=> {
 
     return (
         <div className="blogPost panel panel-default">
-            <div className="panel-heading">
+            <div className="panel-heading previewHeading">
                 <div className="row">
                     <div className="col-xs-12">
                         <a className="postTitle" onClick={goToBlogpost.bind({}, post, dispatch)}>{post.title}</a>
@@ -44,7 +44,7 @@ const BlogPostPreview = ({post, dispatch,loggedIn})=> {
                 }}> Edit!</a> : ""}
 
             </div>
-            <div className="panel-footer">
+            <div className="panel-footer previewFooter">
                 <span className="glyphicon glyphicon-tags"/>
                 {post.tags.toString()}
 

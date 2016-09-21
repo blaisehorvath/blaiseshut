@@ -15,6 +15,7 @@ const TagList = ({Tags, addTagToField})=> {
     return (
         <div>
             {Tags.map((tag)=> {
+                console.log(tag);
                 return <SingleTag key={tag.id} tag={tag} addTagToField={addTagToField}/>
             })}
         </div>
