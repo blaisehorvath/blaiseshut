@@ -10,7 +10,6 @@ import {checkHash} from '../security'
 import express from 'express'
 
 import {pathsAndStores} from '../db'
-import pathsAndStoresFile from "../pathsAndStores"
 
 let router = express.Router();
 router.get('/', (req, res) => {
