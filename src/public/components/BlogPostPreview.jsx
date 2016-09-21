@@ -62,7 +62,7 @@ const BlogPostPreview = ({post, dispatch,loggedIn})=> {
  */
 const goToBlogpost = (post, dispatch) => {
     dispatch(loadBlogPost(post));
-    page("/blog/" + encodeURIComponent(post.title));
+    page("/blog/" + post.title.replace(new RegExp(' ','g'),'-'));
 };
 const mapStateToProps = (state,ownProps)=>{
     return {
