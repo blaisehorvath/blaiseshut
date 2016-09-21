@@ -18,12 +18,10 @@ export default class AdminLoggedIn extends React.Component {
     render() {//TODO:Use react components for everything!
         return (//TODO:Redo this, communicate in store...
             <div className="row">
-                <br/><br/><br/><br/><br/><br/>
                 <div className="col-xs-8">
                     <PostEditor ref={(ref)=>this.postEditor = ref}/>
                 </div>
                 <div className="col-xs-4">
-                    <br/><br/><br/><br/><br/><br/>
                     <TagListWithStore addTagToField={this.addTagToField}/>
                 </div>
             </div>

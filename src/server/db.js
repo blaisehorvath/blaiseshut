@@ -70,7 +70,6 @@ let fillQueryCache = ()=> {
         })
     })
 };
-//TODO:GET TAGS BEFORE SENDIND THE STORE TO ANYONE!!
 const getBlogPostByTitle = (title)=>queryCache.Items.filter(post=>post.title === title)[0];
 const queryBlogPosts = (currentBlogPostIds, activeTags, numberOfPostsToReturn)=> {//
     return new Promise((resolve, reject)=> {
@@ -215,70 +214,6 @@ const pathsAndStores = {
             return this;
         }
     },
-    '/aboutUs': {
-        init: function () {
-            this.store = createStore(AppReducer, {Tags, LoggedIn: false, activeMenuButton: "aboutUs"});
-            this.storeLogged = createStore(AppReducer, {Tags, LoggedIn: true, activeMenuButton: "aboutUs"});
-            this.content = ReactDOM.renderToString(
-                <Provider store={this.store}><ReactApp><About/></ReactApp></Provider>);
-            this.contentLogged = ReactDOM.renderToString(
-                <Provider store={this.storeLogged}><ReactApp><Blog/></ReactApp></Provider>);
-            this.response = renderHTML(this.content, this.store.getState());
-            this.responseLogged = renderHTML(this.contentLogged, this.storeLogged.getState());
-            this.getResponse = function (loggedIn) {
-                return loggedIn ? this.responseLogged : this.response;
-            };
-            return this;
-        }
-    },
-    '/projects': {
-        init: function () {
-            this.store = createStore(AppReducer, {Tags, LoggedIn: false, activeMenuButton: "projects"});
-            this.storeLogged = createStore(AppReducer, {Tags, LoggedIn: true, activeMenuButton: "projects"});
-            this.content = ReactDOM.renderToString(
-                <Provider store={this.store}><ReactApp><About/></ReactApp></Provider>);
-            this.contentLogged = ReactDOM.renderToString(
-                <Provider store={this.storeLogged}><ReactApp><Blog/></ReactApp></Provider>);
-            this.response = renderHTML(this.content, this.store.getState());
-            this.responseLogged = renderHTML(this.contentLogged, this.storeLogged.getState());
-            this.getResponse = function (loggedIn) {
-                return loggedIn ? this.responseLogged : this.response;
-            };
-            return this;
-        }
-    },
-    '/team': {
-        init: function () {
-            this.store = createStore(AppReducer, {Tags, LoggedIn: false, activeMenuButton: "team"});
-            this.storeLogged = createStore(AppReducer, {Tags, LoggedIn: true, activeMenuButton: "team"});
-            this.content = ReactDOM.renderToString(
-                <Provider store={this.store}><ReactApp><About/></ReactApp></Provider>);
-            this.contentLogged = ReactDOM.renderToString(
-                <Provider store={this.storeLogged}><ReactApp><Blog/></ReactApp></Provider>);
-            this.response = renderHTML(this.content, this.store.getState());
-            this.responseLogged = renderHTML(this.contentLogged, this.storeLogged.getState());
-            this.getResponse = function (loggedIn) {
-                return loggedIn ? this.responseLogged : this.response;
-            };
-            return this;
-        }
-    },
-    '/contactUs': {
-        init: function () {
-            this.store = createStore(AppReducer, {Tags, LoggedIn: false, activeMenuButton: "contactUs"});
-            this.storeLogged = createStore(AppReducer, {Tags, LoggedIn: true, activeMenuButton: "contactUs"});
-            this.content = ReactDOM.renderToString(
-                <Provider store={this.store}><ReactApp><About/></ReactApp></Provider>);
-            this.contentLogged = ReactDOM.renderToString(
-                <Provider store={this.storeLogged}><ReactApp><Blog/></ReactApp></Provider>);
-            this.response = renderHTML(this.content, this.store.getState());
-            this.responseLogged = renderHTML(this.contentLogged, this.storeLogged.getState());
-            this.getResponse = function (loggedIn) {
-                return loggedIn ? this.responseLogged : this.response;
-            };
-            return this;
-        }
-    },
     '/blog': {
         init: function () {
             this.store = createStore(AppReducer, {Tags,LoggedIn:false});
@@ -296,14 +231,13 @@ const pathsAndStores = {
         },
     },
     '/blog/:blogTitle': {
-        //TODO: encodeURIComponent isn't needed, the request contains the encoded blogTitle already.
         init: function () {
             this.stores = {
                 initStore: function () {
                     console.log("Init stores");
                     //TODO: WOW, this is ugly AF
                     return _.reduce((acc, curr)=> {
-                        acc[encodeURIComponent(curr.title)] = createStore(AppReducer, {
+                        acc[curr.title] = createStore(AppReducer, {
                             Tags,
                             BlogPost: curr,
                             LoggedIn: false
@@ -316,7 +250,7 @@ const pathsAndStores = {
                 initStoresLogged: function () {
                     console.log("Init storesLogged")
                     return _.reduce((acc, curr)=> {
-                        acc[encodeURIComponent(curr.title)] = createStore(AppReducer, {
+                        acc[curr.title] = createStore(AppReducer, {
                             Tags,
                             BlogPost: curr,
                             LoggedIn: true
@@ -329,9 +263,9 @@ const pathsAndStores = {
                 initContent: function (stores) {
                     console.log("Init contents")
                     return _.reduce((acc, curr)=> {
-                        acc[encodeURIComponent(curr.title)] = ReactDOM.renderToString(
+                        acc[curr.title] = ReactDOM.renderToString(
                             <Provider
-                                store={stores[encodeURIComponent(curr.title)]}><ReactApp><BlogPost/></ReactApp></Provider>
+                                store={stores[curr.title]}><ReactApp><BlogPost/></ReactApp></Provider>
                         );
                         return acc
                     }, this, queryCache.Items)
@@ -341,9 +275,9 @@ const pathsAndStores = {
                 initContentsLogged: function (storesLogged) {
                     console.log("Init contentsLogged")
                     return _.reduce((acc, curr)=> {
-                        acc[encodeURIComponent(curr.title)] = ReactDOM.renderToString(
+                        acc[curr.title] = ReactDOM.renderToString(
                             <Provider
-                                store={storesLogged[encodeURIComponent(curr.title)]}><ReactApp><BlogPost/></ReactApp></Provider>
+                                store={storesLogged[curr.title]}><ReactApp><BlogPost/></ReactApp></Provider>
                         );
                         return acc
                     }, this, queryCache.Items)
@@ -353,8 +287,8 @@ const pathsAndStores = {
                 initResponse: function (stores, contents) {
                     console.log("Init responeses")
                     return _.reduce((acc, curr)=> {
-                        acc[encodeURIComponent(curr.title)] =
-                            renderHTML(contents[encodeURIComponent(curr.title)], stores[encodeURIComponent(curr.title)].getState());
+                        acc[curr.title] =
+                            renderHTML(contents[curr.title], stores[curr.title].getState());
                         return acc
                     }, this, queryCache.Items)
                 }
@@ -363,8 +297,8 @@ const pathsAndStores = {
                 initResponseLogged: function (storesLogged, contentsLogged) {
                     console.log("Init responsesLogged")
                     return _.reduce((acc, curr)=> {
-                        acc[encodeURIComponent(curr.title)] =
-                            renderHTML(contentsLogged[encodeURIComponent(curr.title)], storesLogged[encodeURIComponent(curr.title)].getState());
+                        acc[curr.title] =
+                            renderHTML(contentsLogged[curr.title], storesLogged[curr.title].getState());
                         return acc
                     }, this, queryCache.Items)
                 }
@@ -388,7 +322,8 @@ fillQueryCache()
             });
         })
         .then(()=> {//Write pathsAndStores to fs.
-            fs.writeFile("./pathsAndStores.js",
+            //TODO: This sucks, only for dbg.
+            if(false) fs.writeFile("./src/server/pathsAndStores.js",
                 "const pathsAndStores = "
                 +JSON.stringify(pathsAndStores, null, 4)
                 +";\nexport default pathsAndStores"

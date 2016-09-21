@@ -5,26 +5,12 @@ import React from "react";
 /*App*/
 
 //TODO:Make this work on front end. The createStore in script.js should include our middleWares
-import {loadBlogPost} from "../../public/reducers/StoreAndReducers"
 import {checkHash} from '../security'
-import {store, initialState} from '../server'
 
 import express from 'express'
-import ReactDOM from "react-dom/server"
-import {Provider} from 'react-redux'
-import renderHTML from "../renderHTML"
-
-import ReactApp from "../../public/components/ReactApp";
-import About from "../../public/pages/About"
-import Admin from "../../public/pages/Admin"
-import AdminLoggedIn from "../../public/pages/AdminLoggedIn"
-import Blog from "../../public/pages/Blog"
-import BlogPost from "../../public/pages/BlogPost"
-import AppReducer from "../../public/reducers/StoreAndReducers"
 
 import {pathsAndStores} from '../db'
-import {createStore} from 'redux';
-
+import pathsAndStoresFile from "../pathsAndStores"
 
 let router = express.Router();
 router.get('/', (req, res) => {
@@ -67,7 +53,7 @@ router.get('/blog/:blogTitle', (req, res) => {//TODO:Better regex, only match /s
 
     checkHash(req.cookies.name, req.cookies.hash).then(result=>
         res.send(pathsAndStores['/blog/:blogTitle']
-            .getResponseWithBlogPost(result, encodeURIComponent(req.params.blogTitle))));
+            .getResponseWithBlogPost(result, req.params.blogTitle.replace(new RegExp('-','g'),' '))));
 });
 
 router.get('/blog', (req, res) => {//TODO:Better regex, only match /string_like_this
