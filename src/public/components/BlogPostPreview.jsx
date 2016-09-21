@@ -23,7 +23,7 @@ const BlogPostPreview = ({post, dispatch,loggedIn})=> {
             <div className="panel-heading">
                 <div className="row">
                     <div className="col-xs-12">
-                        <h2 className="postTitle" onClick={goToBlogpost.bind({}, post, dispatch)}>{post.title}</h2>
+                        <a className="postTitle" onClick={goToBlogpost.bind({}, post, dispatch)}>{post.title}</a>
                     </div>
                 </div>
                 <div className="row">

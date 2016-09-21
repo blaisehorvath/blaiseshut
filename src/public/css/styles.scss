@@ -379,17 +379,19 @@ section#blog {
       }
 
       .blogpost {
-        //border: solid;
-        //border-width: 1px;
-        //border-color: yellow;
         @include niceBoxShadow(0, 0, 10px, rgba(0, 0, 0, 0.3));
 
         .panel-heading {
 
-          background: $col_nav_background;
-          color: white;
+          background: white;
+          color: $col_text_black;
 
           .postTitle {
+            display: inline-block;
+            padding: 15px 0px;
+            text-decoration: none;
+            color: $col_text_black;
+            font-size: 2em;
             cursor: pointer;
             font-weight: 600;
             -webkit-transition: all 0.8s;
@@ -406,10 +408,9 @@ section#blog {
           .postAuthor {
             font-weight: bolder;
             i {
-              color: white;
+              color: $col_text_black;
               font-size: 1.25em;
             }
-            //@include niceTextStroke(1px,1px);
           }
 
           .postDate {
