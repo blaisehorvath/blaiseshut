@@ -52,7 +52,7 @@ let fillQueryCache = ()=> {
     return new Promise((res, rej)=> {
         let queryparams = {
             TableName: "SWAblog",
-            ProjectionExpression: "#id, #date, #text, #user, #tags, #precontent, #title",
+            ProjectionExpression: "#id, #date, #text, #user, #tags, #precontent, #title, #img, #shortdesc",
             ExpressionAttributeNames: {
                 "#id": "id",
                 "#date": "date",
@@ -60,7 +60,9 @@ let fillQueryCache = ()=> {
                 "#user": "user",
                 "#tags": "tags",
                 "#precontent": "precontent",
-                "#title": "title"
+                "#title": "title",
+                "#img": "img",
+                "#shortdesc": "shortdesc"
             }
         };
         doc.scan(queryparams, (err, data)=> {
