@@ -9,6 +9,7 @@ class BlogPosts extends React.Component {
     }
 
     componentDidMount() {
+        if (this.props.posts.length < 2)
         this.getNewBlogPosts(2);
     }
 
