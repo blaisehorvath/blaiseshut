@@ -6,13 +6,10 @@ import BlogPostPreview from "./BlogPostPreview"
 class BlogPosts extends React.Component {
     constructor(props) {
         super(props);
-        this.didMount = false;
-        //TODO:Window.scrool check here
     }
 
     componentDidMount() {
         console.log(this.props)
-        this.didMount = true;
         if (this.props.posts.length < 2)
             this.getNewBlogPosts(2);
     }
@@ -48,9 +45,7 @@ class BlogPosts extends React.Component {
                                 <BlogPostPreview post={post}/>
                             </div>
                         })}
-                    <div className="panel">
-                        <PostLoader newPostsFn={this.getNewBlogPosts.bind(this)} bottom={this.props.isBottom}
-                                    loading={this.props.postLoading}/>
+                    <div className="panel">{this.props.postLoading?<PostLoader/>:""}
                     </div>
                 </div>);
         }//TODO: FRONT-END! Change this to scroll event
@@ -58,19 +53,16 @@ class BlogPosts extends React.Component {
     }
 }
 
-const PostLoaderComp = (props) => {
+const PostLoaderComp = () => {
     //if(!props.loading && props.bottom) props.newPostsFn(1);
     //TODO: If the function is passed then we get no error, weird....
-    if (props.loading) {
+    //TODO: Check if we can load any more blogPosts, not important
         return (
             <div className="postLoader">
                 <i className="fa fa-refresh fa-spin fa-3x fa-fw"/>
                 <span className="sr-only">Loading...</span>
             </div>
         );
-    } else {
-        return <div></div>
-    }
 };
 
 let PostLoader = connect((state)=>({loading: state.postLoading}))(PostLoaderComp);
