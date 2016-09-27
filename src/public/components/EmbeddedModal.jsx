@@ -4,12 +4,14 @@
 import React from 'react';
 import ProjectModal from './ProjectModal'
 
+import {embeddedSystemsDesignText} from "../pages/Texts"
 /**
  * This function returns an HTML that will be the content of the Embedded Modal
  * @function modalContent
  * @type {XML}
  */
-const modalContent = (<div>
+const modalContent = embeddedSystemsDesignText;
+(<div>
     <h3>Lorem ipsum dolor.</h3>
     <p>
         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam autem cumque doloribus,

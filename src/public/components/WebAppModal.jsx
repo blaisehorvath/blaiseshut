@@ -4,13 +4,14 @@
 import React from 'react';
 import ProjectModal from './ProjectModal';
 
+import {webApplicationDevelopmentText} from "../pages/Texts"
 
 /**
  * This function returns an HTML that will be the content of the Web Application Development modal
  * @function modalContent
  * @type {XML}
  */
-const modalContent=(
+const modalContent= webApplicationDevelopmentText;
     <div>
         <h3>Lorem ipsum dolor sit.</h3>
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad, assumenda, delectus ex fuga illum magnam odio
@@ -43,7 +44,6 @@ const modalContent=(
             natus nulla numquam perspiciatis porro quasi repellendus similique soluta tenetur vel! Cupiditate delectus
             et hic mollitia officia, quo? Odit, sunt!
         </p>
-    </div>
-);
+    </div>;
 
 export default () => <ProjectModal id="webAppModal" title="Web Application Development" children={modalContent} /> ;
