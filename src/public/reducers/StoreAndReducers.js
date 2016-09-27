@@ -101,14 +101,24 @@ const displayWidth = (state = "sm", action) => {
  */
 const postLoading = (state = false, action) => {
     switch (action.type) {
-        case 'LOAD_POSTS':
+        case 'LOADING_POSTS':
             return true;
-        case 'NEW_BLOG_POSTS':
+        case 'NOT_LOADING_POSTS':
             return false;
         default:
             return false;
     }
 };
+const isBottom = (state = false, action) =>{
+    switch (action.type){
+        case 'BOTTOM':
+            return true;
+        case 'NOT_BOTTOM':
+            return false;
+        default:
+            return false;
+    }
+}
 
 
 const activePage = (state = null, action) => {
@@ -236,6 +246,7 @@ let AppReducer = combineReducers({
     activeMenuButton,
     activeMember,
     displayWidth,
-    postLoading
+    postLoading,
+    isBottom
 });
 export default AppReducer;

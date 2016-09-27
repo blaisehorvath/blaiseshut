@@ -147,10 +147,16 @@ const scrollSpy = () => {
         }
     }
     else if (window.getState().activePage === "blog") {
+        let docHeight = $document.height();
+        let viewHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+
         let postLoaderLocation = $('postLoader');
         let currentScrollPos = $window.scrollTop();
-        if (currentScrollPos >= postLoaderLocation && window.getState().postLoading === false) window.dispatch({ type: 'LOAD_POSTS' , true });
-        console.log("LOL");
+        console.log({currentScrollPos});
+        if (currentScrollPos + viewHeight +1 >= docHeight){
+            window.dispatch({ type: 'BOTTOM' , true });
+            console.log("bottom")
+        } else window.dispatch({ type: 'NOT_BOTTOM' , true });
     }
 };
 

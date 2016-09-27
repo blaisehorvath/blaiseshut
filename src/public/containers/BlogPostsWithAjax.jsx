@@ -26,12 +26,16 @@ const mapStateToPropsBlogPosts = (state, ownProps)=> {
                 >= idx)
         })(),
         activeTags: state.ActiveTags,
+        postLoading: state.postLoading,
+        isBottom: state.isBottom
     };
 };
 const mapDispatchToPropsBlogPosts = (dispatch)=> {
     return {
+        onAjaxBegin:()=>{dispatch({type:"LOADING_POSTS"})},
         onAjaxFinish: (posts)=> {
-            dispatch(addBlogPosts(posts))
+            dispatch(addBlogPosts(posts));
+            dispatch({type: "NOT_LOADING_POSTS"})
         }
     };
 };

@@ -11,12 +11,12 @@ const mapStateToPropsTagList = (state, ownProps) => {
 const mapDispatchToPropsTagList = (dispatch, ownProps) => {
     return {}
 };
-const TagList = ({Tags, addTagToField})=> {
+const TagList = ({Tags})=> {
     return (
         <div>
             {Tags.map((tag)=> {
                 console.log(tag);
-                return <SingleTag key={tag.id} tag={tag} addTagToField={addTagToField}/>
+                return <SingleTag key={tag.id} tag={tag}/>
             })}
         </div>
     );
