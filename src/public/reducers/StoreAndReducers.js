@@ -84,7 +84,7 @@ const ActiveBlogPosts = (state = [], action)=> {
  * @param action.displayWidth {string} The Bootstrap display width type name and an additional <i>mobile</i> or <i>wide</i>.
  * @returns {string} The state of the displayWidth.
  */
-const displayWidth = ( state = "sm", action) => {
+const displayWidth = (state = "sm", action) => {
     switch (action.type) {
         case 'SET_DISPLAY_WIDTH':
             return action.displayWidth;
@@ -92,6 +92,22 @@ const displayWidth = ( state = "sm", action) => {
             return state;
     }
 };
+
+/**
+ * This reducer is triggered when the scrolling hits the bottom on the blog.
+ * @param state
+ * @param action
+ * @returns {boolean}
+ */
+const postLoading = (state = false, action) => {
+    switch (action.type) {
+        case 'LOAD_POSTS':
+            return true;
+        default:
+            return false;
+    }
+};
+
 
 const activePage = (state = null, action) => {
     switch (action.type) {
@@ -203,7 +219,7 @@ export const loggedInFalse = ()=> {
 export const setActiveMember = (member) => {
     return {
         type: "SET_ACTIVE_MEMBER",
-        activeMember : member
+        activeMember: member
     }
 };
 

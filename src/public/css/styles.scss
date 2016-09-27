@@ -378,6 +378,15 @@ section#blog {
         width: 100%;
       }
 
+      div.postLoader {
+        text-align: center;
+        background: yellow;
+        i.fa-refresh {
+          background: deeppink;
+          margin: auto auto;
+        }
+      }
+
       .blogpost {
         @include niceBoxShadow(0, 0, 5px, rgba(0, 0, 0, 0.3));
         border-radius: $panel-border-radius;
@@ -468,7 +477,7 @@ section#blog {
         padding: 7px;
         border-style: solid;
         border-width: 1px;
-        border-radius: 4%;
+        border-radius: 5%;
         border-color: $col_nice_black;
         @include niceBoxShadow(0,0, 3px, rgba(0, 0, 0, 0.3));
 
@@ -488,11 +497,11 @@ section#blog {
 
         // the style of the tags
         .inputTag {
-          -webkit-transition: background 1.2s, color 0.2s, font-weight 0.2s, padding 1.2s, border-color 4s, ease-in-out;
-          -moz-transition: background 1.2s, color 0.2s, font-weight 0.2s, padding 1.2s, border-color 4s, ease-in-out;
-          -ms-transition: background 1.2s, color 0.2s, font-weight 0.2s, padding 1.2s, border-color 4s, ease-in-out;
-          -o-transition: background 1.2s, color 0.2s, font-weight 0.2s, padding 1.2s, border-color 4s, ease-in-out;
-          transition: background 1.2s, color 0.2s, font-weight 0.2s, padding 1.2s, border-color 4s, ease-in-out;
+          -webkit-transition: background 0.250s, color 0.2s, font-weight 0.2s, padding 0.250s, border-color 4s, ease-in-out;
+          -moz-transition: background 0.250s, color 0.2s, font-weight 0.2s, padding 0.250s, border-color 4s, ease-in-out;
+          -ms-transition: background 0.250s, color 0.2s, font-weight 0.2s, padding 0.250s, border-color 4s, ease-in-out;
+          -o-transition: background 0.250s, color 0.2s, font-weight 0.2s, padding 0.250s, border-color 4s, ease-in-out;
+          transition: background 0.250s, color 0.2s, font-weight 0.2s, padding 0.250s, border-color 4s, ease-in-out;
           display: inline-block;
           padding: 0px 3px;
           margin: 2px;

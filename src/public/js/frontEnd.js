@@ -41,7 +41,7 @@ const bsRanges = {
 };
 
 /**
- * A function that{Returns a function, that, as long as it continues to be invoked, will not
+ * A function that returns a function, that, as long as it continues to be invoked, will not
  * be triggered. The function will be called after it stops being called for N milliseconds.
  * If `immediate` is passed, trigger the function on the leading edge, instead of the trailing.
  * @param func {Function} The function that will be transformed.
@@ -84,7 +84,7 @@ const dispatchBootstrapBreakpoint = () => {
  */
 const dispatchBootstrapBreakpointDebounce = debounce(dispatchBootstrapBreakpoint, 250);
 
-
+//TODO: doc
 const scrollSpy = () => {
     if (window.getState().activePage === "about") {
 
@@ -145,6 +145,11 @@ const scrollSpy = () => {
                 }
             }
         }
+    }
+    else if (window.getState().activePage === "blog") {
+        let $postLoader = $('postLoader');
+
+        console.log("LOL");
     }
 };
 
