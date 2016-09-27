@@ -147,16 +147,14 @@ const scrollSpy = () => {
         }
     }
     else if (window.getState().activePage === "blog") {
+        //TODO: This isn't called if there is no scroll.
+        //TODO: It should be, viewHeight and docHeight is enough to fire bottom event in that case
         let docHeight = $document.height();
         let viewHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
-
-        let postLoaderLocation = $('postLoader');
         let currentScrollPos = $window.scrollTop();
-        console.log({currentScrollPos});
-        if (currentScrollPos + viewHeight +1 >= docHeight){
-            window.dispatch({ type: 'BOTTOM' , true });
-            console.log("bottom")
-        } else window.dispatch({ type: 'NOT_BOTTOM' , true });
+        if (currentScrollPos + viewHeight + 2 >= docHeight && !window.getState().isBottom) {// Fire once...
+            window.dispatch({type: 'BOTTOM'});
+        } else if (window.getState().isBottom) window.dispatch({type: 'NOT_BOTTOM'}); // Fire once...
     }
 };
 
@@ -180,7 +178,7 @@ const scrollSpyDebounce = debounce(scrollSpy, 10);
     $window.ready(dispatchBootstrapBreakpoint);
 
     $window.scroll(()=> {
-       scrollSpyDebounce();
+        scrollSpyDebounce();
     })
 
 })(jQuery); // End of use strict

@@ -17,7 +17,6 @@ class BlogPosts extends React.Component {
     getNewBlogPosts(numberOfPostsToReturn) {
         this.props.onAjaxBegin(); // Comes from the connect, ugly AF for Balazs... :D
         //TODO:Maybe this could be a little bit earlier?
-        console.log("getting fasz" + numberOfPostsToReturn)
         let data = {
             currentBlogPostIds: this.props.posts.map(post=>post.id),
             numberOfPostsToReturn,
@@ -34,9 +33,9 @@ class BlogPosts extends React.Component {
 
     render() {
         if (this.props.posts) {
-            console.log(this.props)
             if ((this.props.isBottom && !this.props.postLoading))
                 this.getNewBlogPosts(1);
+            //TODO: We should listen to these events and call this function.. Not related to render!!!!
             return (
                 <div>
                     {
