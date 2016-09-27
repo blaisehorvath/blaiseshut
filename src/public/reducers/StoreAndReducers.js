@@ -103,6 +103,8 @@ const postLoading = (state = false, action) => {
     switch (action.type) {
         case 'LOAD_POSTS':
             return true;
+        case 'NEW_BLOG_POSTS':
+            return false;
         default:
             return false;
     }
@@ -233,6 +235,7 @@ let AppReducer = combineReducers({
     LoggedIn,
     activeMenuButton,
     activeMember,
-    displayWidth
+    displayWidth,
+    postLoading
 });
 export default AppReducer;

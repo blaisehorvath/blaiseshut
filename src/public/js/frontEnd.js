@@ -147,8 +147,9 @@ const scrollSpy = () => {
         }
     }
     else if (window.getState().activePage === "blog") {
-        let $postLoader = $('postLoader');
-
+        let postLoaderLocation = $('postLoader');
+        let currentScrollPos = $window.scrollTop();
+        if (currentScrollPos >= postLoaderLocation && window.getState().postLoading === false) window.dispatch({ type: 'LOAD_POSTS' , true });
         console.log("LOL");
     }
 };

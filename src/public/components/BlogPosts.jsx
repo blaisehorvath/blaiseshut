@@ -1,4 +1,5 @@
-import React from "react"
+import React from "react";
+import { connect } from "react-redux";
 
 import BlogPostPreview from "./BlogPostPreview"
 
@@ -43,21 +44,28 @@ class BlogPosts extends React.Component {
                     <div onClick={()=> {
                         this.getNewBlogPosts(1)
                     }} className="panel">Show me more
-                        <PostLoader/>
+                        <PostLoader getNewBlogPosts={this.getNewBlogPosts}/>
                     </div>
                 </div>);//TODO: FRONT-END! Change this to scroll event
         else return <div></div>
     }
 }
 
-const PostLoader = (props) => {
-    return (
-        <div className="postLoader">
-            <i className="fa fa-refresh fa-spin fa-3x fa-fw"/>
-            <span className="sr-only">Loading...</span>
-        </div>
-    );
+const PostLoaderComp = (props) => {
+    if (props.loading) {
+        return (
+            <div className="postLoader">
+                <i className="fa fa-refresh fa-spin fa-3x fa-fw"/>
+                <span className="sr-only">Loading...</span>
+            </div>
+        );
+    } else {
+        // props.getNewBlogPosts(1);
+        return <div>LOL</div>
+    }
 };
+
+let PostLoader = connect((state)=>({ loading : state.postLoading }))(PostLoaderComp);
 
 
 export default BlogPosts
