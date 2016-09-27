@@ -4,12 +4,14 @@
 import React from 'react';
 import ProjectModal from './ProjectModal';
 
+import {iotEngineeringText} from "../pages/Texts"
 /**
  * This function returns an HTML that will be the content of the IOT Modal
  * @function modalContent
  * @type {XML}
  */
-const modalContent = (
+const modalContent = iotEngineeringText;
+(
     <div><h3>Lorem ipsum dolor sit amet.</h3>
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab accusantium ad architecto
             assumenda at corporis distinctio doloremque doloribus earum eum eveniet fuga illo illum
