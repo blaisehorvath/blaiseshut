@@ -29,7 +29,7 @@ class About extends React.Component {
                 <header id="aboutUs">
                     <div className="container">
                         <h1 className="headerTitle">{introShort}</h1>
-                        <p>{introText}</p>
+                        <div>{introText}</div>
                         <p><a className="btn btn-primary btn-lg more">Learn more »</a></p>
                     </div>
                 </header>

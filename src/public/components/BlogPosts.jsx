@@ -6,17 +6,19 @@ import BlogPostPreview from "./BlogPostPreview"
 class BlogPosts extends React.Component {
     constructor(props) {
         super(props);
+        this.didMount = false;
         //TODO:Window.scrool check here
     }
 
     componentDidMount() {
+        this.didMount = true;
         if (this.props.posts.length < 2)
             this.getNewBlogPosts(2);
     }
 
     getNewBlogPosts(numberOfPostsToReturn) {
         //TODO:Maybe this could be a little bit earlier?
-
+        console.log("getting fasz" + numberOfPostsToReturn)
         let data = {
             currentBlogPostIds: this.props.posts.map(post=>post.id),
             numberOfPostsToReturn,
@@ -44,7 +46,7 @@ class BlogPosts extends React.Component {
                     <div onClick={()=> {
                         this.getNewBlogPosts(1)
                     }} className="panel">Show me more
-                        <PostLoader getNewBlogPosts={this.getNewBlogPosts}/>
+                        <PostLoader getNewBlogPosts={this.getNewBlogPosts.bind(this)} mountReady={this.didMount}/>
                     </div>
                 </div>);//TODO: FRONT-END! Change this to scroll event
         else return <div></div>
@@ -53,6 +55,7 @@ class BlogPosts extends React.Component {
 
 const PostLoaderComp = (props) => {
     if (props.loading) {
+        console.log(props)
         return (
             <div className="postLoader">
                 <i className="fa fa-refresh fa-spin fa-3x fa-fw"/>
@@ -60,7 +63,8 @@ const PostLoaderComp = (props) => {
             </div>
         );
     } else {
-        // props.getNewBlogPosts(1);
+        console.log(props)
+        if( props.mountReady) props.getNewBlogPosts(4);
         return <div>LOL</div>
     }
 };

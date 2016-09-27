@@ -1,6 +1,6 @@
 import React from"react"
-export const introShort = <div>Welcome on SWATeam site!</div>;
-export const introText = <div>
+export const introShort = <p>Welcome on SWATeam site!</p>;
+export const introText = <p>
     We’re a two member development team focusing on web and embedded electronics development or Internet Of Things to
     put it simply.
     <br/>Coming from very different backgrounds, together we have experience in wide range of subjects. Balazs, the tech
@@ -13,14 +13,14 @@ export const introText = <div>
     <br/>We both beleive in open technologies, our solutions are usually built on them whenever possible.
     <br/>As a team we’re able to design a complete IOT solution from electrical design, prototyping, mechanical design,
     web development and deployment.
-</div>;
-export const webApplicationDevelopmentText = <div>
+</p>;
+export const webApplicationDevelopmentText = <p>
     This website is our reference website, with the use of following things:
     <br/>Node.js, Express.js, React.js, Redux, Gulp, Sass, Babel, AWS-sdk and Browserify, on the AWS infrastructure
     we’re currently using DynamoDB and Elastic beanstalk.
     <br/>The move to AWS Lambda and API Gateway is on its way to production using the Serverless framework.
-</div>;
-export const embeddedSystemsDesignText = <div>
+</p>;
+export const embeddedSystemsDesignText = <p>
     The first part of an electronics system is the schematic design and PCB routing: for this we’re mainly using KiCAD,
     our other choices would be Eagle and Altium Designer.
     <br/>The second part is the prototyping: we’re able to make our own double sided PCBs for rapid prototyping, and we
@@ -29,13 +29,13 @@ export const embeddedSystemsDesignText = <div>
     8085/8051.
     <br/>Viktor also have FPGA development experience with Xilinx FPGAs using Verilog. The reference for these kind of
     jobs is an FPGA tetris with VGA output, PS2 keyboard handling and a wavetable synth.
-</div>;
-export const iotEngineeringText = <div>
+</p>;
+export const iotEngineeringText = <p>
     As a team, we’re able to develop a complete IOT solution. We also know how to deploy embedded operating systems such
     like RIOT and Contiki on various hardware. We’ve been using RIOT in our recent project, and became quite familiar
     with its networking stack, driver system and application level programming API.
-</div>
-export const teamText = <div>
+</p>
+export const teamText = <p>
     Located in Budapest, we’re working together as freelancers to make money and opportunities for projects we love (
     don’t get me wrong, we love web development ;) ). The thing which got us together is an interest in using technology
     as a tool to achieve sustainable and happy life. This mostly means making your own food using aquaponics amongst
@@ -43,8 +43,8 @@ export const teamText = <div>
     <br/>Our personalities are very different, but in a way that they complement each other, allowing us to make better
     things than one of us could make alone, and we both strongly beleive that this will be the key to our future
     success.
-</div>;
-export const balazsText = <div>
+</p>;
+export const balazsText = <p>
     I’ve began programming at a young age, and went to a high school which was famous for its programming classes. That
     was the place where I learned the fundamentals of programming, mostly trough Delphi and C#.
     After the high school I’ve become interested in biology, and a year later I’ve got accepted to a Biology program at
@@ -75,8 +75,8 @@ export const balazsText = <div>
     <br/>PHP: 7/10: Its been a long time I had to use it, but I had a good knowledge back then.
     <br/>Python: 9/10: I’ve used it for various tasks: scripting, database management and for writing systems biology
     simulations.
-</div>;
-export const viktorText = <div>
+</p>;
+export const viktorText = <p>
     I started studying physics at Budapest Technology and Economics, but as I changed I turned to electrical engineering
     and got a degree in that. The main reason for the change is I started to feel that phyiscs doesn’t get me any closer
     to the goals which became clearer and clearer as I matured. Namely, I really want to work on things which brings the
@@ -124,4 +124,4 @@ export const viktorText = <div>
     <br/>Python 5/10: I’ve used Python for learning AI and doing smaller tasks in it. Honestly, this language is very
     easy to
     use, I’ve never been stuck with it, but I think this only means that I don’t know enough :).
-</div>
+</p>
