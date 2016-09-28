@@ -103,7 +103,7 @@ const scrollSpy = () => {
         let docHeight = $document.height();
         let viewHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
 
-        console.log({
+/*        console.log({
             current: currentScrollPos,
             windowHeight: viewHeight,
             documentHeight: docHeight,
@@ -111,7 +111,7 @@ const scrollSpy = () => {
             projectsRange: $places[1].top + "-" + $places[1].bottom,
             teamRange: $places[2].top + "-" + $places[2].bottom,
             contactUsRange: $places[3].top + "-" + $places[3].bottom
-        });
+        });*/
 
         // if the current position is the bottom of the window highlight the first navbar item
         if (currentScrollPos >= 0 && currentScrollPos <= navHeight) {
@@ -119,7 +119,7 @@ const scrollSpy = () => {
                 type: "SET_ACTIVE_MENU_BUTTON",
                 location: scrollSpyLocations[0]
             });
-            console.log("Scroll is at TOP");
+            // console.log("Scroll is at TOP");
         }
         // if the current position is the bottom of the window highlight the last navbar item
         else if (currentScrollPos + viewHeight >= docHeight) {
@@ -127,7 +127,7 @@ const scrollSpy = () => {
                 type: "SET_ACTIVE_MENU_BUTTON",
                 location: scrollSpyLocations[scrollSpyLocations.length - 1]
             });
-            console.log("Scroll is at bottom!");
+            // console.log("Scroll is at bottom!");
         }
         // if it's not the top or the bottom search linearly from the top which navbar menu should be active
         else {
@@ -140,7 +140,7 @@ const scrollSpy = () => {
                             location: $item.id
                         })
                     }
-                    console.log(`Scroll is at ${$item.id}`);
+                    // console.log(`Scroll is at ${$item.id}`);
                     break
                 }
             }
