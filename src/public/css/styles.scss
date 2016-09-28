@@ -513,9 +513,9 @@ section#blog {
           font-weight: 300;
           color: $col_body_text;
           border-radius: 7px;
-          border-color: $col_nice_black;
-          border-width: 1px;
-          border-style: solid;
+          //border-color: $col_nice_black;
+          //border-width: 1px;
+          //border-style: solid;
           background: white;
 
           &:hover {
@@ -527,7 +527,7 @@ section#blog {
             color: white;
 
             &:hover {
-              background: $col_nav_hover;
+              background: $col_nav_active_hover;
               color: white;
             }
           }
