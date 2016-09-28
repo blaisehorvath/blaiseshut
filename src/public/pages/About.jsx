@@ -30,7 +30,6 @@ class About extends React.Component {
                     <div className="container">
                         <h1 className="headerTitle">{introShort}</h1>
                         <div>{introText}</div>
-                        <p><a className="btn btn-primary btn-lg more">Learn more »</a></p>
                     </div>
                 </header>
 

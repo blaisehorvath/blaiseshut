@@ -44,7 +44,7 @@ class BlogPosts extends React.Component {
                                 <BlogPostPreview post={post}/>
                             </div>
                         })}
-                    <div className="panel">{this.props.postLoading?<PostLoader/>:""}
+                    <div className="panel">{this.props.postLoading?<PostLoader/>:null}
                     </div>
                 </div>);
         }//TODO: FRONT-END! Change this to scroll event
