@@ -3,7 +3,7 @@ import React from "react";
 import {connect} from "react-redux"
 import {changeActivePage} from "../actions/actions"
 import {loadBlogPost} from "../reducers/StoreAndReducers"
-
+import Markdown from "react-markdown"
 /***
  * This react component class is responsible for rendering a whole single blog post.
  * @class
@@ -61,8 +61,8 @@ class BlogPost extends React.Component {
                     </div>
                     <hr className="headerSep"/>
                     <div className="row postBody">
-                        <div className="col-sm-12">{this.props.blogPost.precontent}</div>
-                        <div className="col-sm-12">{this.props.blogPost.text}</div>
+                        <div className="col-sm-12"><Markdown
+                            source={this.props.blogPost.precontent + this.props.blogPost.text}/></div>
                     </div>
                     <hr className="footerSep"/>
                     <div className="postFooter row">
@@ -87,7 +87,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         setActiveMenuButton: () => {
-           dispatch(changeActivePage("blogPost"))
+            dispatch(changeActivePage("blogPost"))
         }
     };
 };
