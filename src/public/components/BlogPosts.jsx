@@ -33,18 +33,18 @@ class BlogPosts extends React.Component {
 
     render() {
         if (this.props.posts) {
-            if ((this.props.isBottom && !this.props.postLoading))
-                this.getNewBlogPosts(1);
+            /*if ((this.props.isBottom && !this.props.postLoading))
+                this.getNewBlogPosts(1);*/
             //TODO: We should listen to these events and call this function.. Not related to render!!!!
             return (
                 <div>
                     {
-                        this.props.activeBlogPosts.map(post => {//TODO:This is not the BLOG! loggedIn is elsewhere
+                        this.props.activeBlogPosts.map(post => {
                             return <div key={post.id}>
                                 <BlogPostPreview post={post}/>
                             </div>
                         })}
-                    <div className="panel" style={{height:50}}>{this.props.postLoading?<PostLoader/>:null}
+                    <div className="panel">{this.props.postLoading?<PostLoader/>:<a onClick={()=>{this.getNewBlogPosts(1)}}>Load more!</a>}
                     </div>
                 </div>);
         }//TODO: FRONT-END! Change this to scroll event

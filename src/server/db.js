@@ -74,6 +74,7 @@ let fillQueryCache = ()=> {
 };
 const getBlogPostByTitle = (title)=>queryCache.Items.filter(post=>post.title === title)[0];
 const queryBlogPosts = (currentBlogPostIds, activeTags, numberOfPostsToReturn)=> {//
+    console.log({currentBlogPostIds,activeTags,numberOfPostsToReturn})
     return new Promise((resolve, reject)=> {
         //Get all the remaining posts
         let availableBlogPosts = queryCache.Items

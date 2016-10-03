@@ -149,17 +149,18 @@ const scrollSpy = () => {
     else if (window.getState().activePage === "blog") {
         //TODO: This isn't called if there is no scroll.
         //TODO: It should be, viewHeight and docHeight is enough to fire bottom event in that case
+        //TODO: Call scrollSpyDebounce every ~200ms
         let docHeight = $document.height();
         let viewHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
         let currentScrollPos = $window.scrollTop();
         if (currentScrollPos + viewHeight + 2 >= docHeight && !window.getState().isBottom) {// Fire once...
-            window.dispatch({type: 'BOTTOM'});
-        } else if (window.getState().isBottom) window.dispatch({type: 'NOT_BOTTOM'}); // Fire once...
+            window.dispatch({type: 'BOTTOM'});console.log(window.getState().isBottom)//TODO:Debug
+        } else if (window.getState().isBottom) {window.dispatch({type: 'NOT_BOTTOM'});console.log("notbottom")} // Fire once...
     }
 };
 
 const scrollSpyDebounce = debounce(scrollSpy, 10);
-
+setInterval(scrollSpy,200);
 /*This self invoking function runs the purely front-end scripts*/
 (function ($) {
 

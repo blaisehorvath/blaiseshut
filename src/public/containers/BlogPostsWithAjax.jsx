@@ -4,7 +4,7 @@ import BlogPosts from "../components/BlogPosts"
 import {addBlogPosts} from "../reducers/StoreAndReducers"
 const mapStateToPropsBlogPosts = (state, ownProps)=> {
     return {
-        posts: state.BlogPosts,
+        posts: state.BlogPosts, //TODO: If two post request start ~at the same time... Delete duplicates
         activeBlogPosts: (()=> {
             if (!state.BlogPosts.length) return state.BlogPosts
             else return state.ActiveTags.length
@@ -26,8 +26,8 @@ const mapStateToPropsBlogPosts = (state, ownProps)=> {
                 >= idx)
         })(),
         activeTags: state.ActiveTags,
-        postLoading: state.postLoading,
-        isBottom: state.isBottom
+        postLoading: state.isBottomAndLoading,
+        isBottom: state.isBottomAndLoading
     };
 };
 const mapDispatchToPropsBlogPosts = (dispatch)=> {
