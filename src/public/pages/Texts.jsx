@@ -1,20 +1,20 @@
 import React from "react";
 import SkillItem from "../components/SkillItem";
+import MemberSocial from "../components/MemberSocial";
 
 export const introShort = "Welcome on SWATeam site!";
 
 export const introText = <div>
-    <p>We’re a two member development team focusing on web and embedded electronics development or Internet Of Things to
+    <p>We’re a two member software development team focusing on web and embedded electronics development or Internet Of Things to
         put it simply.</p>
-    <p>Coming from very different backgrounds, together we have experience in wide range of subjects. Balazs, the tech
+    <p>Coming from very different backgrounds, together we have experience in wide range of subjects. Balázs, the tech
         geek of our team studied Biology at ELTE in Budapest, and went into systems and computational biology research.
         Viktor, the other member is a physics student who switched to electrical engineering, with a lot side projects
         including FPGAs and CNC machines amongst others. One thing is true for both of us: we’ve been turned to
-        programming
-        at a very young age.</p>
-    <p>For web developent our main technologies are: Node.js, React/Redux and Amazon AWS, for embedded systems we’r
+        programming at a very young age.</p>
+    <p>For web developent our main technologies are: Node.js, React, Redux and Amazon AWS, for embedded systems we’re
         mainly using TI/ST ARM microcontrollers and RIOT os.</p>
-    <p>We both beleive in open technologies, our solutions are usually built on them whenever possible.</p>
+    <p>We both believe in open technologies, our solutions are usually built on them whenever possible.</p>
     <p>As a team we are able to design a complete IOT solution from electrical design, prototyping, mechanical design,
         web development and deployment.</p>
 </div>;
@@ -23,20 +23,20 @@ export const webApplicationDevelopmentText = <div>
     <p>This website is our reference website, with the use of following things:</p>
     <h4>Building:</h4>
     <ul>
-        <li>Gulp,</li>
-        <li>Babel,</li>
+        <li>Gulp</li>
+        <li>Babel</li>
         <li>Browserify</li>
     </ul>
     <h4>Back-end:</h4>
     <ul>
-        <li>Node.js,</li>
-        <li>Express.js,</li>
-        <li>AWS-SDK, on the AWS infrastructure</li>
+        <li>Node.js</li>
+        <li>Express.js</li>
+        <li>AWS-SDK on the AWS infrastructure</li>
     </ul>
     <h4>Front-end</h4>
     <ul>
-        <li>React.js,</li>
-        <li>Redux,</li>
+        <li>React.js</li>
+        <li>Redux</li>
         <li>jQuery</li>
         <li>Bootstrap</li>
         <li>Sass</li>
@@ -118,6 +118,8 @@ let balazsSkills = [
     }
 ];
 
+let balazsSocial = {uwUrl:"https://www.upwork.com/freelancers/~01cb2a4ccd99032bfb", lnUrl:"https://www.linkedin.com/in/bal%C3%A1zs-horv%C3%A1th-493b5b105?trk=hp-identity-name", gitUrl:"https://github.com/blaisehorvath"};
+
 export const balazsText = <div>
     <h4>Education and Experiences</h4>
     <p>I’ve began programming at a young age, and went to a high school which was famous for its programming classes.
@@ -147,6 +149,7 @@ export const balazsText = <div>
         very efficiently on a full scale IOT project.</p>
     <h4>Skills</h4>
     {balazsSkills.map(skill => <SkillItem {...skill}/>)}
+    <MemberSocial {...balazsSocial} />
 </div>;
 
 
@@ -201,6 +204,8 @@ let viktorSkills = [
     }
 ];
 
+let viktorSocial = {uwUrl : "https://www.upwork.com/o/profiles/users/_~01b56a4e45e83c5751/" , lnUrl : "https://www.linkedin.com/in/viktor-v%C3%A1czi-58054ba0", gitUrl : "https://github.com/ViktorVaczi90"}
+
 export const viktorText =
     <div>
         <h4>Education and background</h4>
@@ -220,4 +225,5 @@ export const viktorText =
             have a passion for guitar playing and music in general. I love to move, or just excersize.</p>
         <h4>Skills</h4>
         {viktorSkills.map( skill => <SkillItem {...skill}/>)}
+        <MemberSocial {... viktorSocial}/>
     </div>;

@@ -2,6 +2,7 @@
 @import "css3-mixins";
 @import "own_mixins";
 @import "variables";
+@import "bootstrap-social";
 
 /*-------------------------------------
                 Classes
@@ -160,38 +161,46 @@ header {
 
   @include default-box($col_header_background);
 
-  .container {
+  background: url("/img/es.jpg");
+
+  div.container {
     padding: 100px 0 50px 0;
 
-    h1.headerTitle {
-      margin-top: 0;
-      font-size: 28pt;
-    }
+    div.headerContent {
+      padding: 60px;
+      background: rgba(black, 0.2);
+      color: white;
 
-    p {
-      font-size: 14pt;
-      font-weight: 300;
-      text-align: justify;
-    }
-    .more {
-      font-size: 13px;
-    }
-
-    //on mobile
-    @media (max-width: $media-bootstrap-sm-min) {
-
-      padding: 60px 0 50px 0;
-
-      h1 {
-        font-size: 16pt;
+      h1.headerTitle {
+        margin-top: 0;
+        font-size: 28pt;
       }
+
       p {
-        font-size: 12pt;
+        font-size: 14pt;
+        font-weight: 400;
+        text-align: justify;
       }
       .more {
-        font-size: 10pt;
+        font-size: 13px;
       }
 
+      //on mobile
+      @media (max-width: $media-bootstrap-sm-min) {
+
+        padding: 60px 0 50px 0;
+
+        h1 {
+          font-size: 16pt;
+        }
+        p {
+          font-size: 12pt;
+        }
+        .more {
+          font-size: 10pt;
+        }
+
+      }
     }
   }
 }
@@ -334,6 +343,39 @@ section#team {
       h4 {
         padding: 6pt 0 4pt 0;
       }
+
+      div.memberSocial {
+        text-align: center;
+        a {
+          margin: 0 6px 0 6px;
+        }
+        a.uwLink {
+          $uwColor: white;
+          display: inline-block;
+          border: solid 1px darken($uwColor, 15);
+          -webkit-border-radius: 7px;
+          -moz-border-radius: 7px;
+          border-radius: 7px;
+          background: $uwColor;
+          height: 45px;
+          width: 130px;
+          //width: 45px;
+          text-align: center;
+          vertical-align: middle;
+          img.uwIcon {
+            //display: inline-block;
+            position: relative;
+            top: 6px;
+            width: 110px;
+          }
+          &:hover {
+            background: darken($uwColor, 2);
+          }
+        }
+        .btn-social-icon {
+        }
+      }
+
       div.skillItem {
 
         padding-top: 6pt;

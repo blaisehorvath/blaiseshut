@@ -21,8 +21,17 @@ var sources = {
     reducers: "src/public/reducers/!(*_tmp_*|*_jb_old_*)",
     containers: "src/public/containers/!(*_tmp_*|*_jb_old_*)",
     pages: "src/public/pages/!(*_tmp_*|*_jb_old_*)", //matches anything but temporary files
-    actions: "src/public/actions/!(*_tmp_*|*_jb_old_*)"
+    actions: "src/public/actions/!(*_tmp_*|*_jb_old_*)",
+    images: "src/public/img/*"
 };
+
+//copying images
+gulp.task('copy_images', function () {
+    return gulp.src(sources.images)
+        .pipe(plumber())
+        .pipe(gulp.dest('build/public/img/'))
+        .pipe(livereload())
+});
 
 //copying css files
 gulp.task('compile_css', function () {
@@ -145,7 +154,7 @@ gulp.task('clean', function () {
 
 //cleans beforethe irst build
 gulp.task ('build', function (cb) {
-    runSeq('clean', ['compile_css', 'browserify', 'build_server', 'move_creds'], cb)
+    runSeq('clean', ['compile_css', 'copy_images', 'browserify', 'build_server', 'move_creds'], cb)
 });
 
 gulp.task( 'server:start', ['build'] , function() {
@@ -158,6 +167,7 @@ gulp.task('default', ['server:start'], function () {
 
     //gulp.watch( ['src/server/*' , 'src/public/?(actions|components|containers|js|pages|reducers)/!(___jb_tmp___)'] ).on( 'change', restart );
     gulp.watch([sources.css], ['reload_css']);
+    gulp.watch([sources.images], ['copy_images']);
 
     gulp.watch([sources.reducers], ['browserify-live']);
     gulp.watch([sources.server], ['rebuild_server']);

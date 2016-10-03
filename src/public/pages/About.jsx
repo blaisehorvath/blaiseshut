@@ -3,11 +3,11 @@ import {connect} from "react-redux"
 import {changeActiveMenuButton} from "../reducers/StoreAndReducers";
 import {changeActivePage} from "../actions/actions"
 
+import Header from "../components/Header";
 import Projects from "../components/Projects";
 import Team from "../components/Team";
 import ContactUs from "../components/ContactUs";
 
-import {introText,introShort} from "./Texts"
 class About extends React.Component {
     constructor(props) {
         super(props);
@@ -26,19 +26,13 @@ class About extends React.Component {
     render() {
         return (
             <div>
-                <header id="aboutUs">
-                    <div className="container">
-                        <h1 className="headerTitle">{introShort}</h1>
-                        <div>{introText}</div>
-                    </div>
-                </header>
+                <Header/>
 
                 <Projects/>
 
                 <Team/>
 
                 <ContactUs/>
-
             </div>
         )
     };
