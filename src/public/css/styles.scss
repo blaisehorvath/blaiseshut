@@ -398,7 +398,7 @@ section#team {
               vertical-align: middle;
               height: 12px;
               margin: 0;
-              background: $col_nav_background;
+              background: rgba($col_nav_main, 0.4);
               display: inline-block;
               div.progress-bar {
                 background: $col_nav_active_hover;
