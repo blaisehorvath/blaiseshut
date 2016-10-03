@@ -14,12 +14,12 @@ const projectList = [
     {
         targetID: "embeddedModal",
         caption: "Embedded systems design",
-        imgSrc: {small: "https://placehold.it/200x200", big: "https://placehold.it/325x325"},
+        imgSrc: {small: "/img/stm32-200.jpg", big: "/img/stm32-325.jpg"},
     },
     {
         targetID: "iotModal",
         caption: "IOT engineering",
-        imgSrc: {small: "https://placehold.it/200x200", big: "https://placehold.it/325x325"},
+        imgSrc: {small: "/img/iot_200.png", big: "/img/iot_325.png"},
     }
 ];
 
