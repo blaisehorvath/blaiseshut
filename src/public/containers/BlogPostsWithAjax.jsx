@@ -26,8 +26,7 @@ const mapStateToPropsBlogPosts = (state, ownProps)=> {
                 >= idx)
         })(),
         activeTags: state.ActiveTags,
-        postLoading: state.isBottomAndLoading,
-        isBottom: state.isBottomAndLoading
+        postLoading: state.postLoading,
     };
 };
 const mapDispatchToPropsBlogPosts = (dispatch)=> {

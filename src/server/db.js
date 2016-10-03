@@ -68,13 +68,12 @@ let fillQueryCache = ()=> {
         doc.scan(queryparams, (err, data)=> {
             if (err) console.log(err);
             else queryCache = data;
-            res(data);//TODO:UGLY!
+            res(data);
         })
     })
 };
 const getBlogPostByTitle = (title)=>queryCache.Items.filter(post=>post.title === title)[0];
 const queryBlogPosts = (currentBlogPostIds, activeTags, numberOfPostsToReturn)=> {//
-    console.log({currentBlogPostIds,activeTags,numberOfPostsToReturn})
     return new Promise((resolve, reject)=> {
         //Get all the remaining posts
         let availableBlogPosts = queryCache.Items
@@ -219,8 +218,8 @@ const pathsAndStores = {
     },
     '/blog': {
         init: function () {
-            this.store = createStore(AppReducer, {Tags,LoggedIn:false});
-            this.storeLogged = createStore(AppReducer, {Tags,LoggedIn:true});
+            this.store = createStore(AppReducer, {Tags, LoggedIn: false});
+            this.storeLogged = createStore(AppReducer, {Tags, LoggedIn: true});
             this.content = ReactDOM.renderToString(
                 <Provider store={this.store}><ReactApp><Blog/></ReactApp></Provider>);
             this.contentLogged = ReactDOM.renderToString(
@@ -238,7 +237,7 @@ const pathsAndStores = {
             this.stores = {
                 initStore: function () {
                     console.log("Init stores");
-                    //TODO: WOW, this is ugly AF
+                    //TODO: UnhandledPromiseRejectionWarning happens here, queryCache is not ready yet, don't know why.
                     return _.reduce((acc, curr)=> {
                         acc[curr.title] = createStore(AppReducer, {
                             Tags,
@@ -252,6 +251,7 @@ const pathsAndStores = {
             this.storesLogged = {
                 initStoresLogged: function () {
                     console.log("Init storesLogged")
+
                     return _.reduce((acc, curr)=> {
                         acc[curr.title] = createStore(AppReducer, {
                             Tags,
@@ -315,29 +315,34 @@ const pathsAndStores = {
     },//TODO: Cache as good as possible. response, store and content should be objects with blogpost name props, in which you could filter easily
 };
 fillQueryCache()
-    .then(getTags()
-        .then((tags)=> {
-            Object.keys(pathsAndStores).forEach((key, index)=> {
-                if (pathsAndStores[key].hasOwnProperty('init')) {
-                    console.log("initializing " + key);
-                    pathsAndStores[key].init();
-                }
-            });
-        })
-        .then(()=> {//Write pathsAndStores to fs.
-            //TODO: This sucks, only for dbg.
-            if(false) fs.writeFile("./src/server/pathsAndStores.js",
-                "const pathsAndStores = "
-                +JSON.stringify(pathsAndStores, null, 4)
-                +";\nexport default pathsAndStores"
-                , function(err) {
-                if(err) {
-                    console.log(err);
-                } else {
-                    console.log("JSON saved to " + "pathsAndStores");
-                }
-            });
+    .then((data)=> {
+            getTags()
+                .then((tags)=> {
+                    Object.keys(pathsAndStores).forEach((key, index)=> {
+                        if (pathsAndStores[key].hasOwnProperty('init')) {
+                            console.log("initializing " + key);
+                            pathsAndStores[key].init();
+                        }
+                    });
+                })
+                .then(()=> {//Write pathsAndStores to fs.
+                        //TODO: This sucks, only for dbg.
+                        if (false) fs.writeFile("./src/server/pathsAndStores.js",
+                            "const pathsAndStores = "
+                            + JSON.stringify(pathsAndStores, null, 4)
+                            + ";\nexport default pathsAndStores"
+                            , function (err) {
+                                if (err) {
+                                    console.log(err);
+                                } else {
+                                    console.log("JSON saved to " + "pathsAndStores");
+                                }
+                            }
+                        );
 
-        }));
+                    }
+                )
+        }
+    );
 //*******************************************************END OF DB SETUP************************************************
 export {queryBlogPosts, blogPostToDb, Tags, getTags, pathsAndStores}

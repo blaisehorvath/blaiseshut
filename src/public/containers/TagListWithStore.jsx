@@ -15,7 +15,6 @@ const TagList = ({Tags})=> {
     return (
         <div>
             {Tags.map((tag)=> {
-                console.log(tag);
                 return <SingleTag key={tag.id} tag={tag}/>
             })}
         </div>
