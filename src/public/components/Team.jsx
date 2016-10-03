@@ -12,21 +12,27 @@ const teamMembers = [
         isExpanded: false,
         caption: "Team",
         title: "Team",
-        children: teamText
+        children: teamText,
+        smallImgSrc: "",
+        bigImgSrc: "",
     },
     {
         targetCollapse: "member1",
         isExpanded: false,
         caption: "Balázs",
         title: "Balázs",
-        children: balazsText
+        children: balazsText,
+        smallImgSrc: "/img/scientist.jpg",
+        bigImgSrc: "",
     },
     {
         targetCollapse: "member2",
         isExpanded: false,
         caption: "Viktor",
         title: "Viktor",
-        children: viktorText
+        children: viktorText,
+        smallImgSrc: "/img/engineer.jpg",
+        bigImgSrc: "",
     }
 ];
 

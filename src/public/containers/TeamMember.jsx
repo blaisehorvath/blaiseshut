@@ -9,6 +9,8 @@ import BiStateImg from "../containers/BiStateImg";
  * @param props.caption {string} The text displayed under the member menu item.
  * @param props.activeMember {string} The id of the currently active member mapped from the state.
  * @param props.targetCollapse {string} The id (without #) of the collapse that contains the team members CV.
+ * @param props.smallImgSrc {string} The url of the image for small displays.
+ * @param props.bigImgSrc {string} The url of the image for big displays.
  * @returns {XML}
  * @constructor
  */
@@ -17,7 +19,7 @@ const TeamMember = (props) => {
         <div className="col-sm-4 memberCol">
             <a onClick={() => teamMemberOnClick(props)}>
                 <div className="memberThumbnail">
-                    <BiStateImg smallImgSrc="https://placehold.it/200x200" bigImgSrc="https://placehold.it/325x325"/>
+                    <BiStateImg smallImgSrc={props.smallImgSrc} bigImgSrc={props.bigImgSrc}/>
                     <img className="img-responsive teamPicture" alt=""/>
                     <div className="caption">
                         <div className="caption-content">

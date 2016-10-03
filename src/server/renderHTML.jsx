@@ -41,6 +41,8 @@ export default function renderHTML(content, initialState) {
                 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
                 <!-- jsSocials -->
                 <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery.jssocials/1.3.1/jssocials.min.js"></script>
+                <!-- Github Share bar-->
+                <script async defer src="https://buttons.github.io/buttons.js"></script>
                 <!-- Own Javascript -->
                 <script src="/private/script.js"></script>
                 <script src="/js/frontEnd.js"></script>
