@@ -34,7 +34,7 @@ class BlogPosts extends React.Component {
     render() {
         if (this.props.posts) {
             /*if ((this.props.isBottom && !this.props.postLoading))
-                this.getNewBlogPosts(1);*/
+             this.getNewBlogPosts(1);*/
             //TODO: We should listen to these events and call this function.. Not related to render!!!!
             return (
                 <div>
@@ -44,7 +44,7 @@ class BlogPosts extends React.Component {
                                 <BlogPostPreview post={post}/>
                             </div>
                         })}
-                    <div className="panel">{this.props.postLoading?<PostLoader/>:<a onClick={()=>{this.getNewBlogPosts(1)}}>Load more!</a>}
+                    <div className="panel" height={200}>{this.props.postLoading ? <PostLoader/> : null}
                     </div>
                 </div>);
         }//TODO: FRONT-END! Change this to scroll event
@@ -56,12 +56,12 @@ const PostLoaderComp = () => {
     //if(!props.loading && props.bottom) props.newPostsFn(1);
     //TODO: If the function is passed then we get no error, weird....
     //TODO: Check if we can load any more blogPosts, not important
-        return (
-            <div className="postLoader">
-                <i className="fa fa-refresh fa-spin fa-3x fa-fw"/>
-                <span className="sr-only">Loading...</span>
-            </div>
-        );
+    return (
+        <div className="postLoader">
+            <i className="fa fa-refresh fa-spin fa-3x fa-fw"/>
+            <span className="sr-only">Loading...</span>
+        </div>
+    );
 };
 
 let PostLoader = connect((state)=>({loading: state.postLoading}))(PostLoaderComp);

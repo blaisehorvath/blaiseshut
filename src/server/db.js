@@ -74,7 +74,6 @@ let fillQueryCache = ()=> {
 };
 const getBlogPostByTitle = (title)=>queryCache.Items.filter(post=>post.title === title)[0];
 const queryBlogPosts = (currentBlogPostIds, activeTags, numberOfPostsToReturn)=> {//
-    console.log({currentBlogPostIds,activeTags,numberOfPostsToReturn})
     return new Promise((resolve, reject)=> {
         //Get all the remaining posts
         let availableBlogPosts = queryCache.Items
@@ -238,7 +237,7 @@ const pathsAndStores = {
             this.stores = {
                 initStore: function () {
                     console.log("Init stores");
-                    //TODO: WOW, this is ugly AF
+                    //TODO: UnhandledPromiseRejectionWarning happens here, queryCache is not ready yet, don't know why.
                     return _.reduce((acc, curr)=> {
                         acc[curr.title] = createStore(AppReducer, {
                             Tags,
@@ -252,6 +251,7 @@ const pathsAndStores = {
             this.storesLogged = {
                 initStoresLogged: function () {
                     console.log("Init storesLogged")
+
                     return _.reduce((acc, curr)=> {
                         acc[curr.title] = createStore(AppReducer, {
                             Tags,

@@ -103,15 +103,15 @@ const scrollSpy = () => {
         let docHeight = $document.height();
         let viewHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
 
-/*        console.log({
-            current: currentScrollPos,
-            windowHeight: viewHeight,
-            documentHeight: docHeight,
-            topRange: $places[0].top + "-" + $places[0].bottom,
-            projectsRange: $places[1].top + "-" + $places[1].bottom,
-            teamRange: $places[2].top + "-" + $places[2].bottom,
-            contactUsRange: $places[3].top + "-" + $places[3].bottom
-        });*/
+        /*        console.log({
+         current: currentScrollPos,
+         windowHeight: viewHeight,
+         documentHeight: docHeight,
+         topRange: $places[0].top + "-" + $places[0].bottom,
+         projectsRange: $places[1].top + "-" + $places[1].bottom,
+         teamRange: $places[2].top + "-" + $places[2].bottom,
+         contactUsRange: $places[3].top + "-" + $places[3].bottom
+         });*/
 
         // if the current position is the bottom of the window highlight the first navbar item
         if (currentScrollPos >= 0 && currentScrollPos <= navHeight) {
@@ -153,14 +153,45 @@ const scrollSpy = () => {
         let docHeight = $document.height();
         let viewHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
         let currentScrollPos = $window.scrollTop();
-        if (currentScrollPos + viewHeight + 2 >= docHeight && !window.getState().isBottom) {// Fire once...
-            window.dispatch({type: 'BOTTOM'});console.log(window.getState().isBottom)//TODO:Debug
-        } else if (window.getState().isBottom) {window.dispatch({type: 'NOT_BOTTOM'});console.log("notbottom")} // Fire once...
+        if (currentScrollPos + viewHeight + 2 >= docHeight) {
+            if (window.getState().isBottom === 'NOT_BOTTOM')
+                window.dispatch({type: 'TO_BOTTOM'});
+        } else if (window.getState().isBottom === 'ON_BOTTOM') {
+            window.dispatch({type: 'NOT_BOTTOM'});
+        }
     }
 };
 
+const getNewBlogPosts = (numberOfPostsToReturn, posts, activeTags, onAjaxFinish)=> {
+    let data = {
+        currentBlogPostIds: posts.map(post=>post.id),
+        numberOfPostsToReturn,
+        activeTags: activeTags
+    };
+    $.ajax({
+        type: 'POST',
+        url: '/getBlogPosts',
+        data,
+    }).done((data)=> {
+        onAjaxFinish(data);// Comes from the connect..
+    })
+};
+let onAjaxFinish = (posts)=> {
+    window.dispatch({
+        type: 'NEW_BLOG_POSTS',
+        posts
+    });
+};
+window.subscribe(()=> {
+    if (window.getState().isBottom === "TO_BOTTOM")
+    {
+        window.dispatch({type: 'ON_BOTTOM'});
+        window.dispatch({type: 'LOADING_POSTS'});
+        getNewBlogPosts(1, window.getState().BlogPosts, window.getState().ActiveTags, onAjaxFinish);
+    }
+});
 const scrollSpyDebounce = debounce(scrollSpy, 10);
-setInterval(scrollSpy,200);
+setInterval(scrollSpy, 200);
 /*This self invoking function runs the purely front-end scripts*/
 (function ($) {
 

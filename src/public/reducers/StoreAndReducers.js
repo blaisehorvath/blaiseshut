@@ -17,10 +17,8 @@ const Tags = (state = [], action) => {
 const BlogPosts = (state = [], action)=> {//TODO: Get all blogposts in the right order (time added)
     switch (action.type) {// TODO: JS SET??
         case 'NEW_BLOG_POSTS':
-            return [...state].concat(action.posts)
-            // This part is to ensure that no post is duplicated, not tested
-            // .filter((post)=>
-            //     !state.filter((statePost)=>statePost ===post)));
+            return [...state]
+                .concat(action.posts.filter(post=>state.map(i=>i.id).indexOf(post.id) === -1))
                 .sort((a, b)=> { // descending order, TODO: maybe we could order things by date?
                     return a.id < b.id ? 1 : -1
                 });
@@ -106,21 +104,21 @@ const postLoading = (state = false, action) => {
         case 'NOT_LOADING_POSTS':
             return false;
         default:
-            return false;
+            return state;
     }
 };
-const isBottom = (state = false, action) =>{
-    switch (action.type){
-        case 'BOTTOM':
-            return true;
+const isBottom = (state = 'NOT_BOTTOM', action) => {
+    switch (action.type) {
+        case 'TO_BOTTOM':
+            return 'TO_BOTTOM';
+        case 'ON_BOTTOM':
+            return 'ON_BOTTOM';
         case 'NOT_BOTTOM':
-            return false;
+            return 'NOT_BOTTOM';
         default:
-            return false;
+            return state;
     }
-}
-
-
+};
 const activePage = (state = null, action) => {
     switch (action.type) {
         case 'CHANGE_ACTIVE_PAGE':
