@@ -2,7 +2,7 @@ import React from "react"
 import {loadBlogPost} from '../reducers/StoreAndReducers'
 import {connect} from 'react-redux'
 import page from 'page'
-
+import Markdown from 'react-markdown'
 /**
  * This stateless functional React component is responsible for rendering a preview of a blog post.
  * @param post {Object} An object that holds information about the post.
@@ -32,8 +32,7 @@ const BlogPostPreview = ({post, dispatch,loggedIn})=> {
                 </div>
             </div>
             <div className="panel-body">
-                {post.text}
-
+                <Markdown source={post.precontent}/>
                 <a className="readMore" onClick={goToBlogpost.bind({}, post, dispatch)}>
                     Read more!
                 </a>
