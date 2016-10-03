@@ -53,9 +53,6 @@ class BlogPosts extends React.Component {
 }
 
 const PostLoaderComp = () => {
-    //if(!props.loading && props.bottom) props.newPostsFn(1);
-    //TODO: If the function is passed then we get no error, weird....
-    //TODO: Check if we can load any more blogPosts, not important
     return (
         <div className="postLoader">
             <i className="fa fa-refresh fa-spin fa-3x fa-fw"/>

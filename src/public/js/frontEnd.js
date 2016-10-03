@@ -181,6 +181,10 @@ let onAjaxFinish = (posts)=> {
         type: 'NEW_BLOG_POSTS',
         posts
     });
+    window.dispatch({
+        type: 'NOT_LOADING_POSTS',
+        posts
+    });
 };
 window.subscribe(()=> {
     if (window.getState().isBottom === "TO_BOTTOM")
