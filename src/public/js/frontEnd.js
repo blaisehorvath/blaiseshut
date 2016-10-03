@@ -83,7 +83,13 @@ const dispatchBootstrapBreakpoint = () => {
  * @function
  */
 const dispatchBootstrapBreakpointDebounce = debounce(dispatchBootstrapBreakpoint, 250);
-
+const getLastPlace = ($places, maxTop)=> {
+    return $places.reduce((prev, curr)=> {
+        if (curr.top > maxTop) return prev;
+        else if (curr.top > prev.top)return curr;
+        else return prev;
+    }, {id: undefined, top: -1, bottom: undefined})
+};
 //TODO: doc
 const scrollSpy = () => {
     if (window.getState().activePage === "about") {
@@ -97,13 +103,17 @@ const scrollSpy = () => {
                 id: $node.id,
                 top: $node.$id.offset().top,
                 bottom: $node.$id.offset().top + $node.$id.outerHeight(true) - navHeight
-            }));
+            }))
+            .sort((a, b)=> {
+                if (a.top === b.top) return 0;
+                return (a.top < b.top) ? -1 : 1;
+            });
 
         let currentScrollPos = $window.scrollTop();
         let docHeight = $document.height();
         let viewHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
-
-        /*        console.log({
+        /*
+         console.log({
          current: currentScrollPos,
          windowHeight: viewHeight,
          documentHeight: docHeight,
@@ -122,7 +132,7 @@ const scrollSpy = () => {
             // console.log("Scroll is at TOP");
         }
         // if the current position is the bottom of the window highlight the last navbar item
-        else if (currentScrollPos + viewHeight >= docHeight) {
+        else if (currentScrollPos + viewHeight >= docHeight - 1) {
             window.dispatch({
                 type: "SET_ACTIVE_MENU_BUTTON",
                 location: scrollSpyLocations[scrollSpyLocations.length - 1]
@@ -131,19 +141,15 @@ const scrollSpy = () => {
         }
         // if it's not the top or the bottom search linearly from the top which navbar menu should be active
         else {
-            for (let $item of $places) {
-                if (currentScrollPos < $item.bottom && currentScrollPos + navHeight > $item.top) {
-                    if ($item.id == window.getState().activeMenuButton) break;
-                    if (window.dispatch) {
-                        window.dispatch({
-                            type: "SET_ACTIVE_MENU_BUTTON",
-                            location: $item.id
-                        })
-                    }
-                    // console.log(`Scroll is at ${$item.id}`);
-                    break
-                }
+            let $item = getLastPlace($places, currentScrollPos + navHeight);
+            if (window.dispatch && !($item.id == window.getState().activeMenuButton)) {
+                window.dispatch({
+                    type: "SET_ACTIVE_MENU_BUTTON",
+                    location: $item.id
+                })
             }
+            // console.log(`Scroll is at ${$item.id}`);
+
         }
     }
     else if (window.getState().activePage === "blog") {
@@ -187,8 +193,7 @@ let onAjaxFinish = (posts)=> {
     });
 };
 window.subscribe(()=> {
-    if (window.getState().isBottom === "TO_BOTTOM")
-    {
+    if (window.getState().isBottom === "TO_BOTTOM") {
         window.dispatch({type: 'ON_BOTTOM'});
         window.dispatch({type: 'LOADING_POSTS'});
         getNewBlogPosts(1, window.getState().BlogPosts, window.getState().ActiveTags, onAjaxFinish);
