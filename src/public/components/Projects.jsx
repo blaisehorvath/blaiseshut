@@ -9,7 +9,7 @@ const projectList = [
     {
         targetID: "webAppModal",
         caption: "WEB application development",
-        imgSrc: {small: "https://placehold.it/200x200", big: "https://placehold.it/325x325"},
+        imgSrc: {small: "/img/code_200.jpg", big: "/img/code_325.jpg"},
     },
     {
         targetID: "embeddedModal",
