@@ -2,7 +2,22 @@
  * Created by v on 2016.04.22..
  */
 import {combineReducers} from 'redux';
-
+const currentHeader = (state = {},action)=>{
+    switch (action.type){
+        case 'NEW_CURRENT_HEADER':
+            return action.header;
+        default:
+            return state;
+    }
+};
+const postHeaders = (state = [],action)=>{
+    switch(action.type){
+        case 'NEW_HEADERS':
+            return action.headers;
+        default:
+            return state;
+    }
+};
 const Tags = (state = [], action) => {
     switch (action.type) {
         case 'ADD_ALL_TAGS':
@@ -245,6 +260,8 @@ let AppReducer = combineReducers({
     activeMember,
     displayWidth,
     postLoading,
-    isBottom
+    isBottom,
+    postHeaders,
+    currentHeader
 });
 export default AppReducer;

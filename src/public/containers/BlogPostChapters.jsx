@@ -1,23 +1,22 @@
 import { connect } from 'react-redux'
 import React from 'react'
-import SingleTag from "../containers/SingleTag"
+import BlogPostHeader from "../containers/BlogPostHeader"
 //TODO: This code didnt worked well when imported!!!???
 const mapStateToPropsTagList = (state, ownProps) => {
     return {
-        Tags: state.Tags
+        headers: state.postHeaders
     }
 };
 const mapDispatchToPropsTagList = (dispatch, ownProps) => {
     return {}
 };
-const TagList = ({Tags})=> {
+const BlogPostChapters = ({headers})=> {
     return (
         <div>
-            {Tags.map((tag)=> {
-                return <SingleTag key={tag.id} tag={tag}/>
+            {headers.map((header,index)=> {
+                return <BlogPostHeader key={index} header={header}/>
             })}
         </div>
     );
 };
-const TagListWithStore = connect(mapStateToPropsTagList, mapDispatchToPropsTagList)(TagList)
-export default TagListWithStore;
+export default connect(mapStateToPropsTagList, mapDispatchToPropsTagList)(BlogPostChapters);

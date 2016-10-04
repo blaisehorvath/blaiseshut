@@ -634,7 +634,51 @@ section#blogPost {
     @include niceBoxShadow(0, 0, 10px, rgba(0, 0, 0, 0.3));
     border-radius: $panel-border-radius;
     padding: 0;
+    .affixContainer {
+      div.postChapters {
+        padding: 7px;
+        border-style: solid;
+        border-width: 1px;
+        border-radius: 5%;
+        border-color: $col_nice_black;
+        @include niceBoxShadow(0, 0, 3px, rgba(0, 0, 0, 0.3));
 
+        // the style of the tags
+        .postHeader {
+          -webkit-transition: background 0.250s, color 0.2s, font-weight 0.2s, padding 0.250s, border-color 4s, ease-in-out;
+          -moz-transition: background 0.250s, color 0.2s, font-weight 0.2s, padding 0.250s, border-color 4s, ease-in-out;
+          -ms-transition: background 0.250s, color 0.2s, font-weight 0.2s, padding 0.250s, border-color 4s, ease-in-out;
+          -o-transition: background 0.250s, color 0.2s, font-weight 0.2s, padding 0.250s, border-color 4s, ease-in-out;
+          transition: background 0.250s, color 0.2s, font-weight 0.2s, padding 0.250s, border-color 4s, ease-in-out;
+          display: inline-block;
+          padding: 0px 3px;
+          margin: 2px;
+          cursor: pointer;
+          text-decoration: none;
+          font-weight: 300;
+          color: $col_body_text;
+          border-radius: 7px;
+          //border-color: $col_nice_black;
+          //border-width: 1px;
+          //border-style: solid;
+          background: white;
+
+          &:hover {
+            color: white;
+            background: $col_nav_hover;
+          }
+          &.active {
+            background: $col_nav_active;
+            color: white;
+
+            &:hover {
+              background: $col_nav_active_hover;
+              color: white;
+            }
+          }
+        }
+      }
+    }
     .postHeader {
       padding-top: 20px;
 

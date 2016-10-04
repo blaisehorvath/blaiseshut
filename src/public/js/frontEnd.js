@@ -90,6 +90,13 @@ const getLastPlace = ($places, maxTop)=> {
         else return prev;
     }, {id: undefined, top: -1, bottom: undefined})
 };
+const getCurrentHeader = (headers, maxTop)=> {
+    return headers.reduce((prev, curr)=> {
+        if (curr.top > prev.top) return curr;
+        else if (curr.top > prev.top) return curr;
+        else return prev;
+    }, {html: undefined, top: -1, title: undefined});
+}
 //TODO: doc
 const scrollSpy = () => {
     if (window.getState().activePage === "about") {
@@ -166,6 +173,13 @@ const scrollSpy = () => {
             window.dispatch({type: 'NOT_BOTTOM'});
         }
     }
+    else if (window.getState().activePage === "blogPost") {
+        let currentScrollPos = $window.scrollTop();
+        let header = getCurrentHeader(window.getState().postHeaders, currentScrollPos + navHeight);
+        if (window.dispatch && !(header == window.getState().currentHeader)) {
+            window.dispatch({type: 'NEW_CURRENT_HEADER', header})
+        }
+    }
 };
 
 const getNewBlogPosts = (numberOfPostsToReturn, posts, activeTags, onAjaxFinish)=> {
@@ -200,7 +214,8 @@ window.subscribe(()=> {
     }
 });
 const scrollSpyDebounce = debounce(scrollSpy, 10);
-setInterval(scrollSpy, 200);
+//scrollSpy();//TODO...
+setInterval(scrollSpy, 200); //TODO: Not reaload on blogPost etc....
 /*This self invoking function runs the purely front-end scripts*/
 (function ($) {
 

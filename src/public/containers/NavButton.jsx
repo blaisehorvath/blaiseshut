@@ -41,7 +41,7 @@ const navButtonClick = (event, props) => {
     let $anchor = $(`[href='#${props.id}']`);
     $('html, body').stop().animate({
         scrollTop: $($anchor.attr('href')).offset().top - 50
-    }, 1250, 'easeInOutExpo');
+    }, 625, 'easeInOutQuart');
     event.preventDefault();
 };
 
