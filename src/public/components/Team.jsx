@@ -13,8 +13,8 @@ const teamMembers = [
         caption: "Team",
         title: "Team",
         children: teamText,
-        smallImgSrc: "",
-        bigImgSrc: "",
+        smallImgSrc: "/img/team_200.jpg",
+        bigImgSrc: "/img/team_325.jpg",
     },
     {
         targetCollapse: "member1",
@@ -22,8 +22,8 @@ const teamMembers = [
         caption: "Balázs",
         title: "Balázs",
         children: balazsText,
-        smallImgSrc: "/img/scientist.jpg",
-        bigImgSrc: "",
+        smallImgSrc: "/img/balazs_200.jpg",
+        bigImgSrc: "/img/balazs_325.jpg",
     },
     {
         targetCollapse: "member2",
@@ -31,8 +31,8 @@ const teamMembers = [
         caption: "Viktor",
         title: "Viktor",
         children: viktorText,
-        smallImgSrc: "/img/engineer.jpg",
-        bigImgSrc: "",
+        smallImgSrc: "/img/mrengineer_200.jpg",
+        bigImgSrc: "/img/mrengineer_325.jpg",
     }
 ];
 

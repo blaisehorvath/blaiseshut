@@ -191,6 +191,12 @@ let viktorSkills = [
         description: " I’m not really the type who likes to tinker with things without a purpose, which could come handy when you’re learning Linux. I use it everyday for work, but I wouldn’t consider myself a poweruser. FPGAs and Verilog: 9/10: Its a long time I’ve touched an FPGA but the logic of it felt very natural to me right from the start. The Tetris project helped me in understanding FPGAs a lot, sadly I don’t have any projects involving this kind of technology right now."
     },
     {
+        key: 9,
+        language: "FPGAs and Verilog",
+        skill: 9,
+        description: "Its a long time I’ve touched an FPGA but the logic of it felt very natural to me right from the start. The Tetris project helped me in understanding FPGAs a lot, sadly I don’t have any projects involving this kind of technology right now."
+    },
+    {
         key: 7,
         language: "PCB design",
         skill: 8,
