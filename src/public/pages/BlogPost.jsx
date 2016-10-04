@@ -30,7 +30,6 @@ class BlogPost extends React.Component {
 
         $(".socialButtons").jsSocials({
             shares: ["facebook", "twitter", "linkedin", "email"],
-            url: "http://hackaday.com/",
             showLabel: false,
             showCount: false,
             text: this.props.blogPost.precontent,
