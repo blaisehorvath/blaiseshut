@@ -274,6 +274,15 @@ const pathsAndStores = {
                     }, this, queryCache.Items)
                 }
             }.initContent(this.stores);
+            this.shareInfos = {
+                initShareInfos : function () {
+                    return _.reduce((acc, curr)=> {
+                        acc[curr.title] = {img : curr.img, shortdesc : curr.shortdesc};
+                        return acc;
+                    }, this, queryCache.Items);
+                }
+            }.initShareInfos();
+            console.log(Object.keys(this.shareInfos));
             this.contentsLogged = {
                 initContentsLogged: function (storesLogged) {
                     console.log("Init contentsLogged")
@@ -287,25 +296,25 @@ const pathsAndStores = {
                 }
             }.initContentsLogged(this.storesLogged);
             this.responses = {
-                initResponse: function (stores, contents) {
-                    console.log("Init responeses")
+                initResponse: function (stores, contents, shareInfos) {
+                    console.log("Init responeses");
                     return _.reduce((acc, curr)=> {
                         acc[curr.title] =
-                            renderHTML(contents[curr.title], stores[curr.title].getState());
+                            renderHTML(contents[curr.title], stores[curr.title].getState(), shareInfos[curr.title]);
                         return acc
                     }, this, queryCache.Items)
                 }
-            }.initResponse(this.stores, this.contents);
+            }.initResponse(this.stores, this.contents, this.shareInfos);
             this.responsesLogged = {
-                initResponseLogged: function (storesLogged, contentsLogged) {
-                    console.log("Init responsesLogged")
+                initResponseLogged: function (storesLogged, contentsLogged, shareInfos) {
+                    console.log("Init responsesLogged");
                     return _.reduce((acc, curr)=> {
                         acc[curr.title] =
-                            renderHTML(contentsLogged[curr.title], storesLogged[curr.title].getState());
+                            renderHTML(contentsLogged[curr.title], storesLogged[curr.title].getState(), shareInfos[curr.title]);
                         return acc
                     }, this, queryCache.Items)
                 }
-            }.initResponseLogged(this.storesLogged, this.contentsLogged);
+            }.initResponseLogged(this.storesLogged, this.contentsLogged, this.shareInfos);
             this.getResponseWithBlogPost = function (loggedIn, blogPostURI) {
                 //TODO: Maybe all the blogPosts should be a propety of the main objects, instead of changing the getResponse function pattern?
                 return loggedIn ? this.responsesLogged[blogPostURI] : this.responses[blogPostURI];
