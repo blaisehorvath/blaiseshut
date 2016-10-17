@@ -80,6 +80,9 @@ router.post("/getBlogPosts", (req, res)=> {//TODO:error handling
         })
 });
 
+/**
+ * This route handles the messages from the clients.
+ */
 router.post("/getMessage", (req, res)=> {
     console.log({req: "POST", email : req.body.email, message: req.body.message});
     res.send("asdadasd");

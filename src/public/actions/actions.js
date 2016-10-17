@@ -21,18 +21,21 @@ export const changeActivePage = (page) => {
     }
 };
 
+// used in the contact us form
 export const messageSuccess = () => {
     return {
         type: 'MESSAGE_SUCCESS'
     }
 };
 
+// used in the contact us form
 export const messageFail = () => {
     return {
         type: 'MESSAGE_FAIL'
     }
 };
 
+// used in the contact us form
 export const clearMessage = () => {
     return {
         type: 'CLEAR_MESSAGE'

@@ -87,7 +87,12 @@ const ActiveBlogPosts = (state = [], action)=> {
     }
 };
 
-//TODO: doc
+/**
+ * This reducer stores the status of the message that is sent from the ContactUs form.
+ * @param state {string|null} The state of the message if there is any.
+ * @param action
+ * @returns {*}
+ */
 const messageStatus = (state = null, action) => {
     switch (action.type) {
         case "MESSAGE_SUCCESS":
