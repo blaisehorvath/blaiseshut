@@ -2,12 +2,16 @@ import React from "react";
 import {connect} from "react-redux";
 import {messageSuccess, messageFail, clearMessage} from "../actions/actions";
 
-//TODO: separate The contacts section from About to a independent jsx file
-//TODO: send the message to the server via ajax
-//TODO: if the message has arrived  to the server alert the user that his/her message has been received
-
+/**
+ * This class is based on the Component class of React. This component renders a contact us form that can be used to send data to the server-
+ * @class
+ */
 class SendMessage extends React.Component {
-    //TODO: doc
+
+    /**
+     * This function sends data to the server via AJAX and based on the result of the response dispatches an action.
+     * @param event
+     */
     postMessage(event) {
         event.preventDefault();
         let email = this.email.value;
@@ -22,12 +26,18 @@ class SendMessage extends React.Component {
         })
     }
 
-    //TODO: doc
+    /**
+     * This function dispatches a clearMessage action. This function can be supplied to alert components.
+     */
     dispatchClear() {
         this.props.dispatch(clearMessage())
     }
 
-    //TODO: doc
+    /**
+     * This function returns the proper alert component (or nothing) based on the store.
+     * By default (when no message is sent) it returns null.
+     * @returns {*}
+     */
     returnAlert() {
         switch (this.props.messageStatus) {
             case "success":
@@ -74,9 +84,15 @@ class SendMessage extends React.Component {
     }
 }
 
+// get the messageStatus from the store
 export default connect(state=>({messageStatus: state.messageStatus}))(SendMessage);
 
-//todo: doc
+/**
+ * This stateless functional react component returns a Bootstrap alert-danger component.
+ * @param close {callback} A function that is called when the user clicks on the close anchor of the alert.
+ * @returns {XML}
+ * @constructor
+ */
 const DangerAlert = ({close}) => {
     return (
         <div id="dangerAlert" className="messageAlert alert alert-danger">
@@ -86,7 +102,12 @@ const DangerAlert = ({close}) => {
     );
 };
 
-//TODO: doc
+/**
+ * This stateless functional react component returns a Bootstrap alert-danger component.
+ * @param close {callback} A function that is called when the user clicks on the close anchor of the alert.
+ * @returns {XML}
+ * @constructor
+ */
 const SuccessAlert = ({close}) => {
     return (
         <div id="successAlert" className="messageAlert alert alert-success">
@@ -95,4 +116,3 @@ const SuccessAlert = ({close}) => {
         </div>
     );
 };
-
