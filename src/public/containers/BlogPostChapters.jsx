@@ -14,7 +14,7 @@ const BlogPostChapters = ({headers})=> {
     return (
         <div>
             {headers.map((header,index)=> {
-                return <BlogPostHeader key={index} header={header}/>
+                return <div><BlogPostHeader key={index} header={header}/><br/></div>
             })}
         </div>
     );

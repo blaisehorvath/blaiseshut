@@ -1,7 +1,7 @@
 export default function renderHTML(content, initialState, shareInfo) {
     let sharedMeta;
     if (shareInfo) {
-        sharedMeta = `<meta property="og:img" content="${shareInfo.img}"/>
+        sharedMeta = `<meta property="og:image" content="${shareInfo.img}"/>
                           <meta property="og:description" content="${shareInfo.shortdesc}"/>`;
     }
     return (

@@ -29,6 +29,9 @@ class BlogPost extends React.Component {
     componentDidMount() {
         //setting the active page
         this.props.setActiveMenuButton();
+
+        $('.postChapters').affix({offset: {top:50}});
+
         $(".socialButtons").jsSocials({
             shares: ["facebook", "twitter", "linkedin", "email"],
             showLabel: false,
