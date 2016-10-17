@@ -10,10 +10,13 @@ class SendMessage extends React.Component {
     //TODO: doc
     postMessage(event) {
         event.preventDefault();
+        let email = this.email.value;
+        let message = this.message.value;
+        this.email.value = this.message.value = "";
         $.ajax({
             type: 'POST',
             url: '/getMessage',
-            data: {email: this.email.value, message: this.message.value},
+            data: {email: email, message: message},
             success: (data, statusCode) => { this.props.dispatch(messageSuccess())},
             error: ($xhr, statusCode, errorString) => { this.props.dispatch(messageFail())}
         })
@@ -73,7 +76,7 @@ class SendMessage extends React.Component {
 
 export default connect(state=>({messageStatus: state.messageStatus}))(SendMessage);
 
-
+//todo: doc
 const DangerAlert = ({close}) => {
     return (
         <div id="dangerAlert" className="messageAlert alert alert-danger">
@@ -83,6 +86,7 @@ const DangerAlert = ({close}) => {
     );
 };
 
+//TODO: doc
 const SuccessAlert = ({close}) => {
     return (
         <div id="successAlert" className="messageAlert alert alert-success">
