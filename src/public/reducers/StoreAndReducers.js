@@ -87,6 +87,20 @@ const ActiveBlogPosts = (state = [], action)=> {
     }
 };
 
+//TODO: doc
+const messageStatus = (state = null, action) => {
+    switch (action.type) {
+        case "MESSAGE_SUCCESS":
+            return "success";
+        case "MESSAGE_FAIL":
+            return "fail";
+        case "CLEAR_MESSAGE":
+            return null;
+        default:
+            return state;
+    }
+};
+
 /**
  * This reducer stores the current display width in the store.
  * It's first called with the width from the front-end script
@@ -262,6 +276,7 @@ let AppReducer = combineReducers({
     postLoading,
     isBottom,
     postHeaders,
-    currentHeader
+    currentHeader,
+    messageStatus
 });
 export default AppReducer;
