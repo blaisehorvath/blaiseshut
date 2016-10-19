@@ -22,7 +22,7 @@ class SendMessage extends React.Component {
             url: '/getMessage',
             data: {email: email, message: message},
             success: (data, statusCode) => { this.props.dispatch(messageSuccess())},
-            error: ($xhr, statusCode, errorString) => { this.props.dispatch(messageFail())}
+            error: ($xhr, statusCode, errorString) => { this.props.dispatch(messageFail(statusCode))}
         })
     }
 
@@ -33,6 +33,7 @@ class SendMessage extends React.Component {
         this.props.dispatch(clearMessage())
     }
 
+
     /**
      * This function returns the proper alert component (or nothing) based on the store.
      * By default (when no message is sent) it returns null.
@@ -40,10 +41,12 @@ class SendMessage extends React.Component {
      */
     returnAlert() {
         switch (this.props.messageStatus) {
-            case "success":
+            case 200:
                 return <SuccessAlert close={this.dispatchClear.bind(this)}/>;
-            case "fail":
-                return <DangerAlert close={this.dispatchClear.bind(this)}/>;
+            case 400:
+                return <DangerAlert close={this.dispatchClear.bind(this)} message={"Please check that the you gave a valid e-mail address or the message content is empty."}/>;
+            case 503:
+                return <DangerAlert close={this.dispatchClear.bind(this)} message={"Sorry our server couldn't send us the message. Please try again later or contact us on LinkedIn or GitHub"}/>;
             default:
                 return null;
         }
@@ -93,11 +96,11 @@ export default connect(state=>({messageStatus: state.messageStatus}))(SendMessag
  * @returns {XML}
  * @constructor
  */
-const DangerAlert = ({close}) => {
+const DangerAlert = ({close, message}) => {
     return (
         <div id="dangerAlert" className="messageAlert alert alert-danger">
             <a href="#" className="close" onClick={(event) => {event.preventDefault(); close()}}>&times;</a>
-            <strong>Danger!</strong> Error while sending message, please try again.
+            <strong>Error!</strong> {message}.
         </div>
     );
 };

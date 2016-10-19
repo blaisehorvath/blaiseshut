@@ -96,9 +96,9 @@ const ActiveBlogPosts = (state = [], action)=> {
 const messageStatus = (state = null, action) => {
     switch (action.type) {
         case "MESSAGE_SUCCESS":
-            return "success";
+            return 200;
         case "MESSAGE_FAIL":
-            return "fail";
+            return action.statusCode;
         case "CLEAR_MESSAGE":
             return null;
         default:

@@ -1,10 +1,10 @@
-/**
- * Created by v on 8/19/16.
- */
-import {admins,checkHash,checkPassword} from '../security'
+import {admins, verifyEmail, checkHash,checkPassword} from '../security'
 import {blogPostToDb, queryBlogPosts} from '../db'
 import React from "react";
-import express from 'express'
+import express from 'express';
+import {SNS} from 'aws-sdk';
+
+const sns = new SNS({ region : "eu-central-1"});
 let router = express.Router();
 
 
@@ -84,8 +84,55 @@ router.post("/getBlogPosts", (req, res)=> {//TODO:error handling
  * This route handles the messages from the clients.
  */
 router.post("/getMessage", (req, res)=> {
-    console.log({req: "POST", email : req.body.email, message: req.body.message});
-    res.send("asdadasd");
+    // checking whether the request contains everything that is needed
+    if ("body" in req && "email" in req.body && "message" in req.body) {
+
+        // verifying whether the given address is a valid at all
+        if (!verifyEmail(req.body.email)) {
+            res.status(400);
+            res.send();
+
+        } else {
+
+            // stripping the html tags to prevent XSSR
+            let message = req.body.message.replace(/<[^>]*script.*>/gi, "");
+
+            let params = {
+                Message: `
+                Sender: ${req.body.email}
+                
+                Message:
+                ${message}
+            `,
+                Subject: 'Website Customer Message',
+                TargetArn: 'arn:aws:sns:eu-central-1:338158282039:webpage-client-message'
+            };
+
+            console.log({req: "POST", email : req.body.email, message: message});
+            console.log("Sending to AWS SNS");
+
+            sns.publish(params, (err, data)=>{
+                // if the message could not be published
+                if (err) {
+                    console.log(err);
+                    res.status(503);
+                    res.send();
+                    console.log({snsMessageStatus: "Failed"});
+                }
+
+                // if everything is fine
+                else {
+                    res.status(200);
+                    res.send();
+                    console.log({snsMessageStatus: "Success", data});
+                }
+            });
+        }
+    } else {
+        // if the the body does not contain the proper keys, or there is no body
+        res.status(400);
+        res.send();
+    }
 });
 
 export default router

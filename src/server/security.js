@@ -51,4 +51,18 @@ const checkPassword = (name, password)=> {
     });
 };
 
-export {checkHash, checkPassword, admins}
+/**
+ * This function tests a string whether it is a valid email address. Based on the General Email Regex from  http://emailregex.com/
+ * @param testString
+ * @returns {Boolean}
+ */
+const verifyEmail = (testString) => {
+    if (typeof testString === 'string') {
+        return Boolean(testString.match(/^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i));
+    } else {
+        return false;
+    }
+
+};
+
+export {verifyEmail, checkHash, checkPassword, admins}

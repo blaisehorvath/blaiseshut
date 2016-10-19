@@ -29,9 +29,10 @@ export const messageSuccess = () => {
 };
 
 // used in the contact us form
-export const messageFail = () => {
+export const messageFail = (statusCode) => {
     return {
-        type: 'MESSAGE_FAIL'
+        type: 'MESSAGE_FAIL',
+        statusCode
     }
 };
 
