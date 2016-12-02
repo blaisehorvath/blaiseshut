@@ -527,6 +527,12 @@ section#blog {
           font-size: 14pt;
           font-weight: 300;
           text-align: justify;
+          color: $col_text_black;
+
+          h1 {
+            font-size: 17pt;
+            color: $col_text_black;
+          }
 
           .readMore {
             display: inline-block;
@@ -717,6 +723,11 @@ section#blogPost {
 
     .postBody {
       @include paragraphFont;
+
+      h1, h2 {
+        font-size: 18pt;
+        font-weight: 700;
+      }
     }
 
     hr.footerSep {

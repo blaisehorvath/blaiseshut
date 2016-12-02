@@ -19,7 +19,7 @@ $footer-mobile-height: 280px;
 
 /* Colours */
 //current palette is based on http://paletton.com/#uid=33i0z0kv4GQjhMBoYIZFEvdG5o2
-$col_text_black: lighten(black, 30);
+$col_text_black: lighten(black, 15);
 
 //everywhere
 $col_nice_black: #dddddd;
@@ -30,7 +30,7 @@ $col_body_text: black;
 
 //nav
 $col_nav_main: rgba(6, 191, 191, 53.2);
-$col_nav_background: rgba(6, 191, 191, 0.4);
+$col_nav_background: rgba(6, 191, 191, 50);
 $col_nav_active: rgba(248, 7, 35, 33.2);
 $col_nav_hover: rgba(0, 149, 149, 40.9);
 $col_nav_active_hover: rgba(255, 179, 7, 71.4);
