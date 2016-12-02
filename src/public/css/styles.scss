@@ -78,21 +78,21 @@ nav.navbar {
       //border-width: 0 1px 0 0;
 
       /* Transition */
-      -webkit-transition: background 0.5s, ease-in-out;
-      -moz-transition: background 0.5s, ease-in-out;
-      -ms-transition: background 0.5s, ease-in-out;
-      -o-transition: background 0.5s, ease-in-out;
-      transition: background 0.5s, ease-in-out;
+      -webkit-transition: background 0.5s, ease-in-out, ease-in-out;
+      -moz-transition: background 0.5s, ease-in-out, ease-in-out;
+      -ms-transition: background 0.5s, ease-in-out, ease-in-out;
+      -o-transition: background 0.5s, ease-in-out, ease-in-out;
+      transition: background 0.5s, ease-in-out, ease-in-out;
 
       a {
         color: $col_nav_text;
         font-weight: 500;
         //text-shadow: 0.7px 0.7px black, -0.7px -0.7px black, -0.7px 0.7px black, 0.7px -0.7px black;
-        -webkit-transition: background 0.5s, ease-in-out;
-        -moz-transition: background 0.5s, ease-in-out;
-        -ms-transition: background 0.5s, ease-in-out;
-        -o-transition: background 0.5s, ease-in-out;
-        transition: background 0.5s, ease-in-out;
+        -webkit-transition: background 0.5s, ease-in-out, ease-in-out;
+        -moz-transition: background 0.5s, ease-in-out, ease-in-out;
+        -ms-transition: background 0.5s, ease-in-out, ease-in-out;
+        -o-transition: background 0.5s, ease-in-out, ease-in-out;
+        transition: background 0.5s, ease-in-out, ease-in-out;
       }
 
       &.active a {
@@ -639,14 +639,56 @@ section#blogPost {
     @include niceBoxShadow(0, 0, 10px, rgba(0, 0, 0, 0.3));
     border-radius: $panel-border-radius;
     padding: 0;
+
     .affixContainer {
+      position: relative;
+
       div.postChapters {
         padding: 7px;
-        border-style: solid;
-        border-width: 1px;
-        border-radius: 5%;
-        border-color: $col_nice_black;
-        @include niceBoxShadow(0, 0, 3px, rgba(0, 0, 0, 0.3));
+        border-style: hidden;
+        //border-width: 1px;
+        //border-radius: 5%;
+        //border-color: $col_nice_black;
+        //@include niceBoxShadow(0, 0, 3px, rgba(0, 0, 0, 0.3));
+
+        /* TODO: if needed it should look different in every viewport */
+        &.affix-top {
+
+          //@media (max-width: $media-bootstrap-sm-min ) {
+          //  //width: hidden;
+          //  //display: none;
+          //}
+          ///* TODO: if needed it should look different in every viewport */
+          //@media (max-width: $media-bootstrap-md-min ) {
+          //  border-style: solid;
+          //  border-width: 1px;
+          //  border-radius: 8px;
+          //  border-color: $col_nice_black;
+          //  @include niceBoxShadow(0, 0, 3px, rgba(0, 0, 0, 0.3));
+          //}
+        }
+
+        &.affix {
+          //position: fixed;
+          //
+          //@media (max-width: $media-bootstrap-sm-min ) {
+          //   visibility: hidden;
+          //}
+          //
+          ///* TODO: if needed it should look different in every viewport */
+          //@media (max-width: $media-bootstrap-md-min ) {
+          //  //visibility: hidden;
+          //  position: relative;
+          //  width: 100%;
+          //  //position: absolute;
+          //}
+          //@media (max-width: $media-bootstrap-md-max ) {
+          //  width: 126px;
+          //}
+          //@media (max-width: $media-bootstrap-lg-min ) {
+          //  width: 160px;
+          //}
+        }
 
         // the style of the tags
         .postHeader {
@@ -672,6 +714,7 @@ section#blogPost {
             color: white;
             background: $col_nav_hover;
           }
+
           &.active {
             background: $col_nav_active;
             color: white;
@@ -684,6 +727,7 @@ section#blogPost {
         }
       }
     }
+
     .postHeader {
       padding-top: 20px;
 
@@ -727,6 +771,13 @@ section#blogPost {
       h1, h2 {
         font-size: 18pt;
         font-weight: 700;
+      }
+
+      pre {
+        code.language-js {
+          font-size: 11.5pt;
+          font-family: monospace;
+        }
       }
     }
 

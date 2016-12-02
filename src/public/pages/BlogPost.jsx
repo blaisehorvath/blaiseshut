@@ -30,7 +30,7 @@ class BlogPost extends React.Component {
         //setting the active page
         this.props.setActiveMenuButton();
 
-        $('.postChapters').affix({offset: {top:50}});
+        $('.postChapters').affix({offset: {top: 50}});
 
         $(".socialButtons").jsSocials({
             shares: ["facebook", "twitter", "linkedin", "email"],
@@ -54,7 +54,9 @@ class BlogPost extends React.Component {
         return (
             <section id="blogPost">
                 <div className="container">
-                    <div className="col-xs-8">
+                    <div className="col-xs-12">
+
+                        {/*header*/}
                         <div className="postHeader">
                             <div className="row">
                                 <div className="col-sm-12">
@@ -71,23 +73,38 @@ class BlogPost extends React.Component {
                                 </div>
                             </div>
                         </div>
+
                         <hr className="headerSep"/>
-                        <div className="row postBody">
-                            <div className="col-sm-12"><Markdown
-                                source={this.props.blogPost.precontent + this.props.blogPost.text}/></div>
-                        </div>
-                        <hr className="footerSep"/>
-                        <div className="postFooter row">
-                            <div className="col-sm-12">
-                            <span
-                                className="postTagsIcon glyphicon glyphicon-tags"/><span>{this.props.blogPost.tags}</span>
+
+                        {/*body*/}
+                        <div className="row">
+                            {/*affix*/}
+                            <div className="hidden-xs hidden-sm col-md-2">
+                                <div className="affixContainer">
+                                    <div className="postChapters">
+                                        <h4>Chapters</h4>
+                                        <BlogPostChapters/>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                    <div className="affixContainer col-xs-4 pull-right">
-                        <div className="postChapters">
-                            <h4>Chapters</h4>
-                            <BlogPostChapters/>
+
+                            {/*content*/}
+                            <div className="col-xs-12 col-md-10">
+
+
+                                <div className="row postBody">
+                                    <div className="col-sm-12"><Markdown
+                                        source={this.props.blogPost.precontent + this.props.blogPost.text}/></div>
+                                </div>
+
+                                <hr className="footerSep"/>
+                                <div className="postFooter row">
+                                    <div className="col-sm-12">
+                                        <span
+                                            className="postTagsIcon glyphicon glyphicon-tags"/><span>{this.props.blogPost.tags}</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
