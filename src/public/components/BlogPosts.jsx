@@ -41,7 +41,7 @@ class BlogPosts extends React.Component {
                     {
                         this.props.activeBlogPosts.map(post => {
                             return <div key={post.id}>
-                                <BlogPostPreview post={post}/>a
+                                <BlogPostPreview post={post}/>
                             </div>
                         })}
                     <div className="panel" style={{height:20}}>{this.props.postLoading ? <PostLoader/> : null}
