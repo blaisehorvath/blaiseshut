@@ -102,8 +102,7 @@ router.post("/getMessage", (req, res)=> {
                 Sender: ${req.body.email}
                 
                 Message:
-                ${message}
-            `,
+                ${message}`,
                 Subject: 'Website Customer Message',
                 TargetArn: 'arn:aws:sns:eu-central-1:338158282039:webpage-client-message'
             };
